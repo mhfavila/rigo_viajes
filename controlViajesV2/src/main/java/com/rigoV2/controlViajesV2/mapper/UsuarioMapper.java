@@ -18,6 +18,7 @@ public class UsuarioMapper {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setId(usuario.getId());
         dto.setNombre(usuario.getNombre());
+        dto.setPassword(usuario.getPassword());
         dto.setEmail(usuario.getEmail());
 
 
@@ -36,6 +37,7 @@ public class UsuarioMapper {
         Usuario usuario = new Usuario();
         usuario.setId(dto.getId());
         usuario.setNombre(dto.getNombre());
+        usuario.setPassword(dto.getPassword());
         usuario.setEmail(dto.getEmail());
 
 

@@ -3,14 +3,16 @@ package com.rigoV2.controlViajesV2.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -21,6 +23,7 @@ public class GlobalExceptionHandler {
         logger.warn("Recurso no encontrado: {}", ex.getMessage()); // log tipo WARN
 
         Map<String, String> respuesta = new HashMap<>();
+
         respuesta.put("error", ex.getMessage());
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
