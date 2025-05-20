@@ -16,6 +16,7 @@ public class ViajeMapper {
         dto.setFecha(viaje.getFecha());
         dto.setPrecioKm(viaje.getPrecioKm());
         dto.setDestino(viaje.getDestino());
+        dto.setDistancia(viaje.getDistancia());
         dto.setEmpresaId(viaje.getEmpresa().getId()); // Solo el ID, no la entidad completa
 
         return dto;
@@ -27,6 +28,7 @@ public class ViajeMapper {
         return Viaje.builder()
                 .id(dto.getId())
                 .fecha(dto.getFecha())
+                .distancia(dto.getDistancia())
                 .precioKm(dto.getPrecioKm())
                 .destino(dto.getDestino())
                 .empresa(empresa) // Se le pasa la entidad completa

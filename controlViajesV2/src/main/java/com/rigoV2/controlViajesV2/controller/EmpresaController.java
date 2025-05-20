@@ -1,0 +1,80 @@
+package com.rigoV2.controlViajesV2.controller;
+
+
+import com.rigoV2.controlViajesV2.dto.EmpresaDTO;
+import com.rigoV2.controlViajesV2.service.EmpresaService;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * Controlador REST para gestionar empresas.
+ * Expone endpoints para operaciones CRUD.
+ */
+@RestController
+@RequestMapping("/api/empresas")
+public class EmpresaController {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmpresaController.class);
+
+    private final EmpresaService empresaService;
+
+    public EmpresaController(EmpresaService empresaService) {
+        this.empresaService = empresaService;
+    }
+
+    /**
+     * Devuelve la lista de todas las empresas.
+     */
+    @GetMapping
+    public ResponseEntity<List<EmpresaDTO>> listarEmpresas() {
+        logger.info("Solicitando listado de todas las empresas");
+        List<EmpresaDTO> empresas = empresaService.listarEmpresas();
+        return ResponseEntity.ok(empresas);
+    }
+
+    /**
+     * Devuelve una empresa por su ID.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<EmpresaDTO> obtenerEmpresa(@PathVariable Long id) {
+        logger.info("Buscando empresa con ID: {}", id);
+        EmpresaDTO empresa = empresaService.obtenerEmpresaPorId(id);
+        return ResponseEntity.ok(empresa);
+    }
+    /**
+     * Crea una nueva empresa a partir de un DTO válido.
+     */
+    @PostMapping
+    public ResponseEntity<EmpresaDTO> crearEmpresa(@Valid @RequestBody EmpresaDTO empresaDTO) {
+        logger.info("Creando empresa: {}", empresaDTO.getNombre());
+        EmpresaDTO nueva = empresaService.crearEmpresa(empresaDTO);
+        return ResponseEntity.ok(nueva);
+    }
+
+    /**
+     * Actualiza los datos de una empresa existente.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<EmpresaDTO> actualizarEmpresa(
+            @PathVariable Long id,
+            @Valid @RequestBody EmpresaDTO empresaDTO) {
+        logger.info("Actualizando empresa con ID: {}", id);
+        EmpresaDTO actualizada = empresaService.actualizarEmpresa(id, empresaDTO);
+        return ResponseEntity.ok(actualizada);
+    }
+
+    /**
+     * Elimina una empresa por su ID.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarEmpresa(@PathVariable Long id) {
+        logger.info("Eliminando empresa con ID: {}", id);
+        empresaService.eliminarEmpresa(id);
+        return ResponseEntity.noContent().build();
+    }
+}

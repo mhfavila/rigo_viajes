@@ -22,6 +22,9 @@ public class ViajeDTO {
     @NotBlank(message = "El destino es obligatorio")
     private String destino;
 
+    @NotNull(message = "La distancia es obligatoria")
+    private Double distancia;
+
     @NotNull(message = "El ID de la empresa es obligatorio")
     private Long empresaId;
 }
