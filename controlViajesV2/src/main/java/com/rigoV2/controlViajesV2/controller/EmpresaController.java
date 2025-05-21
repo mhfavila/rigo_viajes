@@ -1,6 +1,7 @@
 package com.rigoV2.controlViajesV2.controller;
 
 
+import com.rigoV2.controlViajesV2.dto.EmpresaConViajesDTO;
 import com.rigoV2.controlViajesV2.dto.EmpresaDTO;
 import com.rigoV2.controlViajesV2.service.EmpresaService;
 import jakarta.validation.Valid;
@@ -77,4 +78,16 @@ public class EmpresaController {
         empresaService.eliminarEmpresa(id);
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     * Devuelve una lista de empresas con sus viajes asociados.
+     */
+    @GetMapping("/con-viajes")
+    public ResponseEntity<List<EmpresaConViajesDTO>> listarEmpresas_Viajes() {
+        logger.info("Solicitando listado de todas las empresas");
+        List<EmpresaConViajesDTO> empresas = empresaService.listarEmpresas_Viajes();
+        return ResponseEntity.ok(empresas);
+    }
+
+
 }

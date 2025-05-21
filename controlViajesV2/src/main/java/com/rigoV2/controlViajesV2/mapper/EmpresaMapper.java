@@ -40,4 +40,6 @@ public class EmpresaMapper {
                 .build();
         //Usamos el patrón Builder que ya tienes definido con Lombok para construir la entidad de forma limpia.
     }
+
+
 }

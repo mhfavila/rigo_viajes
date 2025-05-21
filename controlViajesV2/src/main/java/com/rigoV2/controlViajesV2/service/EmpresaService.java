@@ -1,5 +1,6 @@
 package com.rigoV2.controlViajesV2.service;
 
+import com.rigoV2.controlViajesV2.dto.EmpresaConViajesDTO;
 import com.rigoV2.controlViajesV2.dto.EmpresaDTO;
 
 
@@ -23,5 +24,8 @@ public interface EmpresaService {
 
     // Elimina una empresa por su ID
     void eliminarEmpresa(Long id);
+
+    // Devuelve todas las empresas con sus viajes asociados
+    List<EmpresaConViajesDTO>listarEmpresas_Viajes();
 
 }

@@ -1,10 +1,12 @@
 package com.rigoV2.controlViajesV2.serviceImpl;
 
+import com.rigoV2.controlViajesV2.dto.EmpresaConViajesDTO;
 import com.rigoV2.controlViajesV2.dto.EmpresaDTO;
 import com.rigoV2.controlViajesV2.entity.Empresa;
 import com.rigoV2.controlViajesV2.entity.Usuario;
 import com.rigoV2.controlViajesV2.exception.ResourceNotFoundException;
 import com.rigoV2.controlViajesV2.mapper.EmpresaMapper;
+import com.rigoV2.controlViajesV2.mapper.ViajeMapper;
 import com.rigoV2.controlViajesV2.repository.EmpresaRepository;
 import com.rigoV2.controlViajesV2.repository.UsuarioRepository;
 import com.rigoV2.controlViajesV2.service.EmpresaService;
@@ -102,4 +104,26 @@ public class EmpresaServiceImpl implements EmpresaService {
         }
         empresaRepository.deleteById(id);
     }
+
+
+
+
+    @Override
+    public List<EmpresaConViajesDTO> listarEmpresas_Viajes() {
+        logger.info("Listando empresas con sus viajes asociados");
+
+        return empresaRepository.findAll().stream().map(empresa -> {
+            EmpresaConViajesDTO dto = new EmpresaConViajesDTO();
+            dto.setId(empresa.getId());
+            dto.setNombre(empresa.getNombre());
+            dto.setDireccion(empresa.getDireccion());
+            dto.setTelefono(empresa.getTelefono());
+            dto.setViajes(empresa.getViajes().stream()
+                    .map(ViajeMapper::toDTO)
+                    .collect(Collectors.toList()));
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+
 }
