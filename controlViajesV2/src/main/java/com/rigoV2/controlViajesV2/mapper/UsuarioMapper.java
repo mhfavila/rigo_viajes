@@ -2,7 +2,9 @@ package com.rigoV2.controlViajesV2.mapper;
 
 import com.rigoV2.controlViajesV2.dto.UsuarioDTO;
 import com.rigoV2.controlViajesV2.entity.Usuario;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsuarioMapper {
 
 
@@ -20,6 +22,8 @@ public class UsuarioMapper {
         dto.setNombre(usuario.getNombre());
         dto.setPassword(usuario.getPassword());
         dto.setEmail(usuario.getEmail());
+        dto.setRoles(usuario.getRoles());
+
 
 
         return dto;
@@ -39,6 +43,7 @@ public class UsuarioMapper {
         usuario.setNombre(dto.getNombre());
         usuario.setPassword(dto.getPassword());
         usuario.setEmail(dto.getEmail());
+        usuario.setRoles(dto.getRoles());
 
 
         return usuario;

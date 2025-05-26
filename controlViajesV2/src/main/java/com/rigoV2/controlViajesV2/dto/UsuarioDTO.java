@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 public class UsuarioDTO {
@@ -23,4 +25,7 @@ public class UsuarioDTO {
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Debe ser un email válido")
     private String email;
+
+
+    private Set<String> roles;
 }
