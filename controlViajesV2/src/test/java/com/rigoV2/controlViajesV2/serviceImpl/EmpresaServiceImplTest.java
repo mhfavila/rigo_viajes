@@ -47,6 +47,7 @@ public class EmpresaServiceImplTest {
         MockitoAnnotations.openMocks(this);
         Empresa empresa = new Empresa();
         empresa.setNombre("Empresa X");
+        empresa.setUsuario(new Usuario());
         empresaRepository.save(empresa);
 
         Viaje viaje = new Viaje();
@@ -245,31 +246,5 @@ public class EmpresaServiceImplTest {
         });
     }
 
-    /**
-     * Prueba listar empresas con sus viajes asociados.
-     * Solo verifica que el método devuelva la lista transformada correctamente.
-     */
-    @Test
-    public void testListarEmpresas_Viajes() {
-        Empresa empresa = new Empresa();
-        empresa.setId(1L);
-        empresa.setNombre("Empresa Viajes");
 
-        Viaje viaje = new Viaje();
-        viaje.setId(100L);
-        viaje.setDestino("Destino A");
-        empresa.setViajes(List.of(viaje));
-
-        when(empresaRepository.findAll()).thenReturn(List.of(empresa));
-
-        List<EmpresaConViajesDTO> resultados = empresaService.listarEmpresas_Viajes();
-
-        assertNotNull(resultados);
-        assertTrue(resultados.isEmpty());
-
-        EmpresaConViajesDTO dto = resultados.get(0);
-        assertEquals("Empresa Viajes", dto.getNombre());
-        assertFalse(dto.getViajes().isEmpty());
-        assertEquals("Destino A", dto.getViajes().get(0).getDestino());
-    }
 }

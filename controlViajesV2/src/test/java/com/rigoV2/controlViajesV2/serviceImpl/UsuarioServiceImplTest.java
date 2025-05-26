@@ -48,6 +48,22 @@ class UsuarioServiceImplTest {
         // Convertimos la entidad a DTO para usar en las pruebas
         usuarioDTOEjemplo = UsuarioMapper.toDTO(usuarioEjemplo);
     }
+    // Test para crear un nuevo usuario
+    @Test
+    void crear_DeberiaGuardarYRetornarDTO() {
+        // Configuramos el mock para que al guardar retorne nuestro usuario de ejemplo
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuarioEjemplo);
+
+        // Llamamos al método crear con el DTO de ejemplo
+        UsuarioDTO resultado = usuarioService.crear(usuarioDTOEjemplo);
+
+        // Verificamos que el resultado no sea nulo y que los datos coincidan
+        assertNotNull(resultado);
+        assertEquals(usuarioEjemplo.getNombre(), resultado.getNombre());
+
+        // Verificamos que se llamó al método save exactamente una vez
+        verify(usuarioRepository, times(1)).save(any(Usuario.class));
+    }
 
     // Test para el método obtenerTodos()
     @Test
@@ -97,22 +113,7 @@ class UsuarioServiceImplTest {
         verify(usuarioRepository, times(1)).findById(1L);
     }
 
-    // Test para crear un nuevo usuario
-    @Test
-    void crear_DeberiaGuardarYRetornarDTO() {
-        // Configuramos el mock para que al guardar retorne nuestro usuario de ejemplo
-        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuarioEjemplo);
 
-        // Llamamos al método crear con el DTO de ejemplo
-        UsuarioDTO resultado = usuarioService.crear(usuarioDTOEjemplo);
-
-        // Verificamos que el resultado no sea nulo y que los datos coincidan
-        assertNotNull(resultado);
-        assertEquals(usuarioEjemplo.getNombre(), resultado.getNombre());
-
-        // Verificamos que se llamó al método save exactamente una vez
-        verify(usuarioRepository, times(1)).save(any(Usuario.class));
-    }
 
     // Test para actualizar usuario cuando existe
     @Test
