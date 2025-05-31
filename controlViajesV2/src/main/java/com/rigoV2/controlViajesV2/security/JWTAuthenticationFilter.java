@@ -1,10 +1,16 @@
 package com.rigoV2.controlViajesV2.security;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +19,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.lang.runtime.ObjectMethods;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+
+
+import org.slf4j.Logger;
+
 
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-
+private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
     private final JWTUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -42,10 +56,26 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7); // extrae el token sin "Bearer "
             try {
                 username = jwtUtil.extractUsername(jwt);
+            } catch (ExpiredJwtException e) {
+                logger.warn("Token expirado: {}", e.getMessage());
+                sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "El token ha expirado",request.getRequestURI());
+                return;
+            } catch (MalformedJwtException e) {
+                logger.warn("Token mal formado: {}", e.getMessage());
+                sendErrorResponse(response, HttpServletResponse.SC_BAD_REQUEST, "Token mal formado",request.getRequestURI());
+                return;
+            } catch (SignatureException e) {
+                logger.warn("Firma del token inválida: {}", e.getMessage());
+                sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Firma del token inválida",request.getRequestURI());
+                return;
             } catch (Exception e) {
-                // Aquí podrías loguear token inválido o expirado
+                logger.error("Error al procesar el token: {}", e.getMessage());
+                sendErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error interno de autenticación",request.getRequestURI());
+                return;
             }
+
         }
+
 
         // Si username está y no hay autenticación previa
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -62,5 +92,20 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void sendErrorResponse(HttpServletResponse response, int status, String message, String ruta) throws IOException {
+        response.setStatus(status);
+        response.setContentType("application/json");
+
+
+        Map<String,Object> errorBody = new HashMap<>();
+        errorBody.put("timestamp", Instant.now().toString());
+        errorBody.put("status",status);
+        errorBody.put("error",message);
+        errorBody.put("ruta",ruta);
+
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(errorBody));
     }
 }

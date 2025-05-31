@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 
         logger.error("Error interno en la aplicación", ex); // log tipo ERROR con stacktrace
          Map<String, String> respuesta = new HashMap<>();
-        respuesta.put("error", "Ha ocurrido un error interno: " + ex.getLocalizedMessage());
+        respuesta.put("error", "Ha ocurrido un error interno: " + ex.getLocalizedMessage() );
         return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
