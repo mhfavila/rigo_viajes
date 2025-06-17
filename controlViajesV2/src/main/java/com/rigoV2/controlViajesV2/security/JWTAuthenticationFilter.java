@@ -46,6 +46,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+        logger.debug("Procesando autenticación para la petición: {} {}", request.getMethod(), request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");
 
         String username = null;
@@ -53,6 +54,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
 
         // El header debe comenzar con "Bearer "
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
+
             jwt = authHeader.substring(7); // extrae el token sin "Bearer "
             try {
                 username = jwtUtil.extractUsername(jwt);
@@ -74,6 +76,9 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
                 return;
             }
 
+
+        }else {
+            logger.debug("No se encontró un token JWT en la cabecera Authorization");
         }
 
 
@@ -88,6 +93,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                logger.info("Autenticación JWT exitosa para el usuario: {}", username);
             }
         }
 

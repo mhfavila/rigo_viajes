@@ -84,7 +84,8 @@ public class AuthController {
 
         // Asignar rol por defecto
         Set<String> roles = new HashSet<>();
-        roles.add("USER");
+        //roles.add("USER");
+        roles.add(request.getRol());
         nuevoUsuario.setRoles(roles);
 
         usuarioRepository.save(nuevoUsuario);

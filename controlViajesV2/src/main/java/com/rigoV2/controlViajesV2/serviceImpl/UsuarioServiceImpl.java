@@ -74,6 +74,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         existente.setNombre(usuarioDTO.getNombre());
         existente.setEmail(usuarioDTO.getEmail());
         existente.setPassword(usuarioDTO.getPassword());
+        existente.setRoles(usuarioDTO.getRoles());
 
         Usuario actualizado = usuarioRepository.save(existente);
         return UsuarioMapper.toDTO(actualizado);

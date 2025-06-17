@@ -2,6 +2,8 @@ package com.rigoV2.controlViajesV2.security;
 
 import com.rigoV2.controlViajesV2.entity.Usuario;
 import com.rigoV2.controlViajesV2.repository.UsuarioRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     private final UsuarioRepository usuarioRepository;
 
     public UserDetailsServiceImpl(UsuarioRepository usuarioRepository) {
@@ -24,9 +26,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.debug("Intentando cargar usuario con nombre: {}", username);
         Usuario usuario = usuarioRepository.findByNombre(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
-
+                .orElseThrow(() -> {logger.warn("Usuario no encontrado: {}", username); return new UsernameNotFoundException("Usuario no encontrado: " + username);});
+        logger.info("Usuario cargado exitosamente: {}", username);
         return new UsuarioPrincipal(usuario);  // UsuarioPrincipal implementa UserDetails
     }
 }
