@@ -1,6 +1,5 @@
 package com.rigoV2.controlViajesV2.security.config;
 
-import com.rigoV2.controlViajesV2.dto.AuthController;
 import com.rigoV2.controlViajesV2.security.CustomAccessDeniedHandler;
 import com.rigoV2.controlViajesV2.security.CustomAuthenticationEntryPoint;
 import com.rigoV2.controlViajesV2.security.JWTAuthenticationFilter;

@@ -1,4 +1,4 @@
-package com.rigoV2.controlViajesV2.dto;
+package com.rigoV2.controlViajesV2.entity;
 
 import lombok.Getter;
 import lombok.Setter;

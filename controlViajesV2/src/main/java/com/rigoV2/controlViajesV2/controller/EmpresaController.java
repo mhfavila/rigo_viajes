@@ -4,6 +4,7 @@ package com.rigoV2.controlViajesV2.controller;
 import com.rigoV2.controlViajesV2.dto.EmpresaConViajesDTO;
 import com.rigoV2.controlViajesV2.dto.EmpresaDTO;
 import com.rigoV2.controlViajesV2.service.EmpresaService;
+import com.rigoV2.controlViajesV2.util.AppConstants;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import java.util.List;
  * Expone endpoints para operaciones CRUD.
  */
 @RestController
-@RequestMapping("/api/empresas")
+@RequestMapping(AppConstants.REQUEST_EMPRESACONTROLLER)
 public class EmpresaController {
 
     private static final Logger logger = LoggerFactory.getLogger(EmpresaController.class);
@@ -41,7 +42,7 @@ public class EmpresaController {
     /**
      * Devuelve una empresa por su ID.
      */
-    @GetMapping("/{id}")
+    @GetMapping(AppConstants.REQUEST_EMPRESACONTROLLER_ID)
     public ResponseEntity<EmpresaDTO> obtenerEmpresa(@PathVariable Long id) {
         logger.info("Buscando empresa con ID: {}", id);
         EmpresaDTO empresa = empresaService.obtenerEmpresaPorId(id);
@@ -60,7 +61,7 @@ public class EmpresaController {
     /**
      * Actualiza los datos de una empresa existente.
      */
-    @PutMapping("/{id}")
+    @PutMapping(AppConstants.REQUEST_EMPRESACONTROLLER_ID)
     public ResponseEntity<EmpresaDTO> actualizarEmpresa(
             @PathVariable Long id,
             @Valid @RequestBody EmpresaDTO empresaDTO) {
@@ -72,7 +73,7 @@ public class EmpresaController {
     /**
      * Elimina una empresa por su ID.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping(AppConstants.REQUEST_EMPRESACONTROLLER_ID)
     public ResponseEntity<Void> eliminarEmpresa(@PathVariable Long id) {
         logger.info("Eliminando empresa con ID: {}", id);
         empresaService.eliminarEmpresa(id);
@@ -82,7 +83,7 @@ public class EmpresaController {
     /**
      * Devuelve una lista de empresas con sus viajes asociados.
      */
-    @GetMapping("/con-viajes")
+    @GetMapping(AppConstants.REQUEST_EMPRESACONTROLLER_CONVIAJES)
     public ResponseEntity<List<EmpresaConViajesDTO>> listarEmpresas_Viajes() {
         logger.info("Solicitando listado de todas las empresas");
         List<EmpresaConViajesDTO> empresas = empresaService.listarEmpresas_Viajes();

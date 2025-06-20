@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,11 +33,15 @@ import org.slf4j.Logger;
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
-    private final JWTUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
 
-    public JWTAuthenticationFilter(JWTUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
-        this.jwtUtil = jwtUtil;
+    private final JwtTokenValidator jwtTokenValidator;
+    private final UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private JwtTokenParser jwtTokenParser;
+
+    public JWTAuthenticationFilter(JwtTokenValidator jwtTokenValidator, UserDetailsServiceImpl userDetailsService) {
+        this.jwtTokenValidator = jwtTokenValidator;
+
         this.userDetailsService = userDetailsService;
     }
 
@@ -57,7 +62,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
 
             jwt = authHeader.substring(7); // extrae el token sin "Bearer "
             try {
-                username = jwtUtil.extractUsername(jwt);
+                username = jwtTokenParser.extractUsername(jwt);
             } catch (ExpiredJwtException e) {
                 logger.warn("Token expirado: {}", e.getMessage());
                 sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "El token ha expirado",request.getRequestURI());
@@ -86,7 +91,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (jwtUtil.validateToken(jwt, userDetails.getUsername())) {
+            if (jwtTokenValidator.validateToken(jwt, userDetails.getUsername())) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

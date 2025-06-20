@@ -3,6 +3,7 @@ package com.rigoV2.controlViajesV2.controller;
 import com.rigoV2.controlViajesV2.dto.ViajeDTO;
 import com.rigoV2.controlViajesV2.service.ViajeService;
 
+import com.rigoV2.controlViajesV2.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.List;
  * Permite realizar operaciones CRUD sobre la entidad Viaje.
  */
 @RestController
-@RequestMapping("/api/viajes")
+@RequestMapping(AppConstants.REQUEST_VIAJECONTROLLER)
 public class ViajeController {
 
     private static final Logger logger = LoggerFactory.getLogger(ViajeController.class);
@@ -40,7 +41,7 @@ public class ViajeController {
     /**
      * Obtiene un viaje por su ID.
      */
-    @GetMapping("/{id}")
+    @GetMapping(AppConstants.REQUEST_VIAJECONTROLLER_ID)
     public ResponseEntity<ViajeDTO> obtenerViaje(@PathVariable Long id) {
         logger.info("Obteniendo viaje con ID: {}", id);
         ViajeDTO viaje = viajeService.obtenerPorId(id);
@@ -60,7 +61,7 @@ public class ViajeController {
     /**
      * Actualiza un viaje existente.
      */
-    @PutMapping("/{id}")
+    @PutMapping(AppConstants.REQUEST_VIAJECONTROLLER_ID)
     public ResponseEntity<ViajeDTO> actualizarViaje(
             @PathVariable Long id,
             @Valid @RequestBody ViajeDTO viajeDTO) {
@@ -72,7 +73,7 @@ public class ViajeController {
     /**
      * Elimina un viaje por su ID.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping(AppConstants.REQUEST_VIAJECONTROLLER_ID)
     public ResponseEntity<Void> eliminarViaje(@PathVariable Long id) {
         logger.info("Eliminando viaje con ID: {}", id);
         viajeService.eliminar(id);

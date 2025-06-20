@@ -3,6 +3,7 @@ package com.rigoV2.controlViajesV2.controller;
 
 import com.rigoV2.controlViajesV2.dto.UsuarioDTO;
 import com.rigoV2.controlViajesV2.service.UsuarioService;
+import com.rigoV2.controlViajesV2.util.AppConstants;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * Proporciona endpoints CRUD para la entidad Usuario.
  */
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping(AppConstants.REQUEST_USUARIOCONTROLLER)
 public class UsuarioController {
 
     private static final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
@@ -42,7 +43,7 @@ public class UsuarioController {
     /**
      * Obtiene un usuario por su ID.
      */
-    @GetMapping("/{id}")
+    @GetMapping(AppConstants.REQUEST_USUARIOCONTROLLER_ID)
     public ResponseEntity<UsuarioDTO> obtenerUsuario(@PathVariable Long id) {
         logger.info("Obteniendo usuario con ID: {}", id);
         UsuarioDTO usuario = usuarioService.obtenerPorId(id);
@@ -62,7 +63,7 @@ public class UsuarioController {
     /**
      * Actualiza un usuario existente.
      */
-    @PutMapping("/{id}")
+    @PutMapping(AppConstants.REQUEST_USUARIOCONTROLLER_ID)
     public ResponseEntity<UsuarioDTO> actualizarUsuario(
             @PathVariable Long id,
             @Valid @RequestBody UsuarioDTO usuarioDTO) {
@@ -74,7 +75,7 @@ public class UsuarioController {
     /**
      * Elimina un usuario por su ID.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping(AppConstants.REQUEST_USUARIOCONTROLLER_ID)
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         logger.info("Eliminando usuario con ID: {}", id);
         usuarioService.eliminar(id);

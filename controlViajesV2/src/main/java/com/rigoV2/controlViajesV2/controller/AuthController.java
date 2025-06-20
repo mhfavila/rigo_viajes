@@ -1,10 +1,13 @@
-package com.rigoV2.controlViajesV2.dto;
+package com.rigoV2.controlViajesV2.controller;
 
 
+import com.rigoV2.controlViajesV2.entity.AuthRequest;
+import com.rigoV2.controlViajesV2.entity.AuthResponse;
 import com.rigoV2.controlViajesV2.entity.Usuario;
 import com.rigoV2.controlViajesV2.mapper.UsuarioMapper;
 import com.rigoV2.controlViajesV2.repository.UsuarioRepository;
-import com.rigoV2.controlViajesV2.security.JWTUtil;
+import com.rigoV2.controlViajesV2.security.JwtTokenGenerator;
+import com.rigoV2.controlViajesV2.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -20,31 +23,33 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(AppConstants.REQUEST_AUTHCONTROLLER)
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthenticationManager authenticationManager;
-    private final JWTUtil jwtUtil;
+
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final UsuarioMapper usuarioMapper;
+    private final JwtTokenGenerator jwtTokenGenerator;
 
-    public AuthController(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
-                          UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, UsuarioMapper usuarioMapper) {
+    public AuthController(AuthenticationManager authenticationManager,
+                          UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, UsuarioMapper usuarioMapper, JwtTokenGenerator jwtTokenGenerator) {
         this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.usuarioMapper = usuarioMapper;
+        this.jwtTokenGenerator = jwtTokenGenerator;
     }
 
     /**
      * Autentica a un usuario y devuelve un JWT si las credenciales son válidas.
      */
 
-    @PostMapping("/login")
+    @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         logger.info("Intento de login para el usuario: {}", request.getNombre());
 
@@ -55,7 +60,7 @@ public class AuthController {
         Usuario usuario = usuarioRepository.findByNombre(request.getNombre())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        String token = jwtUtil.generateToken(usuario.getNombre());
+        String token = jwtTokenGenerator.generateToken(usuario.getNombre());
 
         return ResponseEntity.ok(new AuthResponse(token));
     }
@@ -64,7 +69,7 @@ public class AuthController {
      * Registra un nuevo usuario si el nombre no está ya en uso.
      */
     // REGISTRO
-    @PostMapping("/register")
+    @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_REGISTER)
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
         logger.info("Intento de registro para el usuario: {}", request.getNombre());
 

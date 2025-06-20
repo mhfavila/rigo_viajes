@@ -1,0 +1,36 @@
+package com.rigoV2.controlViajesV2.security;
+
+
+import com.rigoV2.controlViajesV2.security.config.JwtProperties;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+@Component
+public class JwtTokenGenerator {
+    @Autowired
+   private JwtProperties jwtProperties;
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenGenerator.class);
+
+    public JwtTokenGenerator(JwtProperties jwtProperties) {
+        this.jwtProperties = jwtProperties;
+    }
+
+
+    // Genera token con el nombre del usuario
+    public  String generateToken(String username) throws JwtException {
+        logger.debug("Generando token para el usuario: {}", username);
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration()))
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
+                .compact();
+    }
+}
