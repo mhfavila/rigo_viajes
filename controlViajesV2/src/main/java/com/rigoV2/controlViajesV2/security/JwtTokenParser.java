@@ -4,10 +4,13 @@ import com.rigoV2.controlViajesV2.security.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.function.Function;
 
 @Component
@@ -30,9 +33,16 @@ public class JwtTokenParser {
         final Claims claims = parseClaims(token);
         return claimsResolver.apply(claims);
     }
+
     private Claims parseClaims(String token) throws JwtException {
         logger.debug("Parseando claims del token JWT");
-        return Jwts.parser().setSigningKey(jwtProperties.getSecret()).parseClaimsJws(token).getBody();
+        byte[] keyBytes = jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
 
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
