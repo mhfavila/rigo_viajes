@@ -16,6 +16,7 @@ import java.util.List;
  * Controlador REST para la gestión de viajes.
  * Permite realizar operaciones CRUD sobre la entidad Viaje.
  */
+@CrossOrigin(origins = "http://localhost:4200")  // Permite peticiones desde Angular
 @RestController
 @RequestMapping(AppConstants.REQUEST_VIAJECONTROLLER)
 public class ViajeController {

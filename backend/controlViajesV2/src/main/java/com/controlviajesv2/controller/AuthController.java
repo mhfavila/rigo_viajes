@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@CrossOrigin(origins = "http://localhost:4200")  // Permite peticiones desde Angular
 @RestController
 @RequestMapping(AppConstants.REQUEST_AUTHCONTROLLER)
 public class AuthController {
