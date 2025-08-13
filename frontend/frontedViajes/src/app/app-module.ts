@@ -8,6 +8,7 @@ import { ViajesComponent } from './viajes/viajes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { RegistroComponent } from './registro/registro.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     App,
     ViajesComponent,
     LoginComponent,
+    RegistroComponent,
   ],
   imports: [
     BrowserModule,
