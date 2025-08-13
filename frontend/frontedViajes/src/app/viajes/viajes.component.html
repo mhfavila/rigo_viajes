@@ -1,7 +1,29 @@
 <p>viajes works!</p>
 <h2>Lista de Viajes</h2>
-<ul>
+<ul style="list-style: none; padding: 0;">
+  <li class="header">
+    <span>DESTINO</span>
+    <span>FECHA</span>
+    <span>PRECIO KM</span>
+    <span>DISTANCIA</span>
+  </li>
   <li *ngFor="let viaje of viajes">
-    {{ viaje.destino }} - {{ viaje.fecha }} - {{ viaje.precioKm }} - {{ viaje.distancia}}
+    <span>{{ viaje.destino }}</span>
+    <span>{{ viaje.fecha }}</span>
+    <span>{{ viaje.precioKm }}</span>
+    <span>{{ viaje.distancia }}</span>
   </li>
 </ul>
+
+<style>
+  ul li {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 4px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  .header {
+    font-weight: bold;
+    background-color: #f0f0f0;
+  }
+</style>
