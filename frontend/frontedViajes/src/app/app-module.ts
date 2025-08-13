@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     App,
     ViajesComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

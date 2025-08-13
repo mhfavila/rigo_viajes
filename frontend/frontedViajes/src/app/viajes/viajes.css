@@ -1,0 +1,17 @@
+.lista-viajes {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-viajes li {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 4px 0;
+
+  border-bottom: 1px solid #ccc;
+}
+
+.lista-viajes .header {
+  font-weight: bold;
+  background-color: #d85b5b;
+}
