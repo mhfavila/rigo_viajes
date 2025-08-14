@@ -99,5 +99,6 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("mensaje", "Usuario registrado correctamente"));
 
 
+
     }
 }
