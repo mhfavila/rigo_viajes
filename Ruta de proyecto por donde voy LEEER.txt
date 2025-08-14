@@ -2,9 +2,12 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 
 por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.
-			cosas a revisar:
+			cosas a revisar: -->LISTO
 					- en el regsitro ver que datos le paso y que cuando se haya regsitrado saque un mensaje o algo -->LISTO
 					- Intentar debugear en inteljide el backend por que ahora mismo no me acuerdo como se guardaban los usuarios y demas.-->LISTO
+					
+	Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
+	
 					
 					
 					

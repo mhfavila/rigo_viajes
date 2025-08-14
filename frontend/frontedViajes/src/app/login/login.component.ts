@@ -22,7 +22,7 @@ export class LoginComponent {
       next: (response) => {
         this.authService.guardarToken(response.token);
         console.log('Token recibido:', response.token);
-        this.router.navigate(['/viajes']);  // Redirige al listado de viajes o donde quieras
+        this.router.navigate(['/viajes'], { replaceUrl: true });// Redirige al listado de viajes o donde quieras , el replaceUrl es para que no se pueda saltar el login dando en el boton de hacia atras y hacia delante
       },
       error: (error) => {
         console.error('Error al iniciar sesión:', error);

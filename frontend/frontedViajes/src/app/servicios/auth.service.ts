@@ -28,6 +28,11 @@ export class AuthService {
   cerrarSesion(): void {
     localStorage.removeItem('jwtToken');
   }
+ //para comprobar si esta loggeado
+  isLoggedIn(): boolean {
+    const token = this.obtenerToken();
+    return token !== null && token !== '';
+  }
 
    // Método para registrar nuevo usuario
   registrar(usuario: { nombre: string, password: string, email: string }): Observable<{ mensaje: string }> {
