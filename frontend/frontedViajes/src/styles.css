@@ -1,1 +1,150 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===== FUENTE GLOBAL ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+}
+
+/* ===== CONTENEDOR DE FORMULARIOS ===== */
+.form-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  max-width: 350px;
+  margin: 2rem auto;
+}
+
+/* ===== TITULOS ===== */
+h2 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== LABELS E INPUTS ===== */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555555;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.4);
+}
+
+/* ===== BOTONES ===== */
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+.btn-login {
+  background-color: #4CAF50;
+  color: white;
+}
+.btn-registrar {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-login:hover {
+  background-color: #45a049;
+}
+
+.btn-secondary {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #1976D2;
+}
+
+/* ===== MENSAJES DE ERROR ===== */
+.error-message {
+  text-align: center;
+  color: #e53935;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* ===== CENTRADO Y ESPACIADO GENERAL ===== */
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+/* ===== LISTA DE VIAJES ESTILO TABLA ===== */
+
+/* Contenedor especial para tablas */
+.table-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  max-width: 900px; /* más ancha que un formulario */
+  margin: 2rem auto; /* centrada y con separación */
+}
+.lista-viajes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.lista-viajes li {
+  display: grid;
+ /* Ajuste de ancho de columnas: DESTINO | FECHA | PRECIO KM | DISTANCIA */
+  grid-template-columns: 2fr 2.5fr 2.5fr 2fr;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+  color: #333333;
+
+  justify-items: center; /* centra horizontalmente */
+  align-items: center;   /* centra verticalmente */
+}
+
+.lista-viajes li:last-child {
+  border-bottom: none;
+}
+
+/* CABECERA */
+.lista-viajes .header {
+  font-weight: bold;
+  background-color: #4CAF50; /* color principal del proyecto */
+  color: white;
+}
+
+/* FILAS */
+.lista-viajes li:nth-child(even):not(.header) {
+  background-color: #f9f9f9;
+}

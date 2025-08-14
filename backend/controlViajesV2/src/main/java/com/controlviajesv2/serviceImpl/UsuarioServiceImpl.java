@@ -49,7 +49,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     /**
-     * Crea un nuevo usuario a partir del DTO recibido.
+     * Crea un nuevo usuario a partir del DTO recibido.//AHORA LO HAGO EN LA LCASE AUTHCONTROLLER EN EL METODO REGISTER
      */
     @Override
     public UsuarioDTO crear(UsuarioDTO usuarioDTO) {

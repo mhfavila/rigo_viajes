@@ -12,13 +12,14 @@ export class RegistroComponent {
   nombre = '';
   password = '';
   email = '';
+  rol= '';
   mensaje = '';
   error = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    const nuevoUsuario = { nombre: this.nombre, password: this.password, email: this.email };
+    const nuevoUsuario = { nombre: this.nombre, password: this.password, email: this.email,rol: this.rol };
 
     this.authService.registrar(nuevoUsuario).subscribe({
       next: (res) => {

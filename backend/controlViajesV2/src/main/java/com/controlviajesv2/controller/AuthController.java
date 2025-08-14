@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:4200")  // Permite peticiones desde Angular
@@ -66,7 +67,7 @@ public class AuthController {
     }
 
     /**
-     * Registra un nuevo usuario si el nombre no está ya en uso.
+     * Registra un nuevo usuario si el nombre no está ya en uso.(TENER CUIDADO POR QUE TENGO DOS FORMAS DE CREAR USUARIOS ACTUALMETE SE USA ESTE)
      */
     // REGISTRO
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_REGISTER)
@@ -95,6 +96,8 @@ public class AuthController {
 
         usuarioRepository.save(nuevoUsuario);
 
-        return ResponseEntity.ok("Usuario registrado correctamente");
+        return ResponseEntity.ok(Map.of("mensaje", "Usuario registrado correctamente"));
+
+
     }
 }

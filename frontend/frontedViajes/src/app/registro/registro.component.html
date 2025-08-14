@@ -1,3 +1,9 @@
+
+
+<div class="centered">
+
+
+<div class="form-container">
 <h2>Crear nuevo usuario</h2>
 
 <form (ngSubmit)="onSubmit()">
@@ -16,8 +22,16 @@
     <input type="email" [(ngModel)]="email" name="email" required />
   </div>
 
-  <button type="submit">Registrar</button>
+  <div>
+    <label>Rol:</label>
+    <input type="text" [(ngModel)]="rol" name="rol" required />
+  </div>
+
+  <button type="submit" class="btn-registrar">Registrar</button>
 </form>
 
 <p *ngIf="mensaje" style="color:green;">{{ mensaje }}</p>
 <p *ngIf="error" style="color:red;">{{ error }}</p>
+
+</div>
+</div>

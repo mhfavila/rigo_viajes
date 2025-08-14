@@ -3,6 +3,81 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.
 			cosas a revisar:
-					- en el regsitro ver que datos le paso y que cuando se haya regsitrado saque un mensaje o algo
-					- Intentar debugear en inteljide el backend por que ahora mismo no me acuerdo como se guardaban los usuarios y demas.
+					- en el regsitro ver que datos le paso y que cuando se haya regsitrado saque un mensaje o algo -->LISTO
+					- Intentar debugear en inteljide el backend por que ahora mismo no me acuerdo como se guardaban los usuarios y demas.-->LISTO
+					
+					
+					
+					
+					
+					
+					
+					
+					
+PROBLEMAS QUE HE TENIDO:
+si el backend esta guardando los datos en  la base pero el fronted no lo detecta (ejemplo: lo que me ha pasado con el registro que me lo guardaba en la bbdd pero salia el menaje 
+en rojo de Error al registrar usuario) esto es por la respuesta que esta mandando el metodo , esta mandando un string o otra cosa en vez de un json, para corregirlo mete esto en 
+el return -> Map.of("mensaje","aqui va el texto que tuvieras")
+    -->return ResponseEntity.ok(Map.of("mensaje", "Usuario registrado correctamente"));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	🎨 1. Paleta de colores
+Uso	Color HEX	Ejemplo de aplicación
+Color principal	#4CAF50	Botones de acción principales, enlaces importantes
+Color secundario	#2196F3	Botones secundarios, botones de registro, enlaces secundarios
+Fondo principal	#f4f6f8	Fondo de toda la web
+Fondo de tarjetas / cajas	#ffffff	Formulario, tarjetas de contenido
+Texto principal	#333333	Encabezados y textos importantes
+Texto secundario	#555555	Labels, subtítulos, textos secundarios
+Alertas / errores	#e53935	Mensajes de error
+
+💡 Tip: Con solo 2 colores principales (verde y azul), más neutros (blanco y gris), tu web se ve limpia y armoniosa. No necesitas usar más de 3 colores fuertes.
+
+🔤 2. Tipografía
+
+Fuente principal: Poppins o Roboto → modernas y legibles.
+
+Tamaños sugeridos:
+
+Títulos: 20–28px
+
+Labels: 14–16px
+
+Texto normal: 14px
+
+Peso:
+
+Negrita para títulos y botones
+
+Regular para inputs y textos secundarios
+
+📐 3. Estilo de botones y formularios
+
+Bordes redondeados: border-radius: 5px–10px
+
+Sombra ligera para cajas y botones: box-shadow: 0px 4px 10px rgba(0,0,0,0.1)
+
+Hover: color un poco más oscuro que el original para dar feedback visual
+
+Espaciado: padding interno de 10px–15px y margen entre elementos de 10px–15px
+
+🖼 4. Estructura uniforme
+
+Centrar formularios o contenido principal
+
+Mantener ancho fijo para formularios (250–350px)
+
+Siempre usar el mismo estilo de labels, inputs y botones
+
+Espacios consistentes: márgenes iguales arriba y abajo entre campos
 					
