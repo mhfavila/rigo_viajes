@@ -81,7 +81,7 @@ public class AuthController {
                     .body("Error: El nombre de usuario ya está en uso");
         }
 
-        // Crear nuevo usuario con password cifrada y rol USER por defecto
+        // Crear nuevo usuario con password cifrada
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(request.getNombre());
        // nuevoUsuario.setEmail(request.getNombre() + "@tudominio.com"); // Si quieres, puedes pedir email en otro DTO

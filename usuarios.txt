@@ -1,0 +1,12 @@
+Nombre: Beatriz Campos, Contraseña: pass23
+Nombre: Oscar Molina, Contraseña: pass7
+Nombre: Isabel Morales, Contraseña: pass8
+Nombre: Miguel Martín, Contraseña: pass22
+Nombre: Patricia Herrera, Contraseña: pass10
+Nombre: Carmen Soto, Contraseña: pass8
+Nombre: Rosa Delgado, Contraseña: pass19
+Nombre: Andrés Fuentes, Contraseña: pass22
+Nombre: David Ortega, Contraseña: pass22
+Nombre: Claudia Núñez, Contraseña: pass15
+Nombre: Francisco Castro, Contraseña: pass27
+Nombre: Marta Cabrera, Contraseña: pass19

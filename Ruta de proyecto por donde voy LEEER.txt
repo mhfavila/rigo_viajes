@@ -6,8 +6,23 @@ por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto 
 					- en el regsitro ver que datos le paso y que cuando se haya regsitrado saque un mensaje o algo -->LISTO
 					- Intentar debugear en inteljide el backend por que ahora mismo no me acuerdo como se guardaban los usuarios y demas.-->LISTO
 					
-	Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
 	
+	
+	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
+	
+	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
+	
+	nueva idea , despues de la pantalla de login que te saque  las empresas que tienes disponibles y desde ahi ya te lleve a los viajes de cada empresa
+				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario
+	
+	
+	
+	
+	-Ahora estoy corriginedo una cosa en el backend para crear datos de prueba ,falta meter datos de prueba a empresa y a viajes  --> LISTO
+
+	  -	puedo hacer algo para que me guarde el usuario y contrase;a en un txt asi puedo consultarlo ya que la contrase;a esta encriptada--> LISTO
+	  
+	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
 					
 					
 					

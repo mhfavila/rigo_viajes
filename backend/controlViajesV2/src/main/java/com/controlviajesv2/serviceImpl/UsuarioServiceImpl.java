@@ -51,13 +51,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     /**
      * Crea un nuevo usuario a partir del DTO recibido.//AHORA LO HAGO EN LA LCASE AUTHCONTROLLER EN EL METODO REGISTER
      */
-    @Override
+
+
+    /*@Override
     public UsuarioDTO crear(UsuarioDTO usuarioDTO) {
         logger.info("Creando nuevo usuario: {}", usuarioDTO.getNombre());
         Usuario usuario = UsuarioMapper.toEntity(usuarioDTO);
         Usuario guardado = usuarioRepository.save(usuario);
         return UsuarioMapper.toDTO(guardado);
     }
+
+     */
+
+
 
     /**
      * Actualiza los datos de un usuario existente.

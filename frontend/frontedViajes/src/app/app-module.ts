@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistroComponent } from './registro/registro.component';
+import { EmpresasComponent } from './empresas/empresas.component';
 
 
 @NgModule({
@@ -16,7 +17,9 @@ import { RegistroComponent } from './registro/registro.component';
     App,
     ViajesComponent,
     LoginComponent,
+
     RegistroComponent,
+    EmpresasComponent,
   ],
   imports: [
     BrowserModule,

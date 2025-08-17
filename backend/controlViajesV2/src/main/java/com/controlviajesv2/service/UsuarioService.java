@@ -9,7 +9,8 @@ public interface UsuarioService {
 
     UsuarioDTO obtenerPorId(Long id);
 
-    UsuarioDTO crear(UsuarioDTO usuarioDTO);
+    //el usuario se crea en el register del authcontroller
+    //UsuarioDTO crear(UsuarioDTO usuarioDTO);
 
     UsuarioDTO actualizar(Long id, UsuarioDTO usuarioDTO);
 

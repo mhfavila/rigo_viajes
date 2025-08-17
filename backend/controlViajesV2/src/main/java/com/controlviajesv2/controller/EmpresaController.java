@@ -48,6 +48,8 @@ public class EmpresaController {
         EmpresaDTO empresa = empresaService.obtenerEmpresaPorId(id);
         return ResponseEntity.ok(empresa);
     }
+
+
     /**
      * Crea una nueva empresa a partir de un DTO válido.
      */

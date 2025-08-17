@@ -10,4 +10,9 @@ import java.util.List;
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
     List<Empresa> findByUsuario(Usuario nombre);
+
+    boolean existsByNombre(String nombre);
+    boolean existsByCif(String cif);
+    
+
 }

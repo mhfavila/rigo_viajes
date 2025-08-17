@@ -53,12 +53,17 @@ public class UsuarioController {
     /**
      * Crea un nuevo usuario.
      */
-    @PostMapping
+
+   /*
+   @PostMapping
+
     public ResponseEntity<UsuarioDTO> crearUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         logger.info("Creando nuevo usuario: {}", usuarioDTO.getNombre());
         UsuarioDTO creado = usuarioService.crear(usuarioDTO);
         return ResponseEntity.ok(creado);
     }
+    */
+
 
     /**
      * Actualiza un usuario existente.

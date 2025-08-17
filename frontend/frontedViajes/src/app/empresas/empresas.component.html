@@ -1,0 +1,8 @@
+<p>empresas works!</p>
+<h2>Empresas asociadas a tus viajes</h2>
+
+<ul>
+  <li *ngFor="let empresa of empresas">
+    {{ empresa.nombre }} ({{ empresa.cif }})
+  </li>
+</ul>

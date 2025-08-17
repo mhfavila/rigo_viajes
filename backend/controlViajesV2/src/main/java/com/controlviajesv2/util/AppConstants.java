@@ -20,6 +20,9 @@ public final class AppConstants {
     public static final String REQUEST_EMPRESACONTROLLER_CONVIAJES = "/con-viajes" ;
 
 
+
+
+
     //UsuarioController
     public static final String REQUEST_USUARIOCONTROLLER = "/api/usuarios" ;
     public static final String REQUEST_USUARIOCONTROLLER_ID = "/{id}" ;
