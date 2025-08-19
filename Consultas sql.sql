@@ -32,7 +32,7 @@ SELECT e.id AS empresa_id,
 FROM empresas e
 JOIN usuarios u ON e.usuario_id = u.id
 LEFT JOIN viajes v ON v.empresa_id = e.id
-WHERE u.id = 3  -- aquí reemplaza con el ID del usuario
+WHERE u.id = 2  -- aquí reemplaza con el ID del usuario
 ORDER BY e.id, v.id;
 
 
@@ -49,3 +49,6 @@ FROM usuarios u
 LEFT JOIN empresas e ON e.usuario_id = u.id
 LEFT JOIN viajes v ON v.empresa_id = e.id
 ORDER BY u.id, e.id, v.id;
+
+
+select * from empresas where usuario_id = 1;

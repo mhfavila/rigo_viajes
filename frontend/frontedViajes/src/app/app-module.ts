@@ -10,8 +10,13 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistroComponent } from './registro/registro.component';
 import { EmpresasComponent } from './empresas/empresas.component';
+import { EmpresaDetalleDialog } from './empresa-detalle-dialog/empresa-detalle-dialog';
+import { MatDialogContent } from "@angular/material/dialog";
+import { MatDialogActions } from "@angular/material/dialog";
 
-
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     App,
@@ -20,13 +25,19 @@ import { EmpresasComponent } from './empresas/empresas.component';
 
     RegistroComponent,
     EmpresasComponent,
+    EmpresaDetalleDialog,
   ],
   imports: [
+    MatTableModule,
+    MatDialogModule,
+    MatButtonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
-  ],
+    FormsModule,
+    MatDialogContent,
+    MatDialogActions
+],
   providers: [
     provideBrowserGlobalErrorListeners()
   ],

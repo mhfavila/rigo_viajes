@@ -148,3 +148,28 @@ button {
 .lista-viajes li:nth-child(even):not(.header) {
   background-color: #f9f9f9;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+
+/* ===== CONTENEDOR Empresas ===== */
+.form-container-table{
+  background-color: #ffffff;
+  /*padding: 1rem;*/
+  padding: 5vw;       /* Espacio interno relativo al ancho de la pantalla */
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  width: 80%;       /* Ocupa 80% del ancho de la pantalla */
+  margin: 2rem auto;
+}
+
+.header-nombre {
+  /*background-color: #572abe; /* verde, por ejemplo */
+  color: rgb(0, 0, 0);              /* texto en blanco para que contraste */
+   text-align: center;         /* centrado horizontal */
+  vertical-align: middle;     /* centrado vertical */
+}

@@ -17,13 +17,14 @@ export class AuthService {
     return this.http.post(this.loginUrl, credentials);
   }
 
-  guardarToken(token: string): void {
-    localStorage.setItem('jwtToken', token);
-  }
+ guardarToken(token: string) {
+  localStorage.setItem('token', token);
+  console.log('Token guardado:', localStorage.getItem('token')); // Verifica aquí
+}
 
-   obtenerToken(): string | null {
-    return localStorage.getItem('jwtToken');
-  }
+obtenerToken(): string | null {
+  return localStorage.getItem('token');
+}
 
   cerrarSesion(): void {
     localStorage.removeItem('jwtToken');
@@ -45,17 +46,16 @@ export class AuthService {
 
  // 🔑 Nuevo método para obtener el usuarioId desde el token
   getUsuarioId(): number | null {
-    const token = this.obtenerToken();
-    if (!token) return null;
-    try {
-      // Si el token es un JWT: separar las partes
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.usuarioId; // 👈 asegúrate de que tu backend ponga "usuarioId" en el payload
-    } catch (error) {
-      console.error('Error al decodificar el token:', error);
-      return null;
-    }
+  const token = this.obtenerToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.usuarioId; // ahora existe
+  } catch (error) {
+    console.error('Error al decodificar el token:', error);
+    return null;
   }
+}
 
 
 

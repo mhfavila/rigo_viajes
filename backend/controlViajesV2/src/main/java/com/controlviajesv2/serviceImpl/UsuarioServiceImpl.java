@@ -1,9 +1,12 @@
 package com.controlviajesv2.serviceImpl;
 
+import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.exception.ResourceNotFoundException;
+import com.controlviajesv2.mapper.EmpresaMapper;
 import com.controlviajesv2.mapper.UsuarioMapper;
+import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.UsuarioService;
 import org.slf4j.Logger;
@@ -19,9 +22,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     private static final Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
 
     private final UsuarioRepository usuarioRepository;
+    private final EmpresaRepository empresaRepository;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.empresaRepository = empresaRepository;
     }
 
     /**
@@ -95,4 +100,20 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
+    /**
+     * metodo encargado de sacar las empresas asociadas a un usuario
+     * @param usuarioId
+     * @return
+     */
+    @Override
+    public List<EmpresaDTO> obtenerEmpresasDeUsuario(Long usuarioId) {
+        if (!usuarioRepository.existsById(usuarioId)) {
+            throw new RuntimeException("Usuario no encontrado con id: " + usuarioId);
+        }
+
+        return empresaRepository.findByUsuarioId(usuarioId)
+                .stream()
+                .map(EmpresaMapper::toDTO)   // 👈 usamos tu mapper estático
+                .collect(Collectors.toList());
+    }
 }

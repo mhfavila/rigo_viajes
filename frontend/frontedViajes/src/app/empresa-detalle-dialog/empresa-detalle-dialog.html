@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Información de la empresa</h2>
+
+<mat-dialog-content>
+  <p><strong>Nombre:</strong> {{ data.nombre }}</p>
+  <p><strong>CIF:</strong> {{ data.cif }}</p>
+  <p><strong>Dirección:</strong> {{ data.direccion }}</p>
+  <p><strong>Teléfono:</strong> {{ data.telefono }}</p>
+  <p><strong>Email:</strong> {{ data.email }}</p>
+  <!-- 👉 agrega aquí más campos si tu clase Empresa los tiene -->
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</mat-dialog-actions>

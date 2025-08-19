@@ -61,7 +61,7 @@ public class AuthController {
         Usuario usuario = usuarioRepository.findByNombre(request.getNombre())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        String token = jwtTokenGenerator.generateToken(usuario.getNombre());
+        String token = jwtTokenGenerator.generateToken(usuario);
 
         return ResponseEntity.ok(new AuthResponse(token));
     }

@@ -1,6 +1,7 @@
 package com.controlviajesv2.controller;
 
 
+import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.service.UsuarioService;
 import com.controlviajesv2.util.AppConstants;
@@ -85,6 +86,17 @@ public class UsuarioController {
         logger.info("Eliminando usuario con ID: {}", id);
         usuarioService.eliminar(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+
+/**
+Sacar las empresas de un usuario
+ */
+    @GetMapping(AppConstants.REQUEST_USUARIOCONTROLLER_empresas)
+    public ResponseEntity<List<EmpresaDTO>> obtenerEmpresasDeUsuario(@PathVariable Long id) {
+        List<EmpresaDTO> empresas = usuarioService.obtenerEmpresasDeUsuario(id);
+        return ResponseEntity.ok(empresas);
     }
 
 

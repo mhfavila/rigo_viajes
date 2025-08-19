@@ -13,7 +13,12 @@ por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto 
 	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
 	
 	nueva idea , despues de la pantalla de login que te saque  las empresas que tienes disponibles y desde ahi ya te lleve a los viajes de cada empresa
-				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario
+				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario -->LISTO
+				revisar que funciona en el fronted lo del nuevo endpoint: no lo saca revisar el fronted
+				
+				
+				REVISAR ESTO EN UN FUTUTO,-->vale , lo unico me acabo de dar cuenta de un eeror que no se como solucionar ,yo en mi aplicacion al logearme me genera un token y ese toquen tiene aceso a todos los usuarios , 
+				a mi me gustaria es que al logearme con un usuario solo tuviera aceso a los datos de ese usuario
 	
 	
 	
@@ -37,6 +42,56 @@ si el backend esta guardando los datos en  la base pero el fronted no lo detecta
 en rojo de Error al registrar usuario) esto es por la respuesta que esta mandando el metodo , esta mandando un string o otra cosa en vez de un json, para corregirlo mete esto en 
 el return -> Map.of("mensaje","aqui va el texto que tuvieras")
     -->return ResponseEntity.ok(Map.of("mensaje", "Usuario registrado correctamente"));
+	
+	
+	
+	IDEAS A FUTURO:
+	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints
+	
+	
+	
+	
+	
+	
+	
+	
+	Comandos para angular
+	# Borrar carpeta node_modules
+	Remove-Item -Recurse -Force .\node_modules
+
+	# Borrar package-lock.json
+	Remove-Item -Force .\package-lock.json
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

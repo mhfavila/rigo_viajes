@@ -1,6 +1,7 @@
 package com.controlviajesv2.security;
 
 
+import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.security.config.JwtProperties;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -27,11 +28,12 @@ public class JwtTokenGenerator {
 
 
     // Genera token con el nombre del usuario
-    public  String generateToken(String username) throws JwtException {
-        logger.debug("Generando token para el usuario: {}", username);
+    public  String generateToken(Usuario usuario) throws JwtException {
+        logger.debug("Generando token para el usuario: {}", usuario.getNombre());
         SecretKey key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(usuario.getNombre())
+                .claim("usuarioId", usuario.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration()))
                 .signWith(key,SignatureAlgorithm.HS512)

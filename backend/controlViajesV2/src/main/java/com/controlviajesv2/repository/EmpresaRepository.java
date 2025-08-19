@@ -13,6 +13,8 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
 
     boolean existsByNombre(String nombre);
     boolean existsByCif(String cif);
-    
+
+
+    List<Empresa> findByUsuarioId(Long usuarioId);
 
 }

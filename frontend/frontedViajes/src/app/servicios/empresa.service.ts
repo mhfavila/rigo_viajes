@@ -6,11 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmpresaService {
-  private apiUrl = 'http://localhost:8080/api/empresas';
+  private apiUrl = 'http://localhost:8080/api/usuarios/empresas/';
 
 constructor(private http: HttpClient) {}
 
   getEmpresasDeUsuario(usuarioId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/usuario/${usuarioId}`);
-  }
+  const token = localStorage.getItem('token');
+  const headers = { Authorization: `Bearer ${token}` };
+
+  console.log('Llamando a:', `${this.apiUrl}${usuarioId}`);
+  console.log('Headers:', headers);
+
+  return this.http.get<any[]>(`${this.apiUrl}${usuarioId}`, { headers });
+}
 }

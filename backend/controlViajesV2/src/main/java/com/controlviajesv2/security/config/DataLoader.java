@@ -34,6 +34,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * clase para cargar datos de prueba la primera vez que se crean laas tablas en la bbdd
+ */
 @Component
 public class DataLoader implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);

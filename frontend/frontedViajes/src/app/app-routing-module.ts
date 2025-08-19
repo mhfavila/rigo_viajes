@@ -7,7 +7,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [{ path: 'login', component: LoginComponent },
-  { path: 'empresas', component: EmpresasComponent, canActivate: [AuthGuard]  },
+  { path: 'empresas', component: EmpresasComponent /*, canActivate: [AuthGuard]*/ },
 //  { path: 'viajes', component: ViajesComponent },
   { path: 'viajes', component: ViajesComponent, canActivate: [AuthGuard] },
   { path: 'registro', component: RegistroComponent },
