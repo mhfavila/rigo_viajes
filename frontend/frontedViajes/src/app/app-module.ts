@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { ViajesComponent } from './viajes/viajes.component';
+
 
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     App,
-    ViajesComponent,
+
     LoginComponent,
 
     RegistroComponent,

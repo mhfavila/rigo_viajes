@@ -14,7 +14,9 @@ por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto 
 	
 	nueva idea , despues de la pantalla de login que te saque  las empresas que tienes disponibles y desde ahi ya te lleve a los viajes de cada empresa
 				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario -->LISTO
-				revisar que funciona en el fronted lo del nuevo endpoint: no lo saca revisar el fronted
+				revisar que funciona en el fronted lo del nuevo endpoint: no lo saca revisar el fronted -->LISTO
+				
+				tengo que crear el endpoint para sacar los viajes de una empresa
 				
 				
 				REVISAR ESTO EN UN FUTUTO,-->vale , lo unico me acabo de dar cuenta de un eeror que no se como solucionar ,yo en mi aplicacion al logearme me genera un token y ese toquen tiene aceso a todos los usuarios , 

@@ -102,4 +102,19 @@ public class ViajeServiceImpl implements ViajeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado con ID: " + id));
         viajeRepository.delete(viaje);
     }
+
+    @Override
+    public List<ViajeDTO> findByEmpresaId(Long empresaId) {
+        // 1️⃣ Traemos las entidades Viaje
+        List<Viaje> viajes = viajeRepository.findByEmpresaId(empresaId);
+
+        // 2️⃣ Convertimos a DTOs
+        List<ViajeDTO> viajesDTO = viajes.stream()
+                .map(ViajeMapper::toDTO) // usamos el mapper aquí
+                .collect(Collectors.toList());
+
+        return viajesDTO;
+    }
+
+
 }

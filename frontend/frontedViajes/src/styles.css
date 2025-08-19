@@ -170,6 +170,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .header-nombre {
   /*background-color: #572abe; /* verde, por ejemplo */
   color: rgb(0, 0, 0);              /* texto en blanco para que contraste */
-   text-align: center;         /* centrado horizontal */
+  text-align: center;         /* centrado horizontal */
   vertical-align: middle;     /* centrado vertical */
 }

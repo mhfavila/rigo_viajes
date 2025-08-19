@@ -1,6 +1,7 @@
 package com.controlviajesv2.controller;
 
 import com.controlviajesv2.dto.ViajeDTO;
+import com.controlviajesv2.entity.Viaje;
 import com.controlviajesv2.service.ViajeService;
 
 import com.controlviajesv2.util.AppConstants;
@@ -79,5 +80,15 @@ public class ViajeController {
         logger.info("Eliminando viaje con ID: {}", id);
         viajeService.eliminar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * metodo encargado de devolver los viajes de una empresa
+     * @param empresaId
+     * @return
+     */
+    @GetMapping(AppConstants.REQUEST_VIAJECONTROLLER_IDEMPRESA)
+    public List<ViajeDTO> getViajesPorEmpresa(@PathVariable Long empresaId) {
+        return viajeService.findByEmpresaId(empresaId);
     }
 }
