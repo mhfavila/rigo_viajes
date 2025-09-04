@@ -1,0 +1,93 @@
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* en vez de center, lo pone arriba */
+  height: 100vh;
+  padding-top: 50px;       /* espacio desde arriba */
+  background: #f0f0f0;
+}
+/* Cuadrado */
+.form-container {
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+  display: flex;           /* Flex en columna */
+  flex-direction: column;  /* Apila todo en columna */
+  justify-content: center; /* Centra verticalmente los elementos dentro */
+}
+
+/* Formulario dentro del cuadrado */
+.form-container form {
+  display: flex;
+  flex-direction: column; /* Esto asegura que todos los divs hijos se apilen */
+  gap: 12px;              /* Espacio entre cada campo */
+}
+
+/* Label e input */
+.form-container label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-container input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Título centrado */
+.form-container h2 {
+  text-align: center;   /* centra el texto horizontalmente */
+  margin-bottom: 1.5rem; /* espacio debajo del título */
+  font-weight: 600;      /* opcional: más negrita */
+  color: #222;           /* opcional: color oscuro */
+  font-size: 1.5rem;     /* tamaño más grande */
+}
+
+/*BOTONES*/
+
+/* Botón principal: Login */
+.btn-login {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 50px;      /* redondeado tipo pill */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #007bff; /* azul */
+  color: #fff;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 1rem;          /* separa del campo anterior */
+}
+
+.btn-login:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+/* Botón secundario: Crear nuevo usuario */
+.btn-secondary {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 50px;      /* redondeado tipo pill */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #28a745; /* verde */
+  color: #fff;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 0.8rem;        /* separa del botón anterior */
+}
+
+.btn-secondary:hover {
+  background-color: #1e7e34;
+  transform: scale(1.03);
+}

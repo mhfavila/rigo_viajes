@@ -1,0 +1,36 @@
+<div class="centered">
+  <h2>Viajes de la empresa {{ empresaId }}</h2>
+  <div class="form-container-table">
+    <table mat-table [dataSource]="viajes" class="mat-elevation-z8">
+      <ng-container matColumnDef="destino">
+        <th mat-header-cell *matHeaderCellDef> Destino </th>
+        <td mat-cell *matCellDef="let v"> {{ v.destino }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="distancia">
+        <th mat-header-cell *matHeaderCellDef> Distancia </th>
+        <td mat-cell *matCellDef="let v"> {{ v.distancia }} km </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precioKm">
+        <th mat-header-cell *matHeaderCellDef> Precio/km </th>
+        <td mat-cell *matCellDef="let v"> {{ v.precioKm }} € </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let v"> {{ v.fecha | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let v"> 'Ver Factura' </td>
+      </ng-container>
+
+      <tr mat-header-row
+        *matHeaderRowDef="['destino', 'distancia', 'precioKm', 'fecha','acciones']"></tr>
+      <tr mat-row
+        *matRowDef="let row; columns: ['destino', 'distancia', 'precioKm', 'fecha','acciones'];"></tr>
+    </table>
+  </div>
+</div>

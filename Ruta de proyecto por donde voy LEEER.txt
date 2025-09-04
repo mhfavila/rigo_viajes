@@ -12,11 +12,26 @@ por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto 
 	
 	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
 	
+	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
+	
 	nueva idea , despues de la pantalla de login que te saque  las empresas que tienes disponibles y desde ahi ya te lleve a los viajes de cada empresa
 				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario -->LISTO
 				revisar que funciona en el fronted lo del nuevo endpoint: no lo saca revisar el fronted -->LISTO
 				
-				tengo que crear el endpoint para sacar los viajes de una empresa
+				tengo que crear el endpoint para sacar los viajes de una empresa -->LISTO
+				Revisar por que no saca los viajes de una empresa , en la ruta viene bien el id de la empresa pero luego intenta sacar los viajes de la empresa 0 -->LISTO
+				
+				
+				crear empresas --> LISTO
+				
+				
+				modificar y eliminar empresas, ver mas abajo la idea de como va colocado
+				 repsar el codigo css y el html enteros por que falla en la tabla , puedo intetnar hacrlo desde el principio 
+				
+				reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13
+				
+				
+				tengo que implementar un boton para volver atras en las pantallas de ver viajes
 				
 				
 				REVISAR ESTO EN UN FUTUTO,-->vale , lo unico me acabo de dar cuenta de un eeror que no se como solucionar ,yo en mi aplicacion al logearme me genera un token y ese toquen tiene aceso a todos los usuarios , 
@@ -30,6 +45,7 @@ por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto 
 	  -	puedo hacer algo para que me guarde el usuario y contrase;a en un txt asi puedo consultarlo ya que la contrase;a esta encriptada--> LISTO
 	  
 	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
+					
 					
 					
 					
@@ -95,6 +111,103 @@ el return -> Map.of("mensaje","aqui va el texto que tuvieras")
 	
 	
 	
+	VISUAL PARA LA PANTALLA DE LAS EMPRESAS
+	Flujo recomendado
+
+Listado principal de empresas
+
+Tabla o tarjetas con la información básica: nombre, sector, fecha de creación, acciones.
+
+Botón flotante “+” para crear nueva empresa (no confundir con el resto de botones).
+
+Crear / Editar empresa
+
+Usar un modal (ventana emergente) con un formulario.
+
+Campos principales: nombre, dirección, sector, etc.
+
+Botones: “Guardar” y “Cancelar”.
+
+Cuando se guarda, se cierra el modal y se recarga la tabla automáticamente.
+
+Esto evita recargar toda la página y mantiene el contexto del usuario.
+
+Eliminar empresa
+
+Botón dentro de cada fila (o tarjeta) con un icono de basura.
+
+Mostrar un confirm dialog para evitar borrados accidentales.
+
+Después de confirmar, la tabla se actualiza automáticamente.
+
+Feedback visual
+
+Mensajes de éxito o error con snackbars o alertas pequeñas en la esquina.
+
+Ejemplo: “Empresa creada correctamente” o “No se pudo eliminar la empresa”.
+
+2️⃣ Diseño visual
+a) Distribución de elementos
+
+Tabla compacta o tarjetas según la cantidad de empresas:
+
+Si son pocas (<10), tarjetas con información clave y botones visibles.
+
+Si son muchas, tabla con columnas: Nombre | Sector | Acciones.
+
+Acciones:
+
+Editar → icono de lápiz o botón azul.
+
+Eliminar → icono de basura o botón rojo.
+
+Crear empresa:
+
+Botón flotante grande (FAB) en esquina inferior derecha, color destacado (ej: verde o azul).
+
+Opcionalmente un pequeño tooltip: “Crear nueva empresa”.
+
+b) Estilo de tabla / tarjetas
+
+Tabla:
+
+Cabeceras con fondo suave, texto centrado.
+
+Alternar filas claras y oscuras para facilitar la lectura.
+
+Botones de acción alineados a la derecha.
+
+Tarjetas:
+
+Box-shadow ligero, bordes redondeados.
+
+Información breve arriba, acciones abajo.
+
+Mantener colores consistentes con la paleta de la app.
+
+c) Experiencia de usuario (UX)
+
+Modal para crear/editar evita cambiar de página.
+
+Confirmaciones claras para eliminar.
+
+Feedback inmediato con snackbars.
+
+Botones grandes y claros, con iconos universales (lápiz, basura, +).
+
+3️⃣ Mi recomendación final
+
+Usar tabla si hay muchas empresas, tarjetas si son pocas.
+
+Botón flotante para crear.
+
+Modal para crear/editar.
+
+Snackbars para feedback.
+
+Confirmación para eliminar.
+
+Esto queda visualmente limpio, la lógica es sencilla y escalable, y el usuario entiende rápidamente qué hacer.
 	
 	
 	

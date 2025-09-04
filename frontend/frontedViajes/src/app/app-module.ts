@@ -4,19 +4,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 
-
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistroComponent } from './registro/registro.component';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { EmpresaDetalleDialog } from './empresa-detalle-dialog/empresa-detalle-dialog';
-import { MatDialogContent } from "@angular/material/dialog";
-import { MatDialogActions } from "@angular/material/dialog";
+import { MatDialogContent } from '@angular/material/dialog';
+import { MatDialogActions } from '@angular/material/dialog';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { ViajesComponent } from './viajes/viajes.component';
+import { EmpresaModalComponent } from './empresa-modal/empresa-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     App,
@@ -26,6 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
     RegistroComponent,
     EmpresasComponent,
     EmpresaDetalleDialog,
+    ViajesComponent,
+    EmpresaModalComponent,
   ],
   imports: [
     MatTableModule,
@@ -36,11 +46,16 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     FormsModule,
     MatDialogContent,
-    MatDialogActions
-],
-  providers: [
-    provideBrowserGlobalErrorListeners()
+    MatDialogActions,
+    ReactiveFormsModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
   ],
-  bootstrap: [App]
+  providers: [provideBrowserGlobalErrorListeners()],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}

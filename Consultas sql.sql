@@ -52,3 +52,4 @@ ORDER BY u.id, e.id, v.id;
 
 
 select * from empresas where usuario_id = 1;
+select * from viajes where empresa_id = 1;

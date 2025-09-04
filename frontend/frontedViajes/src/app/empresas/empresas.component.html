@@ -1,37 +1,57 @@
 
 <div class="centered">
-<h2>Empresas asociadas a tus viajes</h2>
-<div class="form-container-table">
-<table mat-table [dataSource]="empresas" class="mat-elevation-z8">
+  <h2>Empresas asociadas a tu Usuario</h2>
+  <div class="form-container-table">
+    <table mat-table [dataSource]="empresas" class="mat-elevation-z8">
 
-  <!-- Columna Nombre -->
-<ng-container  matColumnDef="nombre" >
-  <th mat-header-cell *matHeaderCellDef > Nombre </th>
-  <td mat-cell *matCellDef="let empresa">
-    <button mat-button color="accent" [routerLink]="['/viajes', empresa.id]">
-      {{ empresa.nombre }}
-    </button>
-  </td>
+      <!-- Columna Nombre -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let empresa">
+          <button mat-button color="accent" (click)="verViajes(empresa)">
+            {{ empresa.nombre }}
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Columna CIF -->
+      <ng-container matColumnDef="cif">
+        <th mat-header-cell *matHeaderCellDef class="header-nombre"> CIF </th>
+        <td mat-cell *matCellDef="let empresa"> {{empresa.cif}} </td>
+      </ng-container>
+
+     <!-- Columna Acciones -->
+<ng-container matColumnDef="acciones">
+  <th mat-header-cell *matHeaderCellDef class="header-nombre"> Acciones </th>
+  <td mat-cell *matCellDef="let empresa" class="acciones-cell">
+  <button mat-raised-button color="primary" (click)="verEmpresa(empresa)">
+    Ver detalles
+  </button>
+  <button mat-icon-button color="accent" matTooltip="Editar empresa">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button color="warn" matTooltip="Eliminar empresa">
+    <mat-icon>delete</mat-icon>
+  </button>
+</td>
 </ng-container>
 
-  <!-- Columna CIF -->
-  <ng-container matColumnDef="cif">
-    <th mat-header-cell *matHeaderCellDef class="header-nombre"> CIF </th>
-    <td mat-cell *matCellDef="let empresa"> {{empresa.cif}} </td>
-  </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['nombre','cif','acciones']"></tr>
+      <tr mat-row
+        *matRowDef="let row; columns: ['nombre','cif','acciones'];"></tr>
+    </table>
 
-  <!-- Columna Acciones -->
-  <ng-container matColumnDef="acciones">
-    <th mat-header-cell *matHeaderCellDef class="header-nombre"> Acciones </th>
-    <td mat-cell *matCellDef="let empresa">
-      <button mat-raised-button color="primary" (click)="verEmpresa(empresa)">
-        Ver detalles
-      </button>
-    </td>
-  </ng-container>
+  </div>
+  <div>
 
-  <tr mat-header-row *matHeaderRowDef="['nombre','cif','acciones']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['nombre','cif','acciones'];"></tr>
-</table>
-</div>
+    <button
+      mat-raised-button
+      color="accent"
+      class="boton-flotante"
+      matTooltip="Crear nueva empresa"
+      (click)="abrirModal()">
+      AÑADIR EMPRESA +
+    </button>
+  </div>
+
 </div>

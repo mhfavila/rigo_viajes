@@ -1,19 +1,29 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Viaje {
+  id: number;
+  destino: string;
+  distancia: number;
+  precioKm: number;
+  fecha: string;
+  empresaId: number;
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ViajesService {
-  private apiUrl = 'http://localhost:8080/api/viajes';
+export class ViajesServices {
+  private baseUrl = 'http://localhost:8080/api/viajes';
 
-  constructor(private http: HttpClient,private authService: AuthService) { }
+  constructor(private http: HttpClient) {}
 
-  getViajes(): Observable<any> {
-    const token = this.authService.obtenerToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any[]>(this.apiUrl, { headers });
+  getViajesByEmpresa(empresaId: number): Observable<Viaje[]> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<Viaje[]>(`${this.baseUrl}/empresa/${empresaId}`, {//se anade a la url el /empresa/id
+      headers,
+    });
   }
 }
