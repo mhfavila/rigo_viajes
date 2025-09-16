@@ -1,0 +1,77 @@
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* centrado vertical */
+  height: 100vh;
+  background: #f5f6f7;
+}
+
+/* Cuadrado */
+.form-container {
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+  display: flex;           /* Flex en columna */
+  flex-direction: column;  /* Apila todo en columna */
+  justify-content: center; /* Centra verticalmente los elementos dentro */
+}
+/* Formulario dentro del cuadrado */
+.form-container form {
+  display: flex;
+  flex-direction: column; /* Esto asegura que todos los divs hijos se apilen */
+  gap: 12px;              /* Espacio entre cada campo */
+}
+/* Título centrado */
+.form-container h2 {
+  text-align: center;   /* centra el texto horizontalmente */
+  margin-bottom: 1.5rem; /* espacio debajo del título */
+  font-weight: 600;      /* opcional: más negrita */
+  color: #222;           /* opcional: color oscuro */
+  font-size: 1.5rem;     /* tamaño más grande */
+}
+
+/*hasta aqui ha funcionado*/
+
+/* Label e input */
+.form-container label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-container input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/*BOTONES*/
+
+/* Botón principal: registrar */
+.btn-registrar {
+  width: 100%;
+  padding: 0.6rem;
+    margin-bottom: 1.5rem; /* separa del final del contenedor */
+  border: none;
+  border-radius: 50px;      /* redondeado tipo pill */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #007bff; /* azul */
+  color: #fff;
+  transition: background 0.3s ease, transform 0.2s ease;
+           /* separa del campo anterior */
+}
+
+.btn-registrar:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+
+

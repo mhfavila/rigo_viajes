@@ -1,0 +1,48 @@
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* Centrado vertical */
+  align-items: center;       /* Centrado horizontal */
+  min-height: 100vh;         /* Ocupa toda la pantalla */
+  text-align: center;
+  background-color: #f9f9f9; /* Fondo suave */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form-container-table {
+  width: 80%;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.75rem;
+}
+
+th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+td {
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background-color: #fafafa; /* Efecto hover en filas */
+}

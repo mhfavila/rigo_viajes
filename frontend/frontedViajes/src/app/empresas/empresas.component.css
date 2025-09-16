@@ -1,0 +1,58 @@
+.centered {
+  display: flex;
+  flex-direction: column;   /* Apila elementos en columna */
+  justify-content: center;  /* Centrado vertical */
+  align-items: center;      /* Centrado horizontal */
+  min-height: 100vh;        /* Ocupa toda la altura de la pantalla */
+  text-align: center;       /* Centra el texto */
+  background-color: #f9f9f9; /* Opcional, fondo suave */
+  padding: 1rem;            /* Espacio interno */
+  box-sizing: border-box;
+}
+
+.form-container-table {
+  width: 80%;                /* Que la tabla no ocupe toda la pantalla */
+  max-width: 900px;          /* Tamaño máximo */
+  background: #fff;          /* Fondo blanco para la tabla */
+  border-radius: 12px;       /* Bordes redondeados */
+  padding: 1rem;             /* Espacio interior */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombras suaves */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.75rem;
+}
+
+th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.acciones-cell {
+  display: flex;
+  gap: 0.5rem;   /* Espacio entre botones */
+}
+
+.boton-flotante {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  font-weight: bold;
+}
+.acciones-cell button.mat-raised-button {
+  box-shadow: none;
+}
+table tr {
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  z-index: 1;
+}
+.acciones-cell button {
+  position: relative;
+  z-index: 0;
+}
