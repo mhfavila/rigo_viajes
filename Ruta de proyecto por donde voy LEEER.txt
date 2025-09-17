@@ -1,7 +1,7 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 _____
-_____REVISAR EL METODO EDITAR ESTA GUARDANDO NUEVAS EN VEZ DE EDITARLAS
+_____REVISAR EL METODO EDITAR ESTA GUARDANDO NUEVAS EN VEZ DE EDITARLAS -->  ya actualiza bien 
 
 
 por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.
