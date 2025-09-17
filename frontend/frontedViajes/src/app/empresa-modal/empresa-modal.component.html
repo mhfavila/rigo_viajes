@@ -1,5 +1,5 @@
 
-<h2 mat-dialog-title>Crear Empresa</h2>
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Empresa' : 'Crear Empresa' }}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="empresaForm">
@@ -52,6 +52,7 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="cancelar()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="guardar()"
-    [disabled]="empresaForm.invalid">Guardar</button>
+  <button mat-raised-button color="primary" (click)="guardar()" [disabled]="empresaForm.invalid">
+    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+  </button>
 </mat-dialog-actions>

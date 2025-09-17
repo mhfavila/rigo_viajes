@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EmpresaDetalleDialog } from '../empresa-detalle-dialog/empresa-detalle-dialog';
 import { Router } from '@angular/router';
 import { EmpresaModalComponent } from '../empresa-modal/empresa-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class EmpresasComponent implements OnInit {
     private empresaService: EmpresaService,
     private authService: AuthService,
     private dialog: MatDialog,
+     private snackBar: MatSnackBar,
     private router: Router
   ) {}
 
@@ -73,4 +75,35 @@ export class EmpresasComponent implements OnInit {
     }
   });
 }
+editarEmpresa(empresa: any) {
+  const dialogRef = this.dialog.open(EmpresaModalComponent, {
+    width: '400px',
+    data: { ...empresa,isEditMode:true } // pasamos los datos de la empresa
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.cargarEmpresas(); // refresca la lista si se editó correctamente
+    }
+  });
+}
+
+// Método para eliminar empresa
+eliminarEmpresa(empresa: any) {
+  const confirmDelete = confirm(`¿Seguro que quieres eliminar la empresa "${empresa.nombre}"?`);
+  if (confirmDelete) {
+    this.empresaService.eliminarEmpresa(empresa.id).subscribe({
+      next: () => {
+        console.log('Empresa eliminada correctamente');
+        this.cargarEmpresas(); // refresca la lista
+        this.snackBar.open('Empresa eliminada', 'Cerrar', { duration: 3000 });
+      },
+      error: (err) => {
+        console.error('Error eliminando la empresa', err);
+        this.snackBar.open('Error al eliminar la empresa', 'Cerrar', { duration: 3000 });
+      }
+    });
+  }
+}
+
 }

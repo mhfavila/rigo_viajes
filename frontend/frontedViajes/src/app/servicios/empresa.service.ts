@@ -21,6 +21,7 @@ export class EmpresaService {
 
   private apiUrlEmpresa ='http://localhost:8080/api/empresas';
 
+
   constructor(private http: HttpClient) {}
 
   getEmpresasDeUsuario(usuarioId: number): Observable<any[]> {
@@ -42,4 +43,19 @@ export class EmpresaService {
 
     return this.http.post<Empresa>(this.apiUrlEmpresa, empresa,{ headers });
   }
+// 🔹 Editar empresa
+  editarEmpresa(id: number, empresa: Empresa): Observable<Empresa> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.put<Empresa>(`${this.apiUrlEmpresa}/${id}`, empresa, { headers });
+  }
+  // 🔹 Eliminar empresa
+eliminarEmpresa(id: number): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = { Authorization: `Bearer ${token}` };
+
+  return this.http.delete(`${this.apiUrlEmpresa}/${id}`, { headers });
+}
+
 }

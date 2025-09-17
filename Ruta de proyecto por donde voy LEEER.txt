@@ -1,5 +1,8 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
+_____
+_____REVISAR EL METODO EDITAR ESTA GUARDANDO NUEVAS EN VEZ DE EDITARLAS
+
 
 por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.
 			cosas a revisar: -->LISTO
@@ -46,6 +49,8 @@ por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto 
 	  
 	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
 					
+
+
 					
 					
 					

@@ -37,6 +37,7 @@ th {
 .acciones-cell {
   display: flex;
   gap: 0.5rem;   /* Espacio entre botones */
+  justify-content: flex-end;  /* mueve todo al final de la celda */
 }
 
 .boton-flotante {
@@ -55,4 +56,25 @@ table tr {
 .acciones-cell button {
   position: relative;
   z-index: 0;
+}
+/* Botón editar amarillo */
+.btn-editar {
+  background-color: #FFC107; /* amarillo */
+  color: #000; /* texto negro */
+  transition: background-color 0.3s ease; /* transición suave */
+}
+
+.btn-editar:hover {
+  background-color: #e6ac00; /* un amarillo más oscuro al pasar el ratón */
+}
+
+/* Botón eliminar rojo */
+.btn-eliminar {
+  background-color: #f44336; /* rojo */
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #d32f2f; /* rojo más oscuro al hover */
 }
