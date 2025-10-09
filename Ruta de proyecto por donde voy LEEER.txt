@@ -1,53 +1,70 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
-_____
-_____REVISAR EL METODO EDITAR ESTA GUARDANDO NUEVAS EN VEZ DE EDITARLAS -->  ya actualiza bien 
 
 
-por donde voy --> el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.
-			cosas a revisar: -->LISTO
+COSAS PENDIENTES:
+	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
+	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
+	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
+	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13
+	-tengo que implementar un boton para volver atras en las pantallas de ver viajes
+	
+	
+	
+	
+	REVISAR ESTO EN UN FUTUTO,-->vale , lo unico me acabo de dar cuenta de un eeror que no se como solucionar ,yo en mi aplicacion al logearme me genera un token y ese toquen tiene aceso a todos los usuarios , 
+				a mi me gustaria es que al logearme con un usuario solo tuviera aceso a los datos de ese usuario
+
+
+
+COSAS LISTAS:
+
+	REVISAR EL METODO EDITAR ESTA GUARDANDO NUEVAS EN VEZ DE EDITARLAS -->  ya actualiza bien -->LISTO
+
+
+	el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.-->LISTO
+	cosas a revisar: -->LISTO
 					- en el regsitro ver que datos le paso y que cuando se haya regsitrado saque un mensaje o algo -->LISTO
 					- Intentar debugear en inteljide el backend por que ahora mismo no me acuerdo como se guardaban los usuarios y demas.-->LISTO
-					
-	
-	
-	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
-	
-	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
-	
-	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
-	
 	nueva idea , despues de la pantalla de login que te saque  las empresas que tienes disponibles y desde ahi ya te lleve a los viajes de cada empresa
 				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario -->LISTO
 				revisar que funciona en el fronted lo del nuevo endpoint: no lo saca revisar el fronted -->LISTO
-				
-				tengo que crear el endpoint para sacar los viajes de una empresa -->LISTO
+	tengo que crear el endpoint para sacar los viajes de una empresa -->LISTO
 				Revisar por que no saca los viajes de una empresa , en la ruta viene bien el id de la empresa pero luego intenta sacar los viajes de la empresa 0 -->LISTO
-				
-				
-				crear empresas --> LISTO
-				
-				
-				modificar y eliminar empresas, ver mas abajo la idea de como va colocado
-				 repsar el codigo css y el html enteros por que falla en la tabla , puedo intetnar hacrlo desde el principio 
-				
-				reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13
-				
-				
-				tengo que implementar un boton para volver atras en las pantallas de ver viajes
-				
-				
-				REVISAR ESTO EN UN FUTUTO,-->vale , lo unico me acabo de dar cuenta de un eeror que no se como solucionar ,yo en mi aplicacion al logearme me genera un token y ese toquen tiene aceso a todos los usuarios , 
-				a mi me gustaria es que al logearme con un usuario solo tuviera aceso a los datos de ese usuario
-	
-	
-	
-	
+					
+	crear empresas --> LISTO
+	modificar y eliminar empresas, ver mas abajo la idea de como va colocado-->LISTO
+				 repsar el codigo css y el html enteros por que falla en la tabla , puedo intetnar hacrlo desde el principio -->LISTO
+				 
 	-Ahora estoy corriginedo una cosa en el backend para crear datos de prueba ,falta meter datos de prueba a empresa y a viajes  --> LISTO
 
 	  -	puedo hacer algo para que me guarde el usuario y contrase;a en un txt asi puedo consultarlo ya que la contrase;a esta encriptada--> LISTO
 	  
 	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
+	  
+	  
+	  
+	  
+	  
+	  
+IDEAS A FUTURO:
+	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints
+	
+	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+	
+	
+	
+	
+	
 					
 
 
@@ -68,8 +85,7 @@ el return -> Map.of("mensaje","aqui va el texto que tuvieras")
 	
 	
 	
-	IDEAS A FUTURO:
-	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints
+	
 	
 	
 	
