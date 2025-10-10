@@ -1,0 +1,44 @@
+<h2>Factura de {{ empresa?.nombre }}</h2>
+
+<div class="filtros">
+  <label>Fecha desde: <input type="date" [(ngModel)]="filtros.fechaDesde" /></label>
+  <label>Fecha hasta: <input type="date" [(ngModel)]="filtros.fechaHasta" /></label>
+  <label>Estado:
+    <select [(ngModel)]="filtros.estado">
+      <option value="">Todos</option>
+      <option value="COMPLETADO">Completado</option>
+      <option value="PENDIENTE">Pendiente</option>
+    </select>
+  </label>
+</div>
+
+<table border="1">
+  <thead>
+    <tr>
+      <!-- Checkbox para seleccionar todos -->
+      <th><input type="checkbox" [(ngModel)]="seleccionarTodos" (change)="toggleTodos()" /></th>
+      <th>ID</th>
+      <th>Destino</th>
+      <th>Distancia</th>
+      <th>Precio/km</th>
+      <th>Importe</th>
+      <th>Fecha</th>
+      <th>Empresa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let viaje of viajesFiltrados">
+      <!-- Checkbox por cada viaje -->
+      <td><input type="checkbox" [(ngModel)]="viaje.seleccionado" /></td>
+      <td>{{ viaje.id }}</td>
+      <td>{{ viaje.destino }}</td>
+      <td>{{ viaje.distancia }}</td>
+      <td>{{ viaje.precioKm }}€</td>
+      <td>{{ viaje.distancia * viaje.precioKm }}€</td>
+      <td>{{ viaje.fecha }}</td>
+      <td>{{ viaje.empresaId }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="generarFacturaPDF()">Generar PDF</button>

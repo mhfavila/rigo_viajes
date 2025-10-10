@@ -10,3 +10,15 @@ Nombre: David Ortega, Contraseña: pass22
 Nombre: Claudia Núñez, Contraseña: pass15
 Nombre: Francisco Castro, Contraseña: pass27
 Nombre: Marta Cabrera, Contraseña: pass19
+Nombre: Carlos García, Contraseña: pass28
+Nombre: Sergio Peña, Contraseña: pass29
+Nombre: Nuria Vázquez, Contraseña: pass12
+Nombre: Francisco Castro, Contraseña: pass16
+Nombre: Laura Jiménez, Contraseña: pass1
+Nombre: David Ortega, Contraseña: pass19
+Nombre: Antonio Iglesias, Contraseña: pass19
+Nombre: Oscar Molina, Contraseña: pass8
+Nombre: Juan Pérez, Contraseña: pass27
+Nombre: Raúl Domínguez, Contraseña: pass26
+Nombre: Felipe León, Contraseña: pass7
+Nombre: Carmen Soto, Contraseña: pass19

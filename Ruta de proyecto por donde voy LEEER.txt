@@ -6,8 +6,28 @@ COSAS PENDIENTES:
 	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
 	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
 	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
-	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13
+	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13  --> esto sigue pasando solo que si no se crea es por que ya hay uno con el nombre vaacio
 	-tengo que implementar un boton para volver atras en las pantallas de ver viajes
+	
+	
+	--mas adelante meter las opcione de añadir viajes editar y borrar
+	
+	-- estoy con la parte de ver la factura ,lo voy hacer desde los botones de la empresa nose si hacer un boton y que lleve a otra pantalla en la que se puedan hacer filtros
+	
+	
+				 en principio ya genera los pdf ,falta darle una apariencia mas de factura al pdf ,
+				 y mirar los filtros que se quieren poner como alguno para solo selecionar los viajes por id o algo asi o como sacar algo para que haga un marcado y poder ir selecionando uno a uno 
+				 
+	
+	-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
+				 
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

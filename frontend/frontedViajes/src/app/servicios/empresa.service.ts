@@ -58,4 +58,12 @@ eliminarEmpresa(id: number): Observable<any> {
   return this.http.delete(`${this.apiUrlEmpresa}/${id}`, { headers });
 }
 
+
+//metodo para en la factura sacar la empresa
+getEmpresaPorId(empresaId: number) {
+  const token = localStorage.getItem('token');
+  const headers = { Authorization: `Bearer ${token}` };
+  return this.http.get<Empresa>(`http://localhost:8080/api/empresas/${empresaId}`, { headers });
+}
+
 }

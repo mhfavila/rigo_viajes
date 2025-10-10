@@ -52,4 +52,22 @@ ORDER BY u.id, e.id, v.id;
 
 
 select * from empresas where usuario_id = 1;
-select * from viajes where empresa_id = 1;
+
+SELECT * 
+FROM usuarios u
+JOIN empresas e ON e.usuario_id = u.id
+WHERE e.nombre LIKE '%LambdaDesign%';
+
+
+
+
+
+SELECT u.id, u.nombre, e.id AS empresa_id, e.nombre AS nombre_empresa
+FROM usuarios u
+JOIN empresas e ON e.usuario_id = u.id
+WHERE e.id = 1;
+
+
+select * from empresas e join usuarios ON usuarios.id = e.usuario_id where u.id =1;
+
+SELECT * FROM empresas e WHERE e.usuario_id = 1;

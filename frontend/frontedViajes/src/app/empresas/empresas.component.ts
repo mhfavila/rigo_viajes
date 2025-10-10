@@ -1,3 +1,4 @@
+import { Empresa } from './../servicios/empresa.service';
 import { Component, OnInit } from '@angular/core';
 import { EmpresaService } from '../servicios/empresa.service';
 import { AuthService } from '../servicios/auth.service';
@@ -105,5 +106,7 @@ eliminarEmpresa(empresa: any) {
     });
   }
 }
+
+
 
 }

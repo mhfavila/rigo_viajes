@@ -78,3 +78,17 @@ table tr {
 .btn-eliminar:hover {
   background-color: #d32f2f; /* rojo más oscuro al hover */
 }
+
+
+/* Botón ver factura  azul */
+.btn-ver {
+  background-color: #6197d6;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver:hover {
+  background-color: #2214e4;
+
+
+}

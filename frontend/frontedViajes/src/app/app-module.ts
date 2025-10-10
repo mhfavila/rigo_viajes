@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { FacturasComponent } from './facturas/facturas.component';
 @NgModule({
   declarations: [
     App,
@@ -36,6 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
     EmpresaDetalleDialog,
     ViajesComponent,
     EmpresaModalComponent,
+    FacturasComponent,
   ],
   imports: [
     MatTableModule,

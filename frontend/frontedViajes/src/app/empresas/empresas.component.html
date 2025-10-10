@@ -29,13 +29,22 @@
             (click)="verEmpresa(empresa)">
             Ver detalles
           </button>
-          <button mat-icon-button  class="btn-editar" color="accent" matTooltip="Editar empresa"
+          <button mat-icon-button class="btn-editar" color="accent"
+            matTooltip="Editar empresa"
             (click)="editarEmpresa(empresa)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button  class="btn-eliminar" color="warn" matTooltip="Eliminar empresa"
+          <button mat-icon-button class="btn-eliminar" color="warn"
+            matTooltip="Eliminar empresa"
             (click)="eliminarEmpresa(empresa)">
             <mat-icon>delete</mat-icon>
+          </button>
+
+          <button mat-icon-button class="btn-ver" color="primary"
+            matTooltip="Ver Factura"
+            [routerLink]="['/facturas']"
+            [queryParams]="{ empresaId: empresa.id }">
+            <mat-icon>receipt_long</mat-icon>
           </button>
         </td>
       </ng-container>

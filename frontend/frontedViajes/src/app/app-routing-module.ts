@@ -4,6 +4,8 @@ import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 
+import { FacturasComponent } from './facturas/facturas.component';
+
 
 
 import { RegistroComponent } from './registro/registro.component';
@@ -15,7 +17,9 @@ const routes: Routes = [{ path: 'login', component: LoginComponent },
   { path: 'viajes/:empresaId', component: ViajesComponent },
 
   { path: 'registro', component: RegistroComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },];
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+ { path: 'facturas', component: FacturasComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
