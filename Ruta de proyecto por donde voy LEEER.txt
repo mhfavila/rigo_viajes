@@ -2,6 +2,22 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 
 
+
+NUEVAS COSAS PARA AÑADIR LO DE LA FACTURAÑ
+		crear nuevas tablas de factura y linea factura
+		
+		
+			empresa (tu empresa)
+				│
+				├── factura (N factura)
+				│       └── linea_factura (detalles del viaje)
+				│
+				└── viaje (datos del servicio, reutilizable)
+
+
+
+
+
 COSAS PENDIENTES:
 	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
 	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
@@ -69,6 +85,12 @@ COSAS LISTAS:
 	  
 IDEAS A FUTURO:
 	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints
+	
+	
+	
+	
+	
+	
 	
 	
 				
