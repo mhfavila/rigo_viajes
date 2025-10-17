@@ -22,3 +22,15 @@ Nombre: Juan Pérez, Contraseña: pass27
 Nombre: Raúl Domínguez, Contraseña: pass26
 Nombre: Felipe León, Contraseña: pass7
 Nombre: Carmen Soto, Contraseña: pass19
+Nombre: Antonio Iglesias, Contraseña: pass11
+Nombre: Manuel Lozano, Contraseña: pass4
+Nombre: Juan Pérez, Contraseña: pass12
+Nombre: Claudia Núñez, Contraseña: pass10
+Nombre: Ana López, Contraseña: pass6
+Nombre: Isabel Morales, Contraseña: pass7
+Nombre: Carlos García, Contraseña: pass30
+Nombre: Felipe León, Contraseña: pass20
+Nombre: Patricia Herrera, Contraseña: pass12
+Nombre: Pedro Sánchez, Contraseña: pass12
+Nombre: Sara Romero, Contraseña: pass8
+Nombre: David Ortega, Contraseña: pass13

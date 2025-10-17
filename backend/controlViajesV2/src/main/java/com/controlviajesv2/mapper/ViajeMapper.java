@@ -11,15 +11,16 @@ public class ViajeMapper {
     public static ViajeDTO toDTO(Viaje viaje) {
         if (viaje == null) return null;
 
-        ViajeDTO dto = new ViajeDTO();
-        dto.setId(viaje.getId());
-        dto.setFecha(viaje.getFecha());
-        dto.setPrecioKm(viaje.getPrecioKm());
-        dto.setDestino(viaje.getDestino());
-        dto.setDistancia(viaje.getDistancia());
-        dto.setEmpresaId(viaje.getEmpresa().getId()); // Solo el ID, no la entidad completa
-
-        return dto;
+        return ViajeDTO.builder()
+                .id(viaje.getId())
+                .origen(viaje.getOrigen())
+                .destino(viaje.getDestino())
+                .fecha(viaje.getFecha())
+                .distancia(viaje.getDistancia())
+                .precioKm(viaje.getPrecioKm())
+                .importeTotal(viaje.getImporteTotal())
+                .empresaId(viaje.getEmpresa() != null ? viaje.getEmpresa().getId() : null)
+                .build();
     }
 //Convierte el DTO recibido del cliente en una entidad Viaje.
     public static Viaje toEntity(ViajeDTO dto, Empresa empresa) {
@@ -27,11 +28,13 @@ public class ViajeMapper {
 
         return Viaje.builder()
                 .id(dto.getId())
+                .origen(dto.getOrigen())
+                .destino(dto.getDestino())
                 .fecha(dto.getFecha())
                 .distancia(dto.getDistancia())
                 .precioKm(dto.getPrecioKm())
-                .destino(dto.getDestino())
-                .empresa(empresa) // Se le pasa la entidad completa
+                .importeTotal(dto.getImporteTotal())
+                .empresa(empresa)
                 .build();
     }
 

@@ -50,3 +50,18 @@ Servicios	albaran	VARCHAR	Muy común en las facturas.
 Servicios	cliente_final	VARCHAR	“para Transportes CAPELLE”.
 Servicios	matricula_vehiculo	VARCHAR	Figura en MARCOPINOR.
 Servicios	precio_dieta	DECIMAL	Desglose de dietas.
+
+
+
+
+
+
+EXPLICACIONES 
+
+TABLA Facturas
+@Column(name = "importe_iva")
+private BigDecimal importeIva;
+
+@Column(name = "importe_irpf")
+private BigDecimal importeIrpf;
+Esto te permitirá guardar los valores reales de cada cálculo, no solo los porcentajes.

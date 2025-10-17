@@ -30,8 +30,11 @@ public class Empresa {
     @Column(nullable = false)
     private String telefono;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
+
+    @Column(name = "iban", length = 34)
+    private String iban; // IBAN de la empresa emisora
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -39,4 +42,7 @@ public class Empresa {
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Viaje> viajes;
+
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Factura> facturas;
 }

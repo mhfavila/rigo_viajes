@@ -13,6 +13,11 @@ NUEVAS COSAS PARA AÑADIR LO DE LA FACTURAÑ
 				│       └── linea_factura (detalles del viaje)
 				│
 				└── viaje (datos del servicio, reutilizable)
+				
+				
+				
+				
+POR DONDE ME LLEGO:    --> he creado los nuevos repository de servicio y facturar , sigueinte es crear la clase controller y los service 
 
 
 

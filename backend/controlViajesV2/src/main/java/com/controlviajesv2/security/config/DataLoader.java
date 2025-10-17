@@ -31,12 +31,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+/*
+
+
+descomentar todo esto para tener datos de prueba ,habra que adaptarlo a lo nuevo
 
 /**
  * clase para cargar datos de prueba la primera vez que se crean laas tablas en la bbdd
  */
+
+/*
 @Component
 public class DataLoader implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -127,6 +134,7 @@ public class DataLoader implements CommandLineRunner {
             nuevoViaje.setPrecioKm(precioKM());
             nuevoViaje.setDestino(destino());
             nuevoViaje.setDistancia(distancia());
+            //nuevoViaje.setOrigen();
 
             nuevoViaje.setEmpresaId(empresaDTO.getId());
 
@@ -149,15 +157,15 @@ public class DataLoader implements CommandLineRunner {
 
     }
 
-    private Double distancia() {
-        List<Double> distancias = new ArrayList<>();
+    private BigDecimal distancia() {
+        List<BigDecimal> distancias = new ArrayList<>();
         int cantidadDistancias = 50;
         Random random = new Random();
 
         // Generar lista de 50 distancias aleatorias entre 50.0 km y 500.0 km
         for (int i = 0; i < cantidadDistancias; i++) {
-            double distancia = 50.0 + (500.0 - 50.0) * random.nextDouble(); // rango 50.0 - 500.0
-            distancia = Math.round(distancia * 10.0) / 10.0; // redondear a 1 decimal
+            BigDecimal distancia = BigDecimal.valueOf(50.0 + (500.0 - 50.0) * random.nextDouble()); // rango 50.0 - 500.0
+           // distancia = Math.round(distancia.multiply(10.0)  ) / 10.0; // redondear a 1 decimal
             distancias.add(distancia);
         }
 
@@ -226,7 +234,7 @@ public class DataLoader implements CommandLineRunner {
         return destinos.get(indiceAleatorio);
     }
 
-    private Double precioKM() {
+    private BigDecimal precioKM() {
         List<Double> precios = new ArrayList<>();
         int cantidadPrecios = 50;
         Random random = new Random();
@@ -465,3 +473,7 @@ public class DataLoader implements CommandLineRunner {
 
 
 }
+
+
+
+ */
