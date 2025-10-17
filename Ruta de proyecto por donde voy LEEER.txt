@@ -18,6 +18,7 @@ NUEVAS COSAS PARA AÑADIR LO DE LA FACTURAÑ
 				
 				
 POR DONDE ME LLEGO:    --> he creado los nuevos repository de servicio y facturar , sigueinte es crear la clase controller y los service 
+					    Se ha comentado toda la clase data loder hasta tener listos el resto para asi poder luego hacer nuevos datos de prueba
 
 
 
