@@ -1,0 +1,52 @@
+🧾 1. Tabla: Facturas
+Campo	Situación actual	Comentario / Recomendación
+id_factura	✅ Correcto	Clave primaria.
+numero_factura	✅ Correcto	Ejemplo: “07/24”, “45/24” coincide con los PDFs.
+fecha_emision	✅ Correcto	Coincide con “FECHA” de la factura.
+cliente_id	✅ Correcto	Representa el cliente (“PROYECTOS ELEME 2022 S.L.”, “INDUSTRIAS DEL FENAR S.A.”, etc.).
+total_bruto	✅ Correcto	Corresponde a “BASE IMPONIBLE” o “TOTAL BRUTO”.
+iva	✅ Correcto	Aparece siempre con 21%. Podrías normalizar el tipo (campo tipo_iva o porcentaje_iva).
+retencion_irpf	✅ Correcto	Aparece -1%. Igual conviene guardar el porcentaje además del importe.
+total_factura	✅ Correcto	Coincide con “TOTAL”.
+➕ cuenta_bancaria	❌ Falta	En todas aparece el IBAN (“ES19 1465...”). Puede ser útil si cambia por empresa.
+➕ emisor_id	❌ Falta	Si el sistema gestiona varias empresas emisoras (como PILOTRANS TIZONA), deberías tener una FK a una tabla Empresas.
+➕ forma_pago	❌ Falta	No aparece explícitamente, pero conviene añadirla si se gestiona (transferencia, efectivo, etc.).
+➕ observaciones_factura	❌ Falta	Espacio para notas globales o condiciones (por ejemplo, “Pago a 30 días”).
+
+✅ Conclusión Facturas: tu estructura base es buena, pero añadiría porcentaje_iva, porcentaje_irpf, cuenta_bancaria, emisor_id y forma_pago para tener un modelo más completo.
+
+🚚 2. Tabla: Servicios
+Campo	Situación actual	Comentario / Recomendación
+id_servicio	✅ Correcto	Clave primaria.
+factura_id	✅ Correcto	FK a facturas.
+tipo_servicio	✅ Correcto	“Transporte urgente”, “Coche piloto”… bien.
+fecha_servicio	✅ Correcto	Aparece como “día xx/xx/xxxx”.
+origen	✅ Correcto	“SALIDA: VA – PIENSOS NANTA…”
+destino	✅ Correcto	“DESTINO: Camasobres (Ponferrada)…”
+conductor	⚠️ Parcial	Solo algunas facturas lo incluyen (ej. MARCOPINOR). Mejor dejarlo opcional (NULL).
+km	✅ Correcto	Aparece siempre.
+precio_km	✅ Correcto	0,40 o 0,45 €/km.
+importe_servicio	✅ Correcto	Coincide con el total de la línea.
+dieta	✅ Correcto	En MARCOPINOR hay “Tiempo Espera”, podrías incluir ambos.
+tiempo_espera	✅ Correcto	Aparece en MARCOPINOR (“3,5h”).
+importe_espera	✅ Correcto	12€/h en ese caso.
+observaciones	✅ Correcto	Por ejemplo “ALBARAN: 53161462” o “Transporte CAPELLE”.
+➕ albaran	❌ Falta	Campo propio, ya que aparece en varias líneas de FENAR.
+➕ cliente_final	❌ Falta	A veces hay intermediarios (“para Transportes CAPELLE”) — puede ser útil si el cliente factura a otro.
+➕ matricula_vehiculo	❌ Falta	Aparece en MARCOPINOR (ej. “1234 MGZ”).
+➕ precio_dieta	❌ Falta	Si las dietas no son un importe cerrado, se podría guardar también la tarifa.
+
+✅ Conclusión Servicios: la estructura es sólida, pero te recomiendo añadir albaran, matricula_vehiculo y cliente_final, y opcionalmente desglosar dietas/esperas con tarifas unitarias.
+
+🧠 Resumen general de mejoras
+Tabla	Campo nuevo	Tipo sugerido	Motivo
+Facturas	porcentaje_iva	DECIMAL(5,2)	Poder recalcular IVA si cambia.
+Facturas	porcentaje_irpf	DECIMAL(5,2)	Igual que arriba.
+Facturas	cuenta_bancaria	VARCHAR(34)	Aparece en todas las facturas.
+Facturas	emisor_id	INT (FK)	En caso de múltiples emisores.
+Facturas	forma_pago	VARCHAR	Posible futuro uso.
+Facturas	observaciones_factura	TEXT	Notas generales.
+Servicios	albaran	VARCHAR	Muy común en las facturas.
+Servicios	cliente_final	VARCHAR	“para Transportes CAPELLE”.
+Servicios	matricula_vehiculo	VARCHAR	Figura en MARCOPINOR.
+Servicios	precio_dieta	DECIMAL	Desglose de dietas.
