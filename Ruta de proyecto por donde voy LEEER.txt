@@ -1,25 +1,23 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 
+IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,mas adelante se puede hacer algo para pasar los viajes a servicios
+
+			la idea es que desde la pantalla de empresas se puedan añadir servicios 
+			-->no tenfgo ni idea de donde pondre el boton de generar factura
 
 
-NUEVAS COSAS PARA AÑADIR LO DE LA FACTURAÑ
-		crear nuevas tablas de factura y linea factura
-		
-		
-			empresa (tu empresa)
-				│
-				├── factura (N factura)
-				│       └── linea_factura (detalles del viaje)
-				│
-				└── viaje (datos del servicio, reutilizable)
 				
 				
 				
-				
-POR DONDE ME LLEGO:    --> he creado los nuevos repository de servicio y facturar , sigueinte es crear la clase controller y los service 
+POR DONDE ME LLEGO:   
 					    Se ha comentado toda la clase data loder hasta tener listos el resto para asi poder luego hacer nuevos datos de prueba
-
+							|
+							|--> modificacion me metodos o creacion de nuevoa para tener pruebas de facturas y de servicios >>LISTO
+							|__> corregir datos que faltan en viajes y en empresas
+							
+							
+							Continuar con el fronted
 
 
 
@@ -30,7 +28,7 @@ COSAS PENDIENTES:
 	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
 	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13  --> esto sigue pasando solo que si no se crea es por que ya hay uno con el nombre vaacio
 	-tengo que implementar un boton para volver atras en las pantallas de ver viajes
-	
+	-revisar la creacion de facturas pues si falla no crea la factura pero al crear la sigueinte el id a saltado uno ya 
 	
 	--mas adelante meter las opcione de añadir viajes editar y borrar
 	
@@ -83,6 +81,8 @@ COSAS LISTAS:
 	  -	puedo hacer algo para que me guarde el usuario y contrase;a en un txt asi puedo consultarlo ya que la contrase;a esta encriptada--> LISTO
 	  
 	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
+	  
+	   --> he creado los nuevos repository de servicio y facturar , sigueinte es crear la clase controller y los service >>LISTO
 	  
 	  
 	  

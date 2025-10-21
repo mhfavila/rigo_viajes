@@ -49,7 +49,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public List<EmpresaDTO> listarEmpresas() {
-        // Obtenemos todas las empresas y las convertimos a DTOs
+        // Obtenemos todas las empresas y las convertimos a DTO
         logger.info("Obteniendo todas las empresas");
         return empresaRepository.findAll().stream()
                 .map(EmpresaMapper::toDTO)

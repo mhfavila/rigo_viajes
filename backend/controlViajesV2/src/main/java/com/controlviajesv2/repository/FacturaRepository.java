@@ -9,6 +9,12 @@ import java.util.List;
 
 @Repository
 public interface FacturaRepository extends JpaRepository<Factura, Long> {
+
+
+
+
+
+    /* esto son posibles metodos a futuro para un filtro*/
     // Buscar facturas por empresa
     List<Factura> findByEmpresaId(Long empresaId);
 

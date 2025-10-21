@@ -4,15 +4,11 @@ import com.controlviajesv2.controller.AuthController;
 import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.dto.ViajeDTO;
-import com.controlviajesv2.entity.Empresa;
-import com.controlviajesv2.entity.Usuario;
-import com.controlviajesv2.entity.Viaje;
+import com.controlviajesv2.entity.*;
 import com.controlviajesv2.exception.ResourceNotFoundException;
 import com.controlviajesv2.mapper.EmpresaMapper;
 import com.controlviajesv2.mapper.ViajeMapper;
-import com.controlviajesv2.repository.EmpresaRepository;
-import com.controlviajesv2.repository.UsuarioRepository;
-import com.controlviajesv2.repository.ViajeRepository;
+import com.controlviajesv2.repository.*;
 import com.controlviajesv2.serviceImpl.EmpresaServiceImpl;
 import com.controlviajesv2.serviceImpl.UsuarioServiceImpl;
 import jakarta.validation.Valid;
@@ -34,16 +30,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
-/*
 
-
-descomentar todo esto para tener datos de prueba ,habra que adaptarlo a lo nuevo
 
 /**
  * clase para cargar datos de prueba la primera vez que se crean laas tablas en la bbdd
  */
 
-/*
+
 @Component
 public class DataLoader implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -53,29 +46,34 @@ public class DataLoader implements CommandLineRunner {
     private final EmpresaRepository empresaRepository;
     private final EmpresaServiceImpl empresaServiceImpl;
     private final ViajeRepository viajeRepository;
+    private final FacturaRepository facturaRepository;
+    private final ServicioRepository servicioRepository;
 
-    public DataLoader(UsuarioRepository usuarioRepository, UsuarioServiceImpl usuarioServiceImpl, PasswordEncoder passwordEncoder, EmpresaRepository empresaRepository, EmpresaServiceImpl empresaServiceImpl, ViajeRepository viajeRepository) {
+    public DataLoader(UsuarioRepository usuarioRepository, UsuarioServiceImpl usuarioServiceImpl, PasswordEncoder passwordEncoder, EmpresaRepository empresaRepository, EmpresaServiceImpl empresaServiceImpl, ViajeRepository viajeRepository, FacturaRepository facturaRepository, ServicioRepository servicioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioServiceImpl = usuarioServiceImpl;
         this.passwordEncoder = passwordEncoder;
         this.empresaRepository = empresaRepository;
         this.empresaServiceImpl = empresaServiceImpl;
         this.viajeRepository = viajeRepository;
+        this.facturaRepository = facturaRepository;
+        this.servicioRepository = servicioRepository;
     }
 
     //revisar por ver como creo yo el registro de los nuevos usuaruiso
     @Override
     public void run(String... args) {
         if (usuarioRepository.count() == 0) { // Solo si está vacío
-
+            Map<String, String> usuarios = new HashMap<>();
             for (int i = 0; i < 12; i++) {
+
                 // Crear nuevo usuario con password cifrada
                 Usuario nuevoUsuario = new Usuario();
                 nuevoUsuario.setNombre(Nombre());
                 // nuevoUsuario.setEmail(request.getNombre() + "@tudominio.com"); // Si quieres, puedes pedir email en otro DTO
                 String email = nuevoUsuario.getNombre().replace(" ", "");
                 nuevoUsuario.setEmail(email + "@gmail.com");
-                String contrasena =Contrasena();
+                String contrasena = Contrasena();
                 nuevoUsuario.setPassword(passwordEncoder.encode(contrasena));
 
                 // Asignar rol por defecto
@@ -88,25 +86,38 @@ public class DataLoader implements CommandLineRunner {
                 if (usuarioRepository.findByNombre(nuevoUsuario.getNombre()).isPresent()) {
                     i = i - 1;
                 } else {
-                    guardarEnTxt(nuevoUsuario.getNombre(), contrasena);
+                    usuarios.put(nuevoUsuario.getNombre(), contrasena);
+                    //guardarEnTxt(nuevoUsuario);
                     usuarioRepository.save(nuevoUsuario);
                 }
 
 
+
+
                 logger.info("Intento de registro para el usuario: {}", nuevoUsuario.getNombre());
             }
+            guardarEnTxt(usuarios);
             crearEmpresas();
             crearViajes();
+            cargarFacturasYServicios();
 
         }
     }
 
-    private void guardarEnTxt(String nombre, String contrasena) {
+    private void guardarEnTxt(Map<String, String> usuarios) {
         String rutaArchivo = "C:/Users\\Favila\\Desktop/rigo_viajes/usuarios.txt";// ruta del archivo
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
-            bw.write("Nombre: " + nombre + ", Contraseña: " + contrasena);
-            bw.newLine(); // salto de línea
-            System.out.println("Usuario guardado en archivo txt correctamente.");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo))) {//si quiero que mantenga lo que habia antes puedo a;adir true-->rutaArchivo,true
+
+
+            // 🔹 Recorres cada par (clave, valor)
+            for (Map.Entry<String, String> entry : usuarios.entrySet()) {
+                String nombre = entry.getKey();
+                String contrasena = entry.getValue();
+                bw.write("Nombre: " + nombre + ", Contraseña: " + contrasena);
+                bw.newLine(); // salto de línea
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,6 +143,7 @@ public class DataLoader implements CommandLineRunner {
 
             nuevoViaje.setFecha(fechaViaje());
             nuevoViaje.setPrecioKm(precioKM());
+            nuevoViaje.setOrigen("Valladolid");
             nuevoViaje.setDestino(destino());
             nuevoViaje.setDistancia(distancia());
             //nuevoViaje.setOrigen();
@@ -165,7 +177,7 @@ public class DataLoader implements CommandLineRunner {
         // Generar lista de 50 distancias aleatorias entre 50.0 km y 500.0 km
         for (int i = 0; i < cantidadDistancias; i++) {
             BigDecimal distancia = BigDecimal.valueOf(50.0 + (500.0 - 50.0) * random.nextDouble()); // rango 50.0 - 500.0
-           // distancia = Math.round(distancia.multiply(10.0)  ) / 10.0; // redondear a 1 decimal
+            // distancia = Math.round(distancia.multiply(10.0)  ) / 10.0; // redondear a 1 decimal
             distancias.add(distancia);
         }
 
@@ -235,7 +247,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private BigDecimal precioKM() {
-        List<Double> precios = new ArrayList<>();
+        List<BigDecimal> precios = new ArrayList<>();
         int cantidadPrecios = 50;
         Random random = new Random();
 
@@ -243,7 +255,7 @@ public class DataLoader implements CommandLineRunner {
         for (int i = 0; i < cantidadPrecios; i++) {
             double precio = 0.5 + (100.0 - 10.5) * random.nextDouble(); // rango 10.5 - 100.0
             precio = Math.round(precio * 100.0) / 100.0; // redondear a 2 decimales
-            precios.add(precio);
+            precios.add(BigDecimal.valueOf(precio));
         }
 
         // Elegir un precio aleatorio de la lista
@@ -472,9 +484,82 @@ public class DataLoader implements CommandLineRunner {
     }
 
 
+
+//datos de prueba de servicios y facturas
+
+    private void cargarFacturasYServicios() {
+        List<Empresa> empresas = empresaRepository.findAll();
+        List<Usuario> usuarios = usuarioRepository.findAll();
+
+        if (empresas.isEmpty() || usuarios.isEmpty()) {
+            System.out.println(" No hay empresas o usuarios en la base de datos. No se pueden crear facturas.");
+            return;
+        }
+
+        Random random = new Random();
+
+        for (int i = 1; i <= 10; i++) { // crear 5 facturas de ejemplo
+            Empresa empresa = empresas.get(random.nextInt(empresas.size()));
+            Usuario usuario = usuarios.get(random.nextInt(usuarios.size()));
+
+            Factura factura = Factura.builder()
+                    .numeroFactura("F-" + String.format("%04d", i))
+                    .fechaEmision(LocalDate.now().minusDays(random.nextInt(120)))
+                    .empresa(empresa)
+                    .usuario(usuario)
+                    .totalBruto(BigDecimal.ZERO) // se calculará más abajo
+                    .porcentajeIva(new BigDecimal("21.00"))
+                    .porcentajeIrpf(new BigDecimal("15.00"))
+                    .cuentaBancaria("ES7620770024003102575766")
+                    .formaPago("Transferencia")
+                    .estado("BORRADOR")
+                    .observaciones("Factura generada automáticamente para pruebas.")
+                    .build();
+
+            List<Servicio> servicios = new ArrayList<>();
+            BigDecimal totalBruto = BigDecimal.ZERO;
+            int aleatorioFact = random.nextInt(7) + 1;
+            for (int j = 1; j <= aleatorioFact; j++) { // número aleatorio de servicios entre uno y siete por factura
+                BigDecimal precioKm = new BigDecimal("0.60");
+                int km = 50 + random.nextInt(1000); // 50 a 1000 km
+                BigDecimal importeServicio = precioKm.multiply(BigDecimal.valueOf(km));
+
+                Servicio servicio = Servicio.builder()
+                        .factura(factura)
+                        .tipoServicio("Transporte")
+                        .fechaServicio(factura.getFechaEmision().minusDays(random.nextInt(10)))
+                        .origen(destino())
+                        .destino(destino())
+                        .km(km)
+                        .precioKm(precioKm)
+                        .importeServicio(importeServicio)
+                        .clienteFinal("Cliente " + i)
+                        .observaciones("Servicio de prueba número " + j)
+                        .build();
+
+                servicios.add(servicio);
+                totalBruto = totalBruto.add(importeServicio);
+            }
+
+            factura.setServicios(servicios);
+
+            BigDecimal importeIva = totalBruto.multiply(factura.getPorcentajeIva().divide(new BigDecimal("100")));
+            BigDecimal importeIrpf = totalBruto.multiply(factura.getPorcentajeIrpf().divide(new BigDecimal("100")));
+            BigDecimal totalFactura = totalBruto.add(importeIva).subtract(importeIrpf);
+
+            factura.setTotalBruto(totalBruto);
+            factura.setImporteIva(importeIva);
+            factura.setImporteIrpf(importeIrpf);
+            factura.setTotalFactura(totalFactura);
+
+            facturaRepository.save(factura);
+        }
+
+        System.out.println("✅ Facturas y servicios de prueba creados correctamente.");
+    }
+
 }
 
 
 
 
- */

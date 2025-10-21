@@ -3,6 +3,9 @@ SELECT * from usuario_roles;
 select * from empresas;
 select * from viajes;
 
+select * from facturas;
+SELECT * from servicios;
+
 SELECT 
     u.id AS usuario_id,
     u.nombre AS usuario_nombre,
