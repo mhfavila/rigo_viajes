@@ -1,0 +1,14 @@
+<p>servicio-detalle.component works!</p>
+<div *ngIf="servicio" class="detalle-servicio">
+  <h2>Servicio {{ servicio.id }}</h2>
+
+  <p><strong>Tipo:</strong> {{ servicio.tipoServicio }}</p>
+  <p><strong>Fecha:</strong> {{ servicio.fechaServicio }}</p>
+  <p><strong>Origen:</strong> {{ servicio.origen }}</p>
+  <p><strong>Destino:</strong> {{ servicio.destino }}</p>
+  <p><strong>Conductor:</strong> {{ servicio.conductor }}</p>
+  <p><strong>Vehículo:</strong> {{ servicio.matriculaVehiculo }}</p>
+  <p><strong>Kilómetros:</strong> {{ servicio.km }}</p>
+  <p><strong>Importe:</strong> {{ servicio.importeServicio | currency:'EUR' }}</p>
+  <p><strong>Observaciones:</strong> {{ servicio.observaciones }}</p>
+</div>

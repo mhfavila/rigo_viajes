@@ -29,6 +29,7 @@ public final class AppConstants {
     //ServicioController
     public static final String REQUEST_SERVICIOCONTROLLER = "/api/servicios" ;
     public static final String REQUEST_SERVICIOCONTROLLER_ID = "/{id}";
+    public static final String REQUEST_SERVICIOCONTROLLER_IDEMPRESA = "/empresa/{empresaId}";
 
 
 

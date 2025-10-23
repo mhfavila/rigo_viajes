@@ -27,6 +27,9 @@ public interface FacturaRepository extends JpaRepository<Factura, Long> {
     // Buscar facturas por estado
     List<Factura> findByEstado(String estado);
 
+
+    //metodo para los datos de prueba que verifica que solo haya una factura con el numero de factura
+    boolean existsByNumeroFactura(String numero);
 }
 
 

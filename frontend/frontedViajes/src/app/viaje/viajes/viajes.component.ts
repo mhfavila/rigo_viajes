@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ViajesServices, Viaje } from '../servicios/viajes.service';
+import { ViajesServices, Viaje } from '../../services/viajes.service';
 
 @Component({
   selector: 'app-viajes',

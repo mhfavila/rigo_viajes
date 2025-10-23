@@ -20,8 +20,12 @@ public class Servicio {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "factura_id", nullable = false)
+    @JoinColumn(name = "factura_id")
     private Factura factura;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "empresa_id", nullable = false)
+    private Empresa empresa;
 
     @Column(name = "tipo_servicio", nullable = false)
     private String tipoServicio;

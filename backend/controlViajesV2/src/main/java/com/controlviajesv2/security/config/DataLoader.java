@@ -99,7 +99,8 @@ public class DataLoader implements CommandLineRunner {
             guardarEnTxt(usuarios);
             crearEmpresas();
             crearViajes();
-            cargarFacturasYServicios();
+            cargarServiciosDePrueba();
+            generarFacturasDePrueba();
 
         }
     }
@@ -485,77 +486,105 @@ public class DataLoader implements CommandLineRunner {
 
 
 
-//datos de prueba de servicios y facturas
-
-    private void cargarFacturasYServicios() {
+    private void cargarServiciosDePrueba() {
         List<Empresa> empresas = empresaRepository.findAll();
         List<Usuario> usuarios = usuarioRepository.findAll();
 
         if (empresas.isEmpty() || usuarios.isEmpty()) {
-            System.out.println(" No hay empresas o usuarios en la base de datos. No se pueden crear facturas.");
+            System.out.println("No hay empresas o usuarios en la base de datos. No se pueden crear servicios de prueba.");
             return;
         }
 
         Random random = new Random();
 
-        for (int i = 1; i <= 10; i++) { // crear 5 facturas de ejemplo
+        for (int i = 1; i <= 20; i++) { // crear 20 servicios de ejemplo
             Empresa empresa = empresas.get(random.nextInt(empresas.size()));
-            Usuario usuario = usuarios.get(random.nextInt(usuarios.size()));
 
-            Factura factura = Factura.builder()
-                    .numeroFactura("F-" + String.format("%04d", i))
-                    .fechaEmision(LocalDate.now().minusDays(random.nextInt(120)))
-                    .empresa(empresa)
-                    .usuario(usuario)
-                    .totalBruto(BigDecimal.ZERO) // se calculará más abajo
-                    .porcentajeIva(new BigDecimal("21.00"))
-                    .porcentajeIrpf(new BigDecimal("15.00"))
-                    .cuentaBancaria("ES7620770024003102575766")
-                    .formaPago("Transferencia")
-                    .estado("BORRADOR")
-                    .observaciones("Factura generada automáticamente para pruebas.")
+            BigDecimal precioKm = new BigDecimal("0.60");
+            int km = 50 + random.nextInt(1000); // 50 a 1000 km
+            BigDecimal importeServicio = precioKm.multiply(BigDecimal.valueOf(km));
+
+            Servicio servicio = Servicio.builder()
+                    .empresa(empresa) // ✅ ahora obligatorio
+                    .tipoServicio("Transporte")
+                    .fechaServicio(LocalDate.now().minusDays(random.nextInt(30)))
+                    .origen(destino())
+                    .destino(destino())
+                    .km(km)
+                    .precioKm(precioKm)
+                    .importeServicio(importeServicio)
+                    .clienteFinal("Cliente " + i)
+                    .observaciones("Servicio de prueba número " + i)
                     .build();
 
-            List<Servicio> servicios = new ArrayList<>();
-            BigDecimal totalBruto = BigDecimal.ZERO;
-            int aleatorioFact = random.nextInt(7) + 1;
-            for (int j = 1; j <= aleatorioFact; j++) { // número aleatorio de servicios entre uno y siete por factura
-                BigDecimal precioKm = new BigDecimal("0.60");
-                int km = 50 + random.nextInt(1000); // 50 a 1000 km
-                BigDecimal importeServicio = precioKm.multiply(BigDecimal.valueOf(km));
-
-                Servicio servicio = Servicio.builder()
-                        .factura(factura)
-                        .tipoServicio("Transporte")
-                        .fechaServicio(factura.getFechaEmision().minusDays(random.nextInt(10)))
-                        .origen(destino())
-                        .destino(destino())
-                        .km(km)
-                        .precioKm(precioKm)
-                        .importeServicio(importeServicio)
-                        .clienteFinal("Cliente " + i)
-                        .observaciones("Servicio de prueba número " + j)
-                        .build();
-
-                servicios.add(servicio);
-                totalBruto = totalBruto.add(importeServicio);
-            }
-
-            factura.setServicios(servicios);
-
-            BigDecimal importeIva = totalBruto.multiply(factura.getPorcentajeIva().divide(new BigDecimal("100")));
-            BigDecimal importeIrpf = totalBruto.multiply(factura.getPorcentajeIrpf().divide(new BigDecimal("100")));
-            BigDecimal totalFactura = totalBruto.add(importeIva).subtract(importeIrpf);
-
-            factura.setTotalBruto(totalBruto);
-            factura.setImporteIva(importeIva);
-            factura.setImporteIrpf(importeIrpf);
-            factura.setTotalFactura(totalFactura);
-
-            facturaRepository.save(factura);
+            servicioRepository.save(servicio);
         }
 
-        System.out.println("✅ Facturas y servicios de prueba creados correctamente.");
+        System.out.println("✅ Servicios de prueba creados correctamente.");
+    }
+
+    private void generarFacturasDePrueba() {
+        List<Empresa> empresas = empresaRepository.findAll();
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        Random random = new Random();
+
+        if (usuarios.isEmpty()) {
+            System.out.println("⚠️ No hay usuarios en la base de datos. No se pueden generar facturas.");
+            return;
+        }
+
+        for (Empresa empresa : empresas) {
+            List<Servicio> serviciosPendientes = servicioRepository.findByEmpresaAndFacturaIsNull(empresa);
+            if (serviciosPendientes.isEmpty()) continue;
+
+            int numServicios = Math.min(serviciosPendientes.size(), random.nextInt(5) + 1);
+            List<Servicio> serviciosAFacturar = new ArrayList<>(serviciosPendientes.subList(0, numServicios));
+
+            BigDecimal totalBruto = serviciosAFacturar.stream()
+                    .map(Servicio::getImporteServicio)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            BigDecimal porcentajeIva = new BigDecimal("21.00");
+            BigDecimal porcentajeIrpf = new BigDecimal("15.00");
+
+            BigDecimal importeIva = totalBruto.multiply(porcentajeIva).divide(new BigDecimal("100"));
+            BigDecimal importeIrpf = totalBruto.multiply(porcentajeIrpf).divide(new BigDecimal("100"));
+            BigDecimal totalFactura = totalBruto.add(importeIva).subtract(importeIrpf);
+
+            Usuario usuario = usuarios.get(random.nextInt(usuarios.size()));
+            String numero;
+            do {
+                numero = "F-" + String.format("%04d", random.nextInt(1000));
+            } while (facturaRepository.existsByNumeroFactura(numero));
+
+            Factura factura = Factura.builder()
+                    .numeroFactura(numero)
+                    .fechaEmision(LocalDate.now())
+                    .empresa(empresa)
+                    .usuario(usuario)
+                    .totalBruto(totalBruto)
+                    .porcentajeIva(porcentajeIva)
+                    .importeIva(importeIva)
+                    .porcentajeIrpf(porcentajeIrpf)
+                    .importeIrpf(importeIrpf)
+                    .totalFactura(totalFactura)
+                    .estado("BORRADOR")
+                    .observaciones("Factura de prueba generada automáticamente")
+                    .build();
+
+
+            facturaRepository.save(factura);
+            // Asignar la factura a los servicios
+            for (Servicio s : serviciosAFacturar) {
+                s.setFactura(factura);
+                servicioRepository.save(s);
+            }
+
+
+
+        }
+
+        System.out.println("✅ Facturas de prueba generadas correctamente.");
     }
 
 }

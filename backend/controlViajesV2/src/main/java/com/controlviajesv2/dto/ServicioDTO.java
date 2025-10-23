@@ -17,8 +17,10 @@ public class ServicioDTO {
 
     private Long id;
 
-    @NotNull(message = "La factura no puede ser nula")
+
     private Long facturaId;
+
+    private Long empresaId;
 
     @NotBlank(message = "El tipo de servicio no puede estar vacío")
     private String tipoServicio;

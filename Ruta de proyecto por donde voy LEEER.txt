@@ -14,10 +14,23 @@ POR DONDE ME LLEGO:
 					    Se ha comentado toda la clase data loder hasta tener listos el resto para asi poder luego hacer nuevos datos de prueba
 							|
 							|--> modificacion me metodos o creacion de nuevoa para tener pruebas de facturas y de servicios >>LISTO
-							|__> corregir datos que faltan en viajes y en empresas
+							|__> corregir datos que faltan en viajes y en empresas y servicos y facturas
 							
 							
-							Continuar con el fronted
+							Continuar con el fronted  --> 
+								
+								Lo que necesitas hacer poco a poco
+														ACTUALMENTE ME ESTA FALLANDO AL MSOTRAR LSO SERVICIOS  '':Hacer un script en bbdd para meter dos usuarios con todos los datos tanto de mepresa como de viaje de servicio y de factura
+
+										-Pantalla de Servicios: mostrar los servicios y dejar seleccionar algunos. -->necesitare hacer un endpoint para buscar servicios por empresa
+										
+										--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y darle forma y colocar quizas tambien informacion d ela empresa y del usuario
+
+										-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.
+
+										-Pantalla de Facturas: mostrar las facturas creadas.
+
+								(más adelante) Conectar con el backend con un endpoint para generar la factura.
 
 
 
@@ -83,6 +96,8 @@ COSAS LISTAS:
 	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
 	  
 	   --> he creado los nuevos repository de servicio y facturar , sigueinte es crear la clase controller y los service >>LISTO
+	   
+	   HE CORREGIDO LA BBDD PARA QUE LOS SERVICIOS NO DEPENDAN DE LA FACTURA SINO DE LA EMPRESA >>LISTO
 	  
 	  
 	  

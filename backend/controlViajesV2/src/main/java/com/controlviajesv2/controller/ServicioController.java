@@ -1,6 +1,7 @@
 package com.controlviajesv2.controller;
 
 import com.controlviajesv2.dto.ServicioDTO;
+import com.controlviajesv2.dto.ViajeDTO;
 import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.service.ServicioService;
 import com.controlviajesv2.util.AppConstants;
@@ -55,5 +56,15 @@ public class ServicioController {
         logger.info("Eliminando servicio con ID: {}", id);
         servicioService.eliminarServicio(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * metodo encargado de devolver los servicios de una empresa
+     * @param empresaId
+     * @return
+     */
+    @GetMapping(AppConstants.REQUEST_SERVICIOCONTROLLER_IDEMPRESA)
+    public List<ServicioDTO> getServiciossPorEmpresa(@PathVariable Long empresaId) {
+        return servicioService.findByEmpresaId(empresaId);
     }
 }

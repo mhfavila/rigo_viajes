@@ -1,6 +1,7 @@
 package com.controlviajesv2.service;
 
 import com.controlviajesv2.dto.ServicioDTO;
+import com.controlviajesv2.dto.ViajeDTO;
 import com.controlviajesv2.entity.Servicio;
 
 import java.util.List;
@@ -25,4 +26,10 @@ public interface ServicioService {
 
     // Eliminar un servicio por su ID
     void eliminarServicio(Long id);
+
+    //busca los servicios de una empresa por su id
+    List<ServicioDTO> findByEmpresaId(Long empresaId);
+
+
+
 }

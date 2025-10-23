@@ -1,63 +1,68 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 
-import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
-import { RegistroComponent } from './registro/registro.component';
-import { EmpresasComponent } from './empresas/empresas.component';
-import { EmpresaDetalleDialog } from './empresa-detalle-dialog/empresa-detalle-dialog';
-import { MatDialogContent } from '@angular/material/dialog';
-import { MatDialogActions } from '@angular/material/dialog';
+// Componentes
+import { LoginComponent } from './usuario/login/login.component';
+import { RegistroComponent } from './usuario/registro/registro.component';
+import { EmpresasComponent } from './empresa/empresas/empresas.component';
+import { EmpresaDetalleDialog } from './empresa/empresa-detalle-dialog/empresa-detalle-dialog';
+import { EmpresaModalComponent } from './empresa/empresa-modal/empresa-modal.component';
+import { ViajesComponent } from './viaje/viajes/viajes.component';
+import { FacturasComponent } from './factura/facturas/facturas.component';
+import { ServiciosFactuComponent } from './servicio/servicios-factu/servicios-factu.component';
+import { ServicioDetalleComponent } from './servicio/servicio-detalle/servicio-detalle.component';
 
+// Angular Material
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { ViajesComponent } from './viajes/viajes.component';
-import { EmpresaModalComponent } from './empresa-modal/empresa-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { FacturasComponent } from './facturas/facturas.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @NgModule({
   declarations: [
     App,
-
     LoginComponent,
-
     RegistroComponent,
     EmpresasComponent,
     EmpresaDetalleDialog,
-    ViajesComponent,
     EmpresaModalComponent,
+    ViajesComponent,
     FacturasComponent,
+    ServiciosFactuComponent,
+    ServicioDetalleComponent,
   ],
   imports: [
-    MatTableModule,
-    MatDialogModule,
-    MatButtonModule,
     BrowserModule,
+    CommonModule,
+    RouterModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatDialogContent,
-    MatDialogActions,
     ReactiveFormsModule,
-    MatTooltipModule,
+    // Material
+    MatTableModule,
+    MatDialogModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
+    MatTooltipModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [],
   bootstrap: [App],
 })
 export class AppModule {}

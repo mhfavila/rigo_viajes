@@ -1,9 +1,9 @@
-import { Empresa } from './../servicios/empresa.service';
+import { Empresa } from '../../services/empresa.service';
 import { Component, OnInit } from '@angular/core';
-import { EmpresaService } from '../servicios/empresa.service';
-import { AuthService } from '../servicios/auth.service';
+import { EmpresaService } from '../../services/empresa.service';
+import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpresaDetalleDialog } from '../empresa-detalle-dialog/empresa-detalle-dialog';
+import { EmpresaDetalleDialog } from '../../empresa/empresa-detalle-dialog/empresa-detalle-dialog';
 import { Router } from '@angular/router';
 import { EmpresaModalComponent } from '../empresa-modal/empresa-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -58,9 +58,9 @@ export class EmpresasComponent implements OnInit {
     });
   }
 
-  verViajes(empresa: any) {
-    console.log('Navegando a viajes de la empresa con id:', empresa.id);
-    this.router.navigate(['/viajes', empresa.id]);
+  verServicios(empresa: any) {
+    console.log('Navegando a servicios de la empresa con id:', empresa.id);
+    this.router.navigate(['empresas', empresa.id, 'servicios']);
   }
   abrirModal() {
   const dialogRef = this.dialog.open(EmpresaModalComponent, {

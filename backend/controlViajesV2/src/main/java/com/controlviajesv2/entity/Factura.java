@@ -60,7 +60,7 @@ public class Factura {
     @Column(columnDefinition = "TEXT")
     private String observaciones;
 
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "factura",  orphanRemoval = true)
     private List<Servicio> servicios;
 
     @Column(length = 20)

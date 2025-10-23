@@ -1,6 +1,7 @@
 package com.controlviajesv2.mapper;
 
 import com.controlviajesv2.dto.ServicioDTO;
+import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
 
@@ -12,6 +13,7 @@ public class ServicioMapper {
         return ServicioDTO.builder()
                 .id(servicio.getId())
                 .facturaId(servicio.getFactura() != null ? servicio.getFactura().getId() : null)
+                .empresaId(servicio.getEmpresa().getId())
                 .tipoServicio(servicio.getTipoServicio())
                 .fechaServicio(servicio.getFechaServicio())
                 .origen(servicio.getOrigen())
@@ -19,6 +21,7 @@ public class ServicioMapper {
                 .conductor(servicio.getConductor())
                 .matriculaVehiculo(servicio.getMatriculaVehiculo())
                 .km(servicio.getKm())
+
                 .precioKm(servicio.getPrecioKm())
                 .importeServicio(servicio.getImporteServicio())
                 .dieta(servicio.getDieta())
@@ -32,12 +35,13 @@ public class ServicioMapper {
                 .build();
     }
 
-    public static Servicio toEntity(ServicioDTO dto, Factura factura) {
+    public static Servicio toEntity(ServicioDTO dto, Empresa empresa) {
         if (dto == null) return null;
 
         return Servicio.builder()
                 .id(dto.getId())
-                .factura(factura)
+
+                .empresa(empresa)
                 .tipoServicio(dto.getTipoServicio())
                 .fechaServicio(dto.getFechaServicio())
                 .origen(dto.getOrigen())

@@ -1,0 +1,47 @@
+<h2>Servicios de la empresa {{ empresaId }}</h2>
+
+<div *ngIf="servicios.length > 0; else noServicios">
+  <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="width: 40px;"></th> <!-- Columna para checkbox -->
+        <th style="width: 60px;">ID</th>
+        <th>Tipo</th>
+        <th>Fecha</th>
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>KM</th>
+        <th>Precio KM</th>
+        <th>Importe (€)</th>
+        <th style="width: 80px;">Factura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of servicios">
+        <!-- Siempre hay una celda, checkbox solo si facturaId es null -->
+        <td>
+          <ng-container *ngIf="!s.facturaId; else vacio">
+            <input type="checkbox" [(ngModel)]="s.seleccionado">
+          </ng-container>
+          <ng-template #vacio></ng-template>
+        </td>
+        <td style="width: 60px;">
+          {{ s.id }}
+        <a href="#" (click)="abrirServicio(s.id, $event)">{{ s.id }}</a>
+        </td>
+        <td>{{ s.tipoServicio }}</td>
+        <td>{{ s.fechaServicio | date:'shortDate' }}</td>
+        <td>{{ s.origen }}</td>
+        <td>{{ s.destino }}</td>
+        <td>{{ s.km }}</td>
+        <td>{{ s.precioKm }}</td>
+        <td>{{ s.importeServicio | number:'1.2-2' }}</td> <!--ajsuta como maximo y como minimo dos decimales el numero que viene en importe servicio-->
+        <td style="width: 80px;">{{ s.facturaId || '—' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noServicios>
+  <p>No hay servicios registrados para esta empresa.</p>
+</ng-template>

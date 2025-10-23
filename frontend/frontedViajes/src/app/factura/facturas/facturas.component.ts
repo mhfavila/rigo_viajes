@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Empresa, EmpresaService } from '../servicios/empresa.service';
-import { Viaje, ViajesServices } from '../servicios/viajes.service';
+import { Empresa, EmpresaService } from '../../services/empresa.service';
+import { Viaje, ViajesServices } from '../../services/viajes.service';
 
 // Extendemos la interfaz Viaje para añadir 'seleccionado'
 interface ViajeSeleccionable extends Viaje {

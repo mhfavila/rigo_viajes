@@ -1,10 +1,12 @@
 package com.controlviajesv2.serviceImpl;
 
 import com.controlviajesv2.dto.ServicioDTO;
+import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.exception.ResourceNotFoundException;
 import com.controlviajesv2.mapper.ServicioMapper;
+import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.FacturaRepository;
 import com.controlviajesv2.repository.ServicioRepository;
 import com.controlviajesv2.service.ServicioService;
@@ -28,26 +30,31 @@ public class ServicioServiceImpl implements ServicioService {
 
     private final ServicioRepository servicioRepository;
     private final FacturaRepository facturaRepository;
+    private final EmpresaRepository empresaRepository;
 
-    public ServicioServiceImpl(ServicioRepository servicioRepository, FacturaRepository facturaRepository) {
+
+    public ServicioServiceImpl(ServicioRepository servicioRepository, FacturaRepository facturaRepository, EmpresaRepository empresaRepository) {
         this.servicioRepository = servicioRepository;
         this.facturaRepository = facturaRepository;
+        this.empresaRepository = empresaRepository;
     }
 
     @Override
     public ServicioDTO crearServicio(ServicioDTO servicioDTO) {
         logger.info("Creando un nuevo servicio tipo: {}", servicioDTO.getTipoServicio());
 
-        // Obtener la factura asociada
-        Factura factura = facturaRepository.findById(servicioDTO.getFacturaId())
+
+        Empresa empresa = empresaRepository.findById(servicioDTO.getEmpresaId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Factura no encontrada con ID: " + servicioDTO.getFacturaId()));
+                        "Empresa no encontrada con ID: " + servicioDTO.getEmpresaId()));
 
-        // Convertir DTO a entidad
-        Servicio servicio = ServicioMapper.toEntity(servicioDTO, factura);
+        // ⚙️ Convertir DTO a entidad (sin factura, pero con empresa)
+        Servicio servicio = ServicioMapper.toEntity(servicioDTO, empresa);
 
-        // Guardar y retornar el DTO
+        // 💾 Guardar el servicio
         Servicio guardado = servicioRepository.save(servicio);
+
+        // 🔁 Devolver el DTO
         return ServicioMapper.toDTO(guardado);
     }
 
@@ -112,5 +119,18 @@ public class ServicioServiceImpl implements ServicioService {
             throw new ResourceNotFoundException("Servicio no encontrado con ID: " + id);
         }
         servicioRepository.deleteById(id);
+    }
+
+    /**
+     * busca los serviciso asociados a una empresa
+     * @param empresaId
+     * @return
+     */
+    @Override
+    public List<ServicioDTO> findByEmpresaId(Long empresaId) {
+        return servicioRepository.findByEmpresaId(empresaId)
+                .stream()
+                .map(ServicioMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
