@@ -24,6 +24,8 @@ public final class AppConstants {
     //FacturaController
     public static final String REQUEST_FACTURACONTROLLER = "/api/facturas" ;
     public static final String REQUEST_FACTURACONTROLLER_ID = "/{id}";
+    public static final String REQUEST_FACTURAS_EMPRESA_ID = "/empresa/{empresaId}";
+
 
 
     //ServicioController

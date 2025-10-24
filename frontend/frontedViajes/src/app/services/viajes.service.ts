@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Viaje } from '../viaje/viaje.model';
 
-export interface Viaje {
-  id: number;
-  destino: string;
-  distancia: number;
-  precioKm: number;
-  fecha: string;
-  empresaId: number;
-}
+
+
 
 @Injectable({
   providedIn: 'root',

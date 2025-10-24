@@ -112,6 +112,12 @@ SELECT
 FROM servicios s
 WHERE s.empresa_id = 201
 ORDER BY s.id;
+------------------------
+--consulta para ver las facturas de una empresa
+SELECT *
+FROM facturas
+WHERE empresa_id = 201
+ORDER BY fecha_emision DESC;
 -----------------------
 --consulta para ver las empresasa que no tienen servicios
 SELECT 

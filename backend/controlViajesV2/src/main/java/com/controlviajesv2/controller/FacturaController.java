@@ -76,4 +76,14 @@ public class FacturaController {
         facturaService.eliminarFactura(id);
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     * Devuelve todas las facturas de una empresa concreta
+     * @param empresaId id de la empresa
+     * @return lista de facturas
+     */
+    @GetMapping(AppConstants.REQUEST_FACTURAS_EMPRESA_ID)
+    public List<FacturaDTO> getFacturasPorEmpresa(@PathVariable("empresaId") Long empresaId) {
+        return facturaService.getFacturasPorEmpresa(empresaId);
+    }
 }

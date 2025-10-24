@@ -26,6 +26,10 @@ POR DONDE ME LLEGO:
 										
 										--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y darle forma y colocar quizas tambien informacion d ela empresa y del usuario
 
+										--La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados , y que desde la pantalla de mepresa pueda ver las facturas ya creadas y desde ahi dentro se pueda generar el pdf
+										
+										
+										
 										-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.
 
 										-Pantalla de Facturas: mostrar las facturas creadas.

@@ -1,30 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Servicio } from './../servicio/servicio.model';
 
-export interface Servicio {
-  id: number;
-  facturaId?: number;
-  empresaId: number;
-  tipoServicio: string;
-  fechaServicio: string; // formato ISO: '2025-10-22'
-  origen: string;
-  destino: string;
-  conductor?: string;
-  matriculaVehiculo?: string;
-  km: number;
-  precioKm: number;
-  importeServicio: number;
-  dieta?: number;
-  precioDieta?: number;
-  horasEspera?: number;
-  importeEspera?: number;
-  albaran?: string;
-  clienteFinal?: string;
-  observaciones?: string;
-  orden?: number;
-  seleccionado?: boolean;
-}
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ServiciosFactService, Servicio } from '../../services/servicios-fact.service';
+import { ServiciosFactService } from '../../services/servicios-fact.service';
+import { Servicio } from '../servicio.model';
 
 @Component({
   selector: 'app-servicio-detalle',

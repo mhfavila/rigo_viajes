@@ -21,7 +21,7 @@ const routes: Routes = [{ path: 'login', component: LoginComponent },
   { path: 'servicio/:id', component: ServicioDetalleComponent },
   { path: 'registro', component: RegistroComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
- { path: 'facturas', component: FacturasComponent },
+ { path: 'facturas/:empresaId', component: FacturasComponent },
 ];
 
 @NgModule({

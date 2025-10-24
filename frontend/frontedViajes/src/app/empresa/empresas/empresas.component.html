@@ -42,8 +42,8 @@
 
           <button mat-icon-button class="btn-ver" color="primary"
             matTooltip="Ver Factura"
-            [routerLink]="['/facturas']"
-            [queryParams]="{ empresaId: empresa.id }">
+            [routerLink]="['/facturas', empresa.id]"
+            >
             <mat-icon>receipt_long</mat-icon>
           </button>
         </td>

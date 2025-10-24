@@ -25,12 +25,14 @@ public class FacturaServiceImpl implements FacturaService {
     private final EmpresaRepository empresaRepository;
     private final UsuarioRepository usuarioRepository;
 
+
     public FacturaServiceImpl(FacturaRepository facturaRepository,
                               EmpresaRepository empresaRepository,
                               UsuarioRepository usuarioRepository) {
         this.facturaRepository = facturaRepository;
         this.empresaRepository = empresaRepository;
         this.usuarioRepository = usuarioRepository;
+
     }
 
     @Override
@@ -110,5 +112,20 @@ public class FacturaServiceImpl implements FacturaService {
             throw new ResourceNotFoundException("Factura no encontrada con ID: " + id);
         }
         facturaRepository.deleteById(id);
+    }
+
+
+    /**
+     * busca las facturas de una empresa
+     * @param empresaId
+     * @return
+     */
+    @Override
+    public List<FacturaDTO> getFacturasPorEmpresa(Long empresaId) {
+
+        List<Factura> facturas = facturaRepository.findByEmpresaId(empresaId);
+        return facturas.stream()
+                .map(FacturaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

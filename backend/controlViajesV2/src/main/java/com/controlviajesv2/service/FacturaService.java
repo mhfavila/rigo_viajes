@@ -21,4 +21,7 @@ public interface FacturaService {
 
     // Elimina una factura por su ID
     void eliminarFactura(Long id);
+
+//busca las facturas de una empresa, busca por él, id de la empresa
+    List<FacturaDTO> getFacturasPorEmpresa(Long empresaId);
 }

@@ -1,7 +1,9 @@
 import { Component,OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServiciosFactService, Servicio } from '../../services/servicios-fact.service';
+import { ServiciosFactService } from '../../services/servicios-fact.service';
+import { Servicio } from '../servicio.model';
+
 
 @Component({
   selector: 'app-servicios-factu.component',
@@ -62,6 +64,11 @@ export class ServiciosFactuComponent implements OnInit {
     `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
   );
 }
+//muestra los servicios que tienen marcado el check ,luego se modificara para a;adir esos servicios a las facturas
+ mostrarSeleccionados(): void {
+    const seleccionados = this.servicios.filter(s => s.seleccionado);
+    console.log('Servicios seleccionados:', seleccionados);
+  }
 
 }
 

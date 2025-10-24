@@ -1,17 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Empresa } from '../empresa/empresa.model';
 
-export interface Empresa {
- // id?: number;        // opcional al crear
-  nombre: string;
-  cif: string;
-  direccion: string;
-  telefono: string;
-  email: string;
-  usuarioId?: number;  // referencia al usuario propietario
 
-}
 
 @Injectable({
   providedIn: 'root',
