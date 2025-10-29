@@ -44,4 +44,19 @@ export class FacturasComponent implements OnInit {
       console.warn('No se encontró empresaId en la ruta');
     }
   }
+
+
+descargarFacturaPdf(facturaId: number) {
+    this.facturaService.descargarPdf(facturaId).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `factura_${facturaId}.pdf`;
+      a.click();
+    });
+  }
+
+
+
 }

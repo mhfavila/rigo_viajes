@@ -25,6 +25,8 @@ public final class AppConstants {
     public static final String REQUEST_FACTURACONTROLLER = "/api/facturas" ;
     public static final String REQUEST_FACTURACONTROLLER_ID = "/{id}";
     public static final String REQUEST_FACTURAS_EMPRESA_ID = "/empresa/{empresaId}";
+        //generarpdf
+        public static final String REQUEST_FACTURAS_PDF_ID = "/{id}/pdf";
 
 
 
@@ -32,6 +34,8 @@ public final class AppConstants {
     public static final String REQUEST_SERVICIOCONTROLLER = "/api/servicios" ;
     public static final String REQUEST_SERVICIOCONTROLLER_ID = "/{id}";
     public static final String REQUEST_SERVICIOCONTROLLER_IDEMPRESA = "/empresa/{empresaId}";
+
+
 
 
 

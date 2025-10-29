@@ -4,10 +4,14 @@ package com.controlviajesv2.controller;
 
 import com.controlviajesv2.dto.FacturaDTO;
 import com.controlviajesv2.service.FacturaService;
+import com.controlviajesv2.serviceImpl.pdf.FacturaPdfService;
 import com.controlviajesv2.util.AppConstants;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +24,11 @@ public class FacturaController {
     private static final Logger logger = LoggerFactory.getLogger(FacturaController.class);
 
     private final FacturaService facturaService;
+    private final FacturaPdfService facturaPdfService;
 
-    public FacturaController(FacturaService facturaService) {
+    public FacturaController(FacturaService facturaService, FacturaPdfService facturaPdfService) {
         this.facturaService = facturaService;
+        this.facturaPdfService = facturaPdfService;
     }
 
     /**
@@ -86,4 +92,28 @@ public class FacturaController {
     public List<FacturaDTO> getFacturasPorEmpresa(@PathVariable("empresaId") Long empresaId) {
         return facturaService.getFacturasPorEmpresa(empresaId);
     }
+
+    /**
+     * Genera y devuelve el PDF de una factura concreta
+     * @param id el id de la factura
+     * @return
+     */
+    @GetMapping(value = AppConstants.REQUEST_FACTURAS_PDF_ID, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> generarFacturaPdf(@PathVariable Long id) {
+        try {
+            byte[] pdf = facturaPdfService.generarPdf(id);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline; filename=factura_" + id + ".pdf");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdf);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

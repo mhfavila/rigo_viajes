@@ -20,9 +20,9 @@ POR DONDE ME LLEGO:
 							Continuar con el fronted  --> 
 								
 								Lo que necesitas hacer poco a poco
-														ACTUALMENTE ME ESTA FALLANDO AL MSOTRAR LSO SERVICIOS  '':Hacer un script en bbdd para meter dos usuarios con todos los datos tanto de mepresa como de viaje de servicio y de factura
+														
 
-										-Pantalla de Servicios: mostrar los servicios y dejar seleccionar algunos. -->necesitare hacer un endpoint para buscar servicios por empresa
+										-Pantalla de Servicios: mostrar los servicios y dejar seleccionar algunos. -->necesitare hacer un endpoint para buscar servicios por empresa--LISTO
 										
 										--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y darle forma y colocar quizas tambien informacion d ela empresa y del usuario
 
@@ -32,9 +32,15 @@ POR DONDE ME LLEGO:
 										
 										-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.
 
-										-Pantalla de Facturas: mostrar las facturas creadas.
+										-Pantalla de Facturas: mostrar las facturas creadas.--> LISTO
 
-								(más adelante) Conectar con el backend con un endpoint para generar la factura.
+								Conectar con el backend con un endpoint para generar la factura.--> LISTO 
+								
+								
+								POR AQUI ME LLEGO:
+								
+								-->REVISAR COMO GENERA EL PDF PARA ADAPTARLO A LO QUE NECESITO
+								-->FALTA QUE DESDE SERVICIOS SE CRE LA FACTURA
 
 
 
