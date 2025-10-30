@@ -3,66 +3,95 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,mas adelante se puede hacer algo para pasar los viajes a servicios
 
-			la idea es que desde la pantalla de empresas se puedan añadir servicios 
-			-->no tenfgo ni idea de donde pondre el boton de generar factura
+		
+			
 
 
 				
 				
 				
 POR DONDE ME LLEGO:   
-					    Se ha comentado toda la clase data loder hasta tener listos el resto para asi poder luego hacer nuevos datos de prueba
-							|
-							|--> modificacion me metodos o creacion de nuevoa para tener pruebas de facturas y de servicios >>LISTO
-							|__> corregir datos que faltan en viajes y en empresas y servicos y facturas
-							
-							
-							Continuar con el fronted  --> 
-								
-								Lo que necesitas hacer poco a poco
+			En la pantalla de ver servicios 
+						>reorganizar la tabla para mostrar menos informacion
+						>agregar una columna de acciones parabotones de editar y eliminar 
+						>meter un boton para crear nuevos servicios 
+						>mejorar la interfaz con css
+						>dentro de cada servicio dar forma a como ver la informacion en la pantalla a,algo estilo madrid digital o preguntar a chatgpt 
+													|>>--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y 
+														darle forma y colocar quizas tambien informacion d ela empresa y del usuario
+						>La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados ,
+						>-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.	
+						
+			Fronted>
+					en empresa esta el iban ahora hay que a;adirlo para crear empresa
+										
+						
+						
+			
+			
+			En ENTIDADES 
+					|> corregir datos que faltan en viajes y en empresas y servicos y facturas
+					|>	>>Probablemete habra que a;adir en los servicios algo del estilo  destino dos (hablar con rigo para ver como funciona eso)	
+					|> faltaria hacer algo que calcule el importe total del servicio (sumar precio kilometros a tiempo de espera y demas cosas)	
+					|> mirar si para meter direciones hay algo como un domi de MD que te saque en la direcion todos los datos como cp ,provincia calle etc
+					-> en la clase usuario meter estos campos para poder sacarlos en la factura
+													-Direccion
+													-codigo postal y provincia
+													-Nombre de la due;a de la empresa o del titular 
+													- su dni
+													-numero de cuenta
+													Volver a poner lo  de por defecto en el registro el rol ROL_USER en el fronted va esto
+					-> en la clase empresa a;adir campos para poder meterlos en la factura
+														codigo postal 
+														provincia
 														
+					>faltan por a;adir datos a la factura	
+					
+					. mirar los filtros que se quieren poner como alguno para solo selecionar los viajes por id o algo asi o como sacar algo para que haga un marcado y poder ir selecionando uno a uno 
+					
+					
+					
+					
+					
+					
+			COSAS:
+				->-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
+				->-tengo que implementar un boton para volver atras en todas las pantallas 
+									
 
-										-Pantalla de Servicios: mostrar los servicios y dejar seleccionar algunos. -->necesitare hacer un endpoint para buscar servicios por empresa--LISTO
-										
-										--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y darle forma y colocar quizas tambien informacion d ela empresa y del usuario
-
-										--La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados , y que desde la pantalla de mepresa pueda ver las facturas ya creadas y desde ahi dentro se pueda generar el pdf
-										
-										
-										
-										-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.
-
-										-Pantalla de Facturas: mostrar las facturas creadas.--> LISTO
-
-								Conectar con el backend con un endpoint para generar la factura.--> LISTO 
 								
 								
-								POR AQUI ME LLEGO:
+		
 								
-								-->REVISAR COMO GENERA EL PDF PARA ADAPTARLO A LO QUE NECESITO
-								-->FALTA QUE DESDE SERVICIOS SE CRE LA FACTURA
+								
+								
+											
+											
+													
+													
+
 
 
 
 
 COSAS PENDIENTES:
 	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
-	-Volver a poner lo  de por defecto en el registro el rol ROL_USER
+	
 	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
 	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13  --> esto sigue pasando solo que si no se crea es por que ya hay uno con el nombre vaacio
-	-tengo que implementar un boton para volver atras en las pantallas de ver viajes
+	
 	-revisar la creacion de facturas pues si falla no crea la factura pero al crear la sigueinte el id a saltado uno ya 
 	
-	--mas adelante meter las opcione de añadir viajes editar y borrar
-	
-	-- estoy con la parte de ver la factura ,lo voy hacer desde los botones de la empresa nose si hacer un boton y que lleve a otra pantalla en la que se puedan hacer filtros
 	
 	
-				 en principio ya genera los pdf ,falta darle una apariencia mas de factura al pdf ,
-				 y mirar los filtros que se quieren poner como alguno para solo selecionar los viajes por id o algo asi o como sacar algo para que haga un marcado y poder ir selecionando uno a uno 
+	
+	
+	
+		
+				 
 				 
 	
-	-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
+	
 				 
 	
 	
@@ -79,40 +108,6 @@ COSAS PENDIENTES:
 				a mi me gustaria es que al logearme con un usuario solo tuviera aceso a los datos de ese usuario
 
 
-
-COSAS LISTAS:
-
-	REVISAR EL METODO EDITAR ESTA GUARDANDO NUEVAS EN VEZ DE EDITARLAS -->  ya actualiza bien -->LISTO
-
-
-	el registro de nuevo usuario web funciona falta darle aspecto al igual que al login.-->LISTO
-	cosas a revisar: -->LISTO
-					- en el regsitro ver que datos le paso y que cuando se haya regsitrado saque un mensaje o algo -->LISTO
-					- Intentar debugear en inteljide el backend por que ahora mismo no me acuerdo como se guardaban los usuarios y demas.-->LISTO
-	nueva idea , despues de la pantalla de login que te saque  las empresas que tienes disponibles y desde ahi ya te lleve a los viajes de cada empresa
-				--> tengo que crear un endpoin que saque las empresas segun un ide de usuario -->LISTO
-				revisar que funciona en el fronted lo del nuevo endpoint: no lo saca revisar el fronted -->LISTO
-	tengo que crear el endpoint para sacar los viajes de una empresa -->LISTO
-				Revisar por que no saca los viajes de una empresa , en la ruta viene bien el id de la empresa pero luego intenta sacar los viajes de la empresa 0 -->LISTO
-					
-	crear empresas --> LISTO
-	modificar y eliminar empresas, ver mas abajo la idea de como va colocado-->LISTO
-				 repsar el codigo css y el html enteros por que falla en la tabla , puedo intetnar hacrlo desde el principio -->LISTO
-				 
-	-Ahora estoy corriginedo una cosa en el backend para crear datos de prueba ,falta meter datos de prueba a empresa y a viajes  --> LISTO
-
-	  -	puedo hacer algo para que me guarde el usuario y contrase;a en un txt asi puedo consultarlo ya que la contrase;a esta encriptada--> LISTO
-	  
-	  --comprobar el funcionamiento del if de la clase dataloader en la linea  150 --> LISTO
-	  
-	   --> he creado los nuevos repository de servicio y facturar , sigueinte es crear la clase controller y los service >>LISTO
-	   
-	   HE CORREGIDO LA BBDD PARA QUE LOS SERVICIOS NO DEPENDAN DE LA FACTURA SINO DE LA EMPRESA >>LISTO
-	  
-	  
-	  
-	  
-	  
 	  
 IDEAS A FUTURO:
 	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints

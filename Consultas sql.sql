@@ -12,6 +12,8 @@ FROM servicios
 WHERE factura_id = 10;
 
 
+select * from servicios WHERE servicios.empresa_id = 201;
+
 select * from facturas WHERE id = 10;
 select * from usuarios WHERE id = 7;
 
@@ -133,6 +135,16 @@ WHERE s.id IS NULL
 ORDER BY e.id;
 
 -----------------
+
+--Quiero una consulta para sacar los servicios de una factura
+
+
+SELECT s.*
+FROM servicios s
+JOIN facturas f ON s.factura_id = f.id
+WHERE f.numero_factura = 'F-201-002';
+
+-------------------------
 
 --++++++++++++++++
 --BORRAR TABLAS> +

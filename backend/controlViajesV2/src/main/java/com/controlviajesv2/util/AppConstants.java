@@ -1,5 +1,7 @@
 package com.controlviajesv2.util;
 
+import com.lowagie.text.Chunk;
+
 public final class AppConstants {
 
     private AppConstants() {
@@ -57,4 +59,13 @@ public final class AppConstants {
     public static final String REQUEST_VIAJECONTROLLER_IDEMPRESA = "/empresa/{empresaId}";
    // public static final String REQUEST_VIAJECONTROLLER =  ;
 
+
+
+
+
+
+
+    //CONSTABTES FacturaPDFService
+
+    public static final String KM ="Km";
 }
