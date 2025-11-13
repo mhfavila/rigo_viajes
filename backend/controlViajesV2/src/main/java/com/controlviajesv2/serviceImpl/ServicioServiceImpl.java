@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -82,11 +83,29 @@ public class ServicioServiceImpl implements ServicioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Servicio no encontrado con ID: " + id));
 
         // Actualizamos la factura si cambia
-        if (!servicioDTO.getFacturaId().equals(existente.getFactura().getId())) {
-            Factura nuevaFactura = facturaRepository.findById(servicioDTO.getFacturaId())
-                    .orElseThrow(() -> new ResourceNotFoundException(
-                            "Factura no encontrada con ID: " + servicioDTO.getFacturaId()));
-            existente.setFactura(nuevaFactura);
+        // 1. Obtener el ID de Factura del DTO (puede ser nulo)
+        Long dtoFacturaId = servicioDTO.getFacturaId();
+
+        // 2. Obtener el ID de Factura de la entidad existente
+        Long dbFacturaId = null;
+        if (existente.getFactura() != null) {
+            dbFacturaId = existente.getFactura().getId();
+        }
+
+        // 3. Compáramos de forma segura (Objects.equals maneja valores nulos)
+        if (!Objects.equals(dtoFacturaId, dbFacturaId)) {
+            logger.info("El ID de la factura ha cambiado. Actualizando...");
+
+            // 4.a: Si el ID de la factura que viene del DTO (frontend) es nulo, entonces ponemos la factura de la entidad a nulo.
+            if (dtoFacturaId == null) {
+                existente.setFactura(null);
+            } else {
+                //Si el ID de la factura que viene del DTO (frontend) NO es nulo, entonces buscamos esa nueva factura y asígnala.
+                Factura nuevaFactura = facturaRepository.findById(dtoFacturaId)
+                        .orElseThrow(() -> new ResourceNotFoundException(
+                                "Factura no encontrada con ID: " + dtoFacturaId));
+                existente.setFactura(nuevaFactura);
+            }
         }
 
         // Actualizamos todos los campos

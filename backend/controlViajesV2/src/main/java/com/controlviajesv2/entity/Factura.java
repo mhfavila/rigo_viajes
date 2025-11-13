@@ -33,7 +33,7 @@ public class Factura {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @Column(name = "total_bruto", precision = 10, scale = 2, nullable = false)
+    @Column(name = "total_bruto", precision = 100, scale = 2, nullable = false)
     private BigDecimal totalBruto;
 
     @Column(name = "porcentaje_iva", precision = 5, scale = 2, nullable = false)
@@ -48,7 +48,7 @@ public class Factura {
     @Column(name = "importe_irpf", precision = 10, scale = 2)
     private BigDecimal importeIrpf;
 
-    @Column(name = "total_factura", precision = 10, scale = 2, nullable = false)
+    @Column(name = "total_factura", precision = 100, scale = 2, nullable = false)
     private BigDecimal totalFactura;
 
     @Column(name = "cuenta_bancaria")
