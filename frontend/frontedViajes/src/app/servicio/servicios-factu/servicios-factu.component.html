@@ -8,12 +8,13 @@
         <th style="width: 60px;">ID</th>
         <th>Tipo</th>
         <th>Fecha</th>
-        <th>Origen</th>
+       <!-- <th>Origen</th>-->
         <th>Destino</th>
         <th>KM</th>
-        <th>Precio KM</th>
+        <!--<th>Precio KM</th>-->
         <th>Importe (€)</th>
         <th style="width: 80px;">Factura</th>
+        <th style="width: 100px; text-align: center;">Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -31,12 +32,31 @@
         </td>
         <td>{{ s.tipoServicio }}</td>
         <td>{{ s.fechaServicio | date:'shortDate' }}</td>
-        <td>{{ s.origen }}</td>
+        <!--<td>{{ s.origen }}</td>-->
         <td>{{ s.destino }}</td>
         <td>{{ s.km }}</td>
-        <td>{{ s.precioKm }}</td>
+        <!--<td>{{ s.precioKm }}</td>-->
         <td>{{ s.importeServicio | number:'1.2-2' }}</td> <!--ajsuta como maximo y como minimo dos decimales el numero que viene en importe servicio-->
         <td style="width: 80px;">{{ s.facturaId || '—' }}</td>
+
+        <td style="width: 100px; text-align: center;">
+
+
+
+          <button mat-icon-button class="btn-editar" color="accent"
+            matTooltip="Editar empresa"
+            (click)="editarServicio(s.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+
+          <button mat-icon-button class="btn-eliminar" color="warn"
+            matTooltip="Eliminar servicio"
+            (click)="eliminarServicio(s.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+
       </tr>
     </tbody>
   </table>
@@ -48,4 +68,8 @@
 
  <button (click)="mostrarSeleccionados()" style="margin-bottom: 10px;">
     Mostrar seleccionados
+  </button>
+
+  <button (click)="anadirServicios()" style="margin-bottom: 30px;">
+    Añadir Servicios
   </button>

@@ -5,6 +5,7 @@ export interface Empresa {
   direccion: string;
   telefono: string;
   email: string;
+  iban: string;
   usuarioId?: number;  // referencia al usuario propietario
 
 }

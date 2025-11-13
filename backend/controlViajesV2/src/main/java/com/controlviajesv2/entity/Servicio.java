@@ -7,6 +7,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+
+
+
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,22 +53,22 @@ public class Servicio {
     @Column(nullable = false)
     private Integer km;
 
-    @Column(name = "precio_km", precision = 10, scale = 2, nullable = false)
+    @Column(name = "precio_km", precision = 100, scale = 2, nullable = false)
     private BigDecimal precioKm;
 
-    @Column(name = "importe_servicio", precision = 10, scale = 2, nullable = false)
+    @Column(name = "importe_servicio", precision = 100, scale = 2, nullable = false)
     private BigDecimal importeServicio;
 
-    @Column(name = "dieta", precision = 10, scale = 2)
+    @Column(name = "dieta", precision = 100, scale = 2)
     private BigDecimal dieta;
 
-    @Column(name = "precio_dieta", precision = 10, scale = 2)
+    @Column(name = "precio_dieta", precision = 100, scale = 2)
     private BigDecimal precioDieta;
 
-    @Column(name = "horas_espera", precision = 10, scale = 2)
+    @Column(name = "horas_espera", precision = 100, scale = 2)
     private BigDecimal horasEspera;
 
-    @Column(name = "importe_espera", precision = 10, scale = 2)
+    @Column(name = "importe_espera", precision = 100, scale = 2)
     private BigDecimal importeEspera;
 
     @Column

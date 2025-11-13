@@ -12,9 +12,10 @@ IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,
 				
 POR DONDE ME LLEGO:   
 			En la pantalla de ver servicios 
-						>reorganizar la tabla para mostrar menos informacion
+						>reorganizar la tabla para mostrar menos informacion o otra informacion
 						>agregar una columna de acciones parabotones de editar y eliminar 
-						>meter un boton para crear nuevos servicios 
+						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
+						>meter un boton para crear nuevos servicios >>LISTO
 						>mejorar la interfaz con css
 						>dentro de cada servicio dar forma a como ver la informacion en la pantalla a,algo estilo madrid digital o preguntar a chatgpt 
 													|>>--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y 
@@ -22,8 +23,10 @@ POR DONDE ME LLEGO:
 						>La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados ,
 						>-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.	
 						
+						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si
+						
 			Fronted>
-					en empresa esta el iban ahora hay que a;adirlo para crear empresa
+					en empresa esta el iban ahora hay que a;adirlo para crear empresa-->LISTO
 										
 						
 						
@@ -56,9 +59,18 @@ POR DONDE ME LLEGO:
 					
 			COSAS:
 				->-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
-				->-tengo que implementar un boton para volver atras en todas las pantallas 
+				->-tengo que implementar un boton para volver atras en todas las pantallas  y mirar si puedo anular las flechas de volver atrar de google
+				
+				->- revisar si se esta haciendo al suma de los costes y demas en plan el total sale de los kilometros por el precio  y luego a;adari las horas de espera y dietas etc
 									
-
+									
+									
+									
+				REVISIONES FINALES 
+						->Al crear o editar una empresa el telefono puede ser mas lasrgo de 9 numeros
+						->revisar creacion de la empresa
+						
+						-->revisar las validaciones al crear o editar empresa y servicios y las demas entidades y ver en que falla y sacar mensajes para que no pete la aplicacion
 								
 								
 		

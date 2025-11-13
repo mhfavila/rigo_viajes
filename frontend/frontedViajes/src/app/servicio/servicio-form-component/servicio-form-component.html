@@ -1,0 +1,181 @@
+<!--
+  El título cambiará dinámicamente
+-->
+<h1 class="text-2xl font-bold mb-4 p-4">
+  {{ isEditMode ? 'Editar Servicio' : 'Crear Nuevo Servicio' }}
+</h1>
+
+<!--
+  1. El "Armario" (Formulario Principal)
+  - Se vincula al 'servicioForm' del .ts
+  - (ngSubmit) llama a 'guardar()'.
+-->
+<form [formGroup]="servicioForm" (ngSubmit)="guardar()" class="p-4">
+
+  <!--
+    2. El grupo de pestañas de Angular Material.
+  -->
+  <mat-tab-group animationDuration="0ms">
+
+    <!--
+      PESTAÑA 1: INFORMACIÓN PRINCIPAL
+    -->
+    <mat-tab label="Información Principal">
+      <!--
+        3. El "Cajón" 1, conectado con formGroupName="viaje"
+      -->
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4" formGroupName="viaje">
+
+        <!--
+          ¡NO HAY DESPLEGABLE DE EMPRESA!
+          Lo hemos quitado, tal y como diseñamos.
+        -->
+
+        <mat-form-field class="w-full">
+          <mat-label>Tipo de Servicio</mat-label>
+          <input matInput formControlName="tipoServicio" required>
+          <mat-error *ngIf="servicioForm.get('viaje.tipoServicio')?.hasError('required')">
+            El tipo es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Selector de Fecha -->
+        <mat-form-field class="w-full">
+          <mat-label>Fecha del Servicio</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaServicio" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="servicioForm.get('viaje.fechaServicio')?.hasError('required')">
+            La fecha es requerida.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Origen</mat-label>
+          <input matInput formControlName="origen" required>
+          <mat-error *ngIf="servicioForm.get('viaje.origen')?.hasError('required')">
+            El origen es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Destino</mat-label>
+          <input matInput formControlName="destino" required>
+           <mat-error *ngIf="servicioForm.get('viaje.destino')?.hasError('required')">
+            El destino es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Cliente Final</mat-label>
+          <input matInput formControlName="clienteFinal">
+        </mat-form-field>
+
+      </div>
+    </mat-tab>
+
+    <!--
+      PESTAÑA 2: LOGÍSTICA Y COSTES
+    -->
+    <mat-tab label="Logística y Costes">
+      <!-- 3. El "Cajón" 2, conectado con formGroupName="logisticaCostes" -->
+      <div class="p-4 grid grid-cols-1 md:grid-cols-4 gap-4" formGroupName="logisticaCostes">
+
+        <mat-form-field class="w-full">
+          <mat-label>Conductor</mat-label>
+          <input matInput formControlName="conductor">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Matrícula Vehículo</mat-label>
+          <input matInput formControlName="matriculaVehiculo">
+        </mat-form-field>
+
+        <!-- Dejamos 2 columnas libres a propósito para alinear los costes -->
+        <div class="md:col-span-2"></div>
+
+        <mat-form-field class="w-full">
+          <mat-label>KM</mat-label>
+          <input matInput type="number" formControlName="km" required>
+           <mat-error *ngIf="servicioForm.get('logisticaCostes.km')?.hasError('required')">
+            Requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Precio / KM (€)</mat-label>
+          <input matInput type="number" formControlName="precioKm" required>
+           <mat-error *ngIf="servicioForm.get('logisticaCostes.precioKm')?.hasError('required')">
+            Requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Dieta (€)</mat-label>
+          <input matInput type="number" formControlName="dieta">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Precio Dieta (€)</mat-label>
+          <input matInput type="number" formControlName="precioDieta">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Horas Espera</mat-label>
+          <input matInput type="number" formControlName="horasEspera">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Importe Espera (€)</mat-label>
+          <input matInput type="number" formControlName="importeEspera">
+        </mat-form-field>
+
+      </div>
+    </mat-tab>
+
+    <!--
+      PESTAÑA 3: DOCUMENTACIÓN Y NOTAS
+    -->
+    <mat-tab label="Documentación y Notas">
+      <!-- 3. El "Cajón" 3, conectado con formGroupName="documentacion" -->
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4" formGroupName="documentacion">
+
+        <mat-form-field class="w-full">
+          <mat-label>Albarán</mat-label>
+          <input matInput formControlName="albaran">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Orden (para ordenar)</mat-label>
+          <input matInput type="number" formControlName="orden">
+        </mat-form-field>
+
+        <mat-form-field class="w-full md:col-span-2">
+          <mat-label>Observaciones</mat-label>
+          <textarea matInput formControlName="observaciones" rows="5"></textarea>
+        </mat-form-field>
+
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+  <!--
+    4. Botones de Acción
+    - Deben estar DENTRO del <form> pero FUERA de <mat-tab-group>
+      para que siempre sean visibles.
+  -->
+  <div class="flex justify-end gap-2 mt-6">
+    <button mat-stroked-button type="button" (click)="cancelar()">
+      Cancelar
+    </button>
+
+    <button mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="!servicioForm.valid">
+      {{ isEditMode ? 'Actualizar Servicio' : 'Guardar Servicio' }}
+    </button>
+  </div>
+
+</form>

@@ -1,0 +1,7 @@
+para arrancar el proyecto en local 
+mvn spring-boot:run "-Dmaven.test.skip=true"
+
+
+
+para entorno cloud demomento tengo esto 
+cmd /c "set SPRING_PROFILES_ACTIVE=cloud && mvn spring-boot:run -Dmaven.test.skip=true"

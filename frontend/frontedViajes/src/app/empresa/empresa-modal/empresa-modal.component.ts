@@ -1,38 +1,50 @@
 import { EmpresaService } from '../../services/empresa.service';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {EmpresaModalData} from '../empresa-modal/empresa.interfaces';
+
+
 
 @Component({
   selector: 'app-empresa-modal',
+   // 'standalone: false' indica que este componente es parte de un NgModule y debe ser declarado en el array 'declarations' de un módulo
   standalone: false,
   templateUrl: './empresa-modal.component.html',
   styleUrl: './empresa-modal.component.css',
 })
-export class EmpresaModalComponent {
-  empresaForm: FormGroup;
+export class EmpresaModalComponent implements OnInit {
+  empresaForm!: FormGroup;
+  // Bandera (flag) para controlar el estado del modal: 'true' para Editar, 'false' para Crear.
   isEditMode: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private empresaService: EmpresaService,
     public dialogRef: MatDialogRef<EmpresaModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: EmpresaModalData
   ) {
-    this.isEditMode = !!data?.isEditMode;
-    // Inicializamos el formulario con todos los campos
+
+    this.isEditMode = this.data.isEditMode;
+  }
+
+
+  ngOnInit(): void {
     this.empresaForm = this.fb.group({
-      nombre: [data?.nombre || '', Validators.required],
-      cif: [data?.cif || '', Validators.required],
-      direccion: [data?.direccion || '', Validators.required],
-      telefono: [data?.telefono || '', Validators.required],
-      email: [data?.email || '', [Validators.required, Validators.email]],
+      nombre: [this.data.nombre || '', Validators.required],
+      cif: [this.data.cif || '', Validators.required],
+      direccion: [this.data.direccion || '', Validators.required],
+      telefono: [this.data.telefono || '', Validators.required],
+      email: [this.data.email || '', [Validators.required, Validators.email]],
+      iban:[this.data.iban || '', [Validators.required]],
       usuarioId: [
-        { value: data?.usuarioId || 0, disabled: true },
+        { value: this.data.usuarioId, disabled: true }, // 'usuarioId' siempre vendrá en 'data'
         Validators.required,
       ],
     });
 
-    // Suscribirse a cambios para filtrar números
+    // --- Lógica Adicional: Filtro de Teléfono en tiempo real ---
+    // Nos suscribimos a los cambios de valor del campo 'telefono'.
     this.empresaForm.get('telefono')?.valueChanges.subscribe((val) => {
       if (val != null) {
         const numeros = val.replace(/[^0-9]/g, '');
@@ -45,38 +57,27 @@ export class EmpresaModalComponent {
     });
   }
 
-  // Método para enviar los datos al backend y cerrar el modal
+// Método que se llama al pulsar el botón 'Guardar'.
   guardar() {
     if (this.empresaForm.valid) {
-      // getRawValue() incluye los campos deshabilitados
       const empresaData = this.empresaForm.getRawValue();
-      console.log('isEditMode:', this.isEditMode);
-      console.log('Data.id recibido:', this.data.id);
-      console.log('Payload que voy a enviar:', empresaData);
 
       if (this.isEditMode) {
-        console.log('Llamando a EDITAR empresa con id:', this.data.id);
-        this.empresaService.editarEmpresa(this.data.id, empresaData).subscribe({
-           next: (resp) => {
-          console.log(' Respuesta EDITAR empresa:', resp);
-          this.dialogRef.close(true);
-        },
-
-          error: (err) => console.error('Error editando la empresa', err),
+    // --- MODO EDITAR ---
+        this.empresaService.editarEmpresa(this.data.id!, empresaData).subscribe({
+          next: (resp) => this.dialogRef.close(true),
+          error: (err) => console.error('Error editando la empresa', err), // Opcional: Mostrar un snackbar de error al usuario
         });
       } else {
-         console.log('Llamando a CREAR empresa');
+        // --- MODO CREAR ---
         this.empresaService.crearEmpresa(empresaData).subscribe({
-          next: (resp) => {
-          console.log('✅ Respuesta CREAR empresa:', resp);
-          this.dialogRef.close(true);
-        },
+          next: (resp) => this.dialogRef.close(true),
           error: (err) => console.error('Error creando la empresa', err),
         });
       }
     }
   }
-  // Método para cerrar el modal sin guardar
+// Método para el botón 'Cancelar'.
   cancelar() {
     this.dialogRef.close(false);
   }

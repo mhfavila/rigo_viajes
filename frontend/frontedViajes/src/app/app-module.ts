@@ -29,7 +29,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ServicioFormComponent } from './servicio/servicio-form-component/servicio-form-component';
 
+import { MatTabsModule } from '@angular/material/tabs';
+
+import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.component';
 @NgModule({
   declarations: [
     App,
@@ -42,6 +46,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     FacturasComponent,
     ServiciosFactuComponent,
     ServicioDetalleComponent,
+    ServicioFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +66,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+
+    ReactiveFormsModule,
+    MatTabsModule,
+
+    ConfirmDialogComponent,
   ],
   providers: [],
   bootstrap: [App],

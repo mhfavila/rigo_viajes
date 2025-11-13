@@ -35,14 +35,14 @@ export class EmpresaService {
 
     return this.http.post<Empresa>(this.apiUrlEmpresa, empresa,{ headers });
   }
-// 🔹 Editar empresa
+//  Editar empresa
   editarEmpresa(id: number, empresa: Empresa): Observable<Empresa> {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.put<Empresa>(`${this.apiUrlEmpresa}/${id}`, empresa, { headers });
   }
-  // 🔹 Eliminar empresa
+  //  Eliminar empresa
 eliminarEmpresa(id: number): Observable<any> {
   const token = localStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Servicio } from './../servicio/servicio.model';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -20,12 +19,38 @@ export class ServiciosFactService {
       headers,
     });
   }
-//metodo para sacar un servicio segun su id
+  //metodo para sacar un servicio segun su id
   getServicioPorId(servicioId: number): Observable<Servicio> {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get<Servicio>(`${this.baseUrl}/${servicioId}`, {
       headers,
     });
+  }
+
+  //crear servicio
+  crearServicio(servicio: Servicio): Observable<Servicio> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.post<Servicio>(this.baseUrl, servicio, { headers });
+  }
+
+  //editar servicio
+  editarServicio(id: number, servicio: Servicio): Observable<Servicio> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.put<Servicio>(`${this.baseUrl}/${id}`, servicio, {
+      headers,
+    });
+  }
+
+  //eliminar servicio
+  eliminarServicio(servicioId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.delete(`${this.baseUrl}/${servicioId}`, { headers });
   }
 }
