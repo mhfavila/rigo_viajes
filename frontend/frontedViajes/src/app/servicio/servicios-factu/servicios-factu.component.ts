@@ -180,7 +180,35 @@ export class ServiciosFactuComponent implements OnInit {
 
   eliminarServicio(servicioId: number):void {
 
-    this.dialog.open(ConfirmDialogComponent);
-    dialogRef.afterClosed()
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: '¿Estás seguro de que deseas eliminar este servicio?' }
+    });
+    // 2. Nos suscribimos al resultado del diálogo
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+
+      // 3. Si el usuario hizo clic en "Confirmar" (confirmed es true)
+      if (confirmed) {
+
+        // 4. Llamamos al servicio para eliminar
+        this.serviciosFactService.eliminarServicio(servicioId).subscribe({
+          next: () => {
+            // 5. Si todo va bien, mostramos un mensaje y recargamos la lista
+            this.snackBar.open('Servicio eliminado correctamente', 'Cerrar', {
+              duration: 3000,
+            });
+            this.cargarServicios(); // ¡Importante para refrescar!
+          },
+          error: (err) => {
+            // 6. Si hay un error, lo mostramos
+            console.error('Error al eliminar el servicio:', err);
+            this.snackBar.open('Error al eliminar el servicio', 'Cerrar', {
+              duration: 3000,
+            });
+          },
+        });
+      }
+      // Si 'confirmed' es false, no hacemos nada (el usuario canceló)
+    });
+
 }
 }

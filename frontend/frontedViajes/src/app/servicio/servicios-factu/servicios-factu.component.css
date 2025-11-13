@@ -1,0 +1,17 @@
+/* Casi todo el estilo vendrá de las clases de Tailwind
+  en el archivo .html.
+
+  Aquí solo dejamos lo específico, si es que hay algo.
+*/
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* Tus botones de Material (btn-editar, btn-eliminar)
+  pueden necesitar un poco de espacio
+*/
+.btn-editar,
+.btn-eliminar {
+  margin: 0 4px;
+}

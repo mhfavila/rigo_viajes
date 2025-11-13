@@ -3,30 +3,33 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,mas adelante se puede hacer algo para pasar los viajes a servicios
 
-		
-			
-
-
+		COSAS LISTAS:
+				>agregar una columna de acciones parabotones de editar y eliminar >>LISTO
+				>meter un boton para crear nuevos servicios >>LISTO
+				en empresa esta el iban ahora hay que a;adirlo para crear empresa-->LISTO
+				>mejorar la interfaz con css >>LISTO
+				>reorganizar la tabla para mostrar menos informacion o otra informacion>>LISTO
+				>dentro de cada servicio dar forma a como ver la informacion en la pantalla a,algo estilo madrid digital o preguntar a chatgpt 
+													|>>--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y 
+														darle forma y colocar quizas tambien informacion d ela empresa y del usuario>>LISTO
 				
 				
 				
 POR DONDE ME LLEGO:   
 			En la pantalla de ver servicios 
-						>reorganizar la tabla para mostrar menos informacion o otra informacion
-						>agregar una columna de acciones parabotones de editar y eliminar 
+						
+						
 						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
-						>meter un boton para crear nuevos servicios >>LISTO
-						>mejorar la interfaz con css
-						>dentro de cada servicio dar forma a como ver la informacion en la pantalla a,algo estilo madrid digital o preguntar a chatgpt 
-													|>>--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y 
-														darle forma y colocar quizas tambien informacion d ela empresa y del usuario
+						
+						>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura
+						
 						>La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados ,
 						>-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.	
 						
 						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si
 						
 			Fronted>
-					en empresa esta el iban ahora hay que a;adirlo para crear empresa-->LISTO
+					
 										
 						
 						

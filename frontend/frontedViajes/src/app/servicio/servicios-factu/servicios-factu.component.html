@@ -1,75 +1,119 @@
-<h2>Servicios de la empresa {{ empresaId }}</h2>
+<!--
+  Envuelto todo en un contenedor de "tarjeta" de Tailwind
+  para coherencia visual con la otra pantalla.
+-->
+<div class="max-w-7xl mx-auto p-4 md:p-8">
 
-<div *ngIf="servicios.length > 0; else noServicios">
-  <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
-    <thead>
-      <tr>
-        <th style="width: 40px;"></th> <!-- Columna para checkbox -->
-        <th style="width: 60px;">ID</th>
-        <th>Tipo</th>
-        <th>Fecha</th>
-       <!-- <th>Origen</th>-->
-        <th>Destino</th>
-        <th>KM</th>
-        <!--<th>Precio KM</th>-->
-        <th>Importe (€)</th>
-        <th style="width: 80px;">Factura</th>
-        <th style="width: 100px; text-align: center;">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let s of servicios">
-        <!-- Siempre hay una celda, checkbox solo si facturaId es null -->
-        <td>
-          <ng-container *ngIf="!s.facturaId; else vacio">
-            <input type="checkbox" [(ngModel)]="s.seleccionado">
-          </ng-container>
-          <ng-template #vacio></ng-template>
-        </td>
-        <td style="width: 60px;">
-          {{ s.id }}
-        <a href="#" (click)="abrirServicio(s.id, $event)">{{ s.id }}</a>
-        </td>
-        <td>{{ s.tipoServicio }}</td>
-        <td>{{ s.fechaServicio | date:'shortDate' }}</td>
-        <!--<td>{{ s.origen }}</td>-->
-        <td>{{ s.destino }}</td>
-        <td>{{ s.km }}</td>
-        <!--<td>{{ s.precioKm }}</td>-->
-        <td>{{ s.importeServicio | number:'1.2-2' }}</td> <!--ajsuta como maximo y como minimo dos decimales el numero que viene en importe servicio-->
-        <td style="width: 80px;">{{ s.facturaId || '—' }}</td>
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">
+    Servicios de la empresa {{ empresaId }}
+  </h2>
 
-        <td style="width: 100px; text-align: center;">
+  <!--
+    Contenedor de la tabla con sombra, bordes redondeados
+    y 'overflow-hidden' para que los bordes redondeados funcionen
+  -->
+  <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
 
+    <!--
+      *** CAMBIO 1: EL CONTENEDOR DE SCROLL ***
+      - 'overflow-x-auto' se cambia por 'overflow-auto' (para scroll vertical Y horizontal)
+      - 'max-h-[60vh]' se añade para limitar la altura (¡ajusta 60vh a tu gusto!)
+      - 'relative' se añade para que 'sticky' funcione correctamente.
+    -->
+    <div *ngIf="servicios.length > 0; else noServicios" class="overflow-auto max-h-[60vh] relative">
+      <!--
+        Tabla principal
+      -->
+      <table class="w-full text-left divide-y divide-gray-200">
 
+        <!--
+          *** CAMBIO 2: CABECERA STICKY ***
+          - 'sticky top-0 z-10' se añade para que la cabecera se pegue arriba.
+          - 'z-10' asegura que esté por encima del contenido del body.
+        -->
+        <thead class="bg-gray-800 text-gray-50 sticky top-0 z-10">
+          <tr>
+            <!--
+              'th' (Celdas de cabecera)
+            -->
+            <th scope="col" class="px-6 py-3"></th> <!-- Checkbox -->
+            <th scope="col" class="px-6 py-3">ID</th>
+            <th scope="col" class="px-6 py-3">Tipo</th>
+            <th scope="col" class="px-6 py-3">Fecha</th>
+            <th scope="col" class="px-6 py-3">Destino</th>
+            <th scope="col" class="px-6 py-3">KM</th>
+            <th scope="col" class="px-6 py-3">Importe (€)</th>
+            <th scope="col" class="px-6 py-3">Factura</th>
+            <th scope="col" class="px-6 py-3 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <!--
+          Cuerpo de la tabla (Este es el que tendrá scroll)
+        -->
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let s of servicios" class="hover:bg-gray-50 transition-colors">
+            <!--
+              'td' (Celdas de datos)
+            -->
+            <td class="px-6 py-4">
+              <ng-container *ngIf="!s.facturaId; else vacio">
+                <!-- Checkbox estilizado -->
+                <input type="checkbox" [(ngModel)]="s.seleccionado" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+              </ng-container>
+              <ng-template #vacio></ng-template>
+            </td>
+            <td class="px-6 py-4 text-sm font-medium text-gray-900">
+              <!-- Enlace estilizado -->
+              <a href="#" (click)="abrirServicio(s.id, $event)" class="text-blue-600 hover:text-blue-900 hover:underline">
+                {{ s.id }}
+              </a>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ s.tipoServicio }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ s.fechaServicio | date:'shortDate' }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ s.destino }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 text-right">{{ s.km }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 text-right font-medium">{{ s.importeServicio | number:'1.2-2' }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 text-center">{{ s.facturaId || '—' }}</td>
 
-          <button mat-icon-button class="btn-editar" color="accent"
-            matTooltip="Editar empresa"
-            (click)="editarServicio(s.id)">
-            <mat-icon>edit</mat-icon>
-          </button>
+            <!-- Celda para los botones de Angular Material -->
+            <td class="px-6 py-4 text-center whitespace-nowrap">
+              <!-- No he tocado los botones 'mat-icon-button' -->
+              <button mat-icon-button class="btn-editar" color="accent"
+                matTooltip="Editar Servicio"
+                (click)="editarServicio(s.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="btn-eliminar" color="warn"
+                matTooltip="Eliminar servicio"
+                (click)="eliminarServicio(s.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
+    <ng-template #noServicios>
+      <p class="p-6 text-gray-500">No hay servicios registrados para esta empresa.</p>
+    </ng-template>
+  </div> <!-- Fin de la tarjeta de la tabla -->
 
-          <button mat-icon-button class="btn-eliminar" color="warn"
-            matTooltip="Eliminar servicio"
-            (click)="eliminarServicio(s.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
+  <!--
+    Estos botones AHORA se quedarán "quietos" porque están
+    fuera del contenedor que tiene el 'max-h' y 'overflow-auto'.
+  -->
+  <div class="mt-6 flex gap-4">
+    <!-- Botones estilizados con Tailwind -->
+    <button (click)="mostrarSeleccionados()"
+            class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+      Mostrar seleccionados
+    </button>
 
-      </tr>
-    </tbody>
-  </table>
+    <button (click)="anadirServicios()"
+            class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+      Añadir Servicios
+    </button>
+  </div>
+
 </div>
-
-<ng-template #noServicios>
-  <p>No hay servicios registrados para esta empresa.</p>
-</ng-template>
-
- <button (click)="mostrarSeleccionados()" style="margin-bottom: 10px;">
-    Mostrar seleccionados
-  </button>
-
-  <button (click)="anadirServicios()" style="margin-bottom: 30px;">
-    Añadir Servicios
-  </button>
