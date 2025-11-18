@@ -34,6 +34,7 @@ import { ServicioFormComponent } from './servicio/servicio-form-component/servic
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.component';
+import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.component/datos-factura-dialog.component';
 @NgModule({
   declarations: [
     App,
@@ -47,6 +48,7 @@ import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.com
     ServiciosFactuComponent,
     ServicioDetalleComponent,
     ServicioFormComponent,
+    DatosFacturaDialogComponent,
   ],
   imports: [
     BrowserModule,

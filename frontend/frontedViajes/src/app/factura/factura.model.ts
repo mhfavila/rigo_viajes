@@ -1,7 +1,7 @@
 import { Servicio } from "../servicio/servicio.model";
 
 export interface Factura{
-  id: number;
+  id?: number;
   numeroFactura: string;
   fechaEmision: string; // En formato ISO (por ejemplo, '2025-10-24')
   empresaId: number; // Referencia al ID de la empresa
@@ -18,7 +18,7 @@ export interface Factura{
   formaPago?: string;
   observaciones?: string;
   estado?: string; // "BORRADOR", "ENVIADA", "COBRADA"
-
-  servicios?: Servicio[]; // Relación con servicios (opcional)
+  serviciosIds?: number[];
+  //servicios: Servicio[]; // Relación con servicios (opcional)
 
 }

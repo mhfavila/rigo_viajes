@@ -31,5 +31,17 @@ export class FacturaService {
       headers,
       responseType: 'blob', // importante para recibir el PDF como binario
     });
+
+
+  }
+
+  crearFactura(factura: Factura): Observable<Factura> {
+
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
+
+
+
+      return this.http.post<Factura>(this.baseUrl, factura,{ headers });
   }
 }

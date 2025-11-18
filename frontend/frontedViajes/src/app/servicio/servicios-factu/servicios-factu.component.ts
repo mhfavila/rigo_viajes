@@ -5,6 +5,10 @@ import { ServiciosFactService } from '../../services/servicios-fact.service';
 import { Servicio } from '../servicio.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../confirmacionDialogo/confirm-dialog.component';
+import { DatosFacturaDialogComponent } from '../../factura/datos-factura-dialog.component/datos-factura-dialog.component';
+import { Factura } from '../../factura/factura.model';
+import { FacturaService } from '../../services/factura.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-servicios-factu.component',
@@ -13,18 +17,18 @@ import { ConfirmDialogComponent } from '../../confirmacionDialogo/confirm-dialog
   styleUrl: './servicios-factu.component.css',
 })
 export class ServiciosFactuComponent implements OnInit {
-
   servicios: Servicio[] = []; // array vacío, inicializado
   empresaId!: number;
-
+  totalFacturas!: number ;
 
   constructor(
-
     private dialog: MatDialog,
     private serviciosFactService: ServiciosFactService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private facturaService: FacturaService,
+    private cdr: ChangeDetectorRef,
   ) {}
   ngOnInit(): void {
     this.cargarServicios();
@@ -66,11 +70,161 @@ export class ServiciosFactuComponent implements OnInit {
       `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
     );
   }
-  //muestra los servicios que tienen marcado el check ,luego se modificara para a;adir esos servicios a las facturas
-  mostrarSeleccionados(): void {
-    const seleccionados = this.servicios.filter((s) => s.seleccionado);
-    console.log('Servicios seleccionados:', seleccionados);
+  /**
+   * se genera la factura apartir de los servicios selecionados
+   * @returns
+   */
+  generarFacturaDeSeleccionados(): void {
+    //const seleccionados = this.servicios.filter((s) => s.seleccionado);
+    // recojo los servicios marcados
+    const serviciosParaFacturar = this.servicios.filter((s) => s.seleccionado);
+    if (serviciosParaFacturar.length === 0) {
+      console.warn('No hay servicios seleccionados para facturar.');
+
+      alert('Por favor, seleccione al menos un servicio.');
+      return;
+    }
+    //comprobamos que todos los servicos sean de la misma empresa
+    const primeraEmpresaId = serviciosParaFacturar[0].empresaId;
+    const todosSonMismaEmpresa = serviciosParaFacturar.every(
+      (s) => s.empresaId === primeraEmpresaId
+    );
+    if (!todosSonMismaEmpresa) {
+      console.error(
+        'Error: No se pueden facturar servicios de distintas empresas en una sola factura.'
+      );
+      alert('Error: Todos los servicios deben pertenecer a la misma empresa.');
+      return;
+    }
+
+    //calculos
+    // Sumamos el 'importeServicio' de todos los servicios seleccionados
+    const totalBruto = serviciosParaFacturar.reduce(
+      (acumulado, servicio) => acumulado + servicio.importeServicio,
+      0
+    );
+
+    // abrimos el dialogo
+    const dialogRef = this.dialog.open(DatosFacturaDialogComponent, {
+      width: '300px',
+      data: { iva: 21, irpf: 15 },
+    });
+    // esperamos a que se cierre el dialogo
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        console.log('Cancelado por el usuario');
+        return;
+      }
+
+      const porcentajeIvaUsuario = result.iva;
+      const porcentajeIrpfUsuario = result.irpf;
+
+      //llamamos al metodo para crear al factura y le pasamos los parametros
+      this.crearFacturaConDatos(
+        serviciosParaFacturar,
+        primeraEmpresaId,
+        porcentajeIvaUsuario,
+        porcentajeIrpfUsuario
+      );
+    });
+
+
   }
+  /**
+   * metodo para crear la factura
+   * @param servicios
+   * @param empresaId
+   * @param ivaPorcentaje
+   * @param irpfPorcentaje
+   */
+
+
+
+    private crearFacturaConDatos(
+  servicios: Servicio[],
+  empresaId: number,
+  ivaPorcentaje: number,
+  irpfPorcentaje: number
+) {
+  // 1. Calculamos todo lo que NO depende de la API
+  const totalBruto = servicios.reduce((acc, s) => acc + s.importeServicio, 0);
+  const importeIva = totalBruto * (ivaPorcentaje / 100);
+  const importeIrpf = totalBruto * (irpfPorcentaje / 100);
+  const totalFactura = totalBruto + importeIva - importeIrpf;
+  const usuarioId = 1; // modificar para sacar el usuario que corrsponda
+  const idsDeServicios = servicios.map(s => s.id);
+
+  // 2. PRIMERO obtenemos el total de facturas
+  this.facturaService.getFacturaByEmpresa(empresaId).subscribe({
+    next: (data) => {
+      // 3. AHORA SÍ tenemos el dato correcto
+      this.totalFacturas = data.length;
+      console.log('Cantidad de facturas existentes:', this.totalFacturas);
+
+      const numero = this.totalFacturas + 1;
+
+      // 4. Construimos el objeto factura AQUÍ DENTRO
+      const nuevaFactura: Factura = {
+        numeroFactura: "F-" +empresaId+"-"+ numero.toString().padStart(4, "0"), // <-- Ahora 'numero' será 8
+        fechaEmision: new Date().toISOString(),
+        empresaId: empresaId,
+        usuarioId: usuarioId,
+        totalBruto: totalBruto,
+        porcentajeIva: ivaPorcentaje,
+        importeIva: importeIva,
+        porcentajeIrpf: irpfPorcentaje,
+        importeIrpf: importeIrpf,
+        totalFactura: totalFactura,
+        estado: 'BORRADOR',
+        serviciosIds: idsDeServicios
+      };
+
+      // 5. Y llamamos a la API de creación AQUÍ DENTRO
+      this.facturaService.crearFactura(nuevaFactura).subscribe({
+        next: (res) => {
+          // ----- ¡AÑADE ESTOS LOGS AQUÍ! -----
+         console.log('--- 1. RESPUESTA DEL BACKEND RECIBIDA ---');
+        console.log('facturaCreada:', res);
+        console.log('IDs que se enviaron:', res.serviciosIds);
+          console.log('Factura creada exitosamente', res);
+          if (res && res.id) {
+            console.log('--- 2. GUARDIA SUPERADA. Llamando a actualizar... ---');
+          console.log('Se usará el ID de factura:', nuevaFactura.id);
+          this.actualizarServiciosLocales(idsDeServicios,res.id)
+          }else{
+            console.error('La facturaCreada no tiene ID (o es 0, null, undefined). No se llamará a actualizarServiciosLocales.');
+          }
+        // this.cargarServicios
+        },
+        error: (err) => {
+          console.error('Error al CREAR la factura', err);
+        },
+      });
+    },
+    error: (err) => {
+      console.error('Error al OBTENER el número de facturas', err);
+    },
+  });
+
+
+}
+
+
+private actualizarServiciosLocales(idsFacturados: number[],nuevaFacturaId:number) {
+  this.servicios = this.servicios.map(servicio => {
+    if (idsFacturados.includes(servicio.id)) {
+      return { ...servicio, facturaId: nuevaFacturaId, seleccionado: false };
+    }
+    return servicio;
+
+  });
+  this.cdr.markForCheck();
+
+}
+
+
+
+
 
   /**
    * Abre una nueva ventana emergente con el formulario para crear un servicio,
@@ -124,9 +278,6 @@ export class ServiciosFactuComponent implements OnInit {
   }
 
   editarServicio(servicioId: number) {
-
-
-
     // 1. Comprobamos que tenemos el ID de la empresa (cargado en ngOnInit)
     if (!this.empresaId) {
       console.error('Error: No se ha cargado el ID de la empresa.');
@@ -171,24 +322,16 @@ export class ServiciosFactuComponent implements OnInit {
         { duration: 3000 }
       );
     }
-
-
-
-
   }
 
-
-  eliminarServicio(servicioId: number):void {
-
+  eliminarServicio(servicioId: number): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: '¿Estás seguro de que deseas eliminar este servicio?' }
+      data: { message: '¿Estás seguro de que deseas eliminar este servicio?' },
     });
     // 2. Nos suscribimos al resultado del diálogo
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-
       // 3. Si el usuario hizo clic en "Confirmar" (confirmed es true)
       if (confirmed) {
-
         // 4. Llamamos al servicio para eliminar
         this.serviciosFactService.eliminarServicio(servicioId).subscribe({
           next: () => {
@@ -209,6 +352,5 @@ export class ServiciosFactuComponent implements OnInit {
       }
       // Si 'confirmed' es false, no hacemos nada (el usuario canceló)
     });
-
-}
+  }
 }

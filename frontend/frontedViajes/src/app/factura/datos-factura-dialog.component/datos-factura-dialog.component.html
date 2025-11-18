@@ -1,0 +1,22 @@
+<p>datos-factura-dialog.component works!</p>
+<h2 mat-dialog-title>Datos de Facturación</h2>
+<div mat-dialog-content>
+  <p>Por favor, ingrese los porcentajes para esta factura.</p>
+
+  <mat-form-field appearance="fill">
+    <mat-label>IVA (%)</mat-label>
+    <input matInput type="number" [(ngModel)]="data.iva">
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field appearance="fill">
+    <mat-label>IRPF (%)</mat-label>
+    <input matInput type="number" [(ngModel)]="data.irpf">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="aceptar()">Generar</button>
+</div>

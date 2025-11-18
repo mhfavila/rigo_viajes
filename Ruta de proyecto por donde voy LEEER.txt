@@ -12,7 +12,11 @@ IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,
 				>dentro de cada servicio dar forma a como ver la informacion en la pantalla a,algo estilo madrid digital o preguntar a chatgpt 
 													|>>--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y 
 														darle forma y colocar quizas tambien informacion d ela empresa y del usuario>>LISTO
-				
+				 __>no esta fucnionando el boton para gnerarlas desde la pantalla de los servicios
+							ver como generar el numero de factura que se esta pasando vacios>>LISTO
+					__>revisar como se crea la factura en crearFacturaConDatos de la clase ServiciosFactuComponent por que hay datos que van fijos como el id o el usuario?id>>LISTO
+					
+					
 				
 				
 POR DONDE ME LLEGO:   
@@ -21,7 +25,7 @@ POR DONDE ME LLEGO:
 						
 						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
 						
-						>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura
+						
 						
 						>La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados ,
 						>-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.	
@@ -32,8 +36,10 @@ POR DONDE ME LLEGO:
 					
 										
 						
-						
-			
+			FACTURA revisar donde se estan haciendo los calculos y ver si es mejor en el backend o en el fronted
+					
+					-->mirar para odenar que los servicios con cuadro de chak queden ariba
+					>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura 
 			
 			En ENTIDADES 
 					|> corregir datos que faltan en viajes y en empresas y servicos y facturas

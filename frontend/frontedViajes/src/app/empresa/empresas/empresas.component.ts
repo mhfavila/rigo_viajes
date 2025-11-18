@@ -62,7 +62,7 @@ export class EmpresasComponent implements OnInit {
     console.log('Navegando a servicios de la empresa con id:', empresa.id);
     this.router.navigate(['empresas', empresa.id, 'servicios']);
   }
-  abrirModal() {
+  crearEmpresa() {
   const dialogRef = this.dialog.open(EmpresaModalComponent, {
     width: '400px',
     data: {

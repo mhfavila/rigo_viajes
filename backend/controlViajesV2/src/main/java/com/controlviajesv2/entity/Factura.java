@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -60,8 +61,8 @@ public class Factura {
     @Column(columnDefinition = "TEXT")
     private String observaciones;
 
-    @OneToMany(mappedBy = "factura",  orphanRemoval = true)
-    private List<Servicio> servicios;
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Servicio> servicios = new ArrayList<>();
 
     @Column(length = 20)
     private String estado; // Opcional: "BORRADOR", "ENVIADA", "COBRADA"

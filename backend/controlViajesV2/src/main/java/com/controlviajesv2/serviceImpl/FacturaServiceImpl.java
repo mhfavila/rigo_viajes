@@ -3,13 +3,16 @@ package com.controlviajesv2.serviceImpl;
 import com.controlviajesv2.dto.FacturaDTO;
 import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
+import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.exception.ResourceNotFoundException;
 import com.controlviajesv2.mapper.FacturaMapper;
 import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.FacturaRepository;
+import com.controlviajesv2.repository.ServicioRepository;
 import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.FacturaService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,18 +27,21 @@ public class FacturaServiceImpl implements FacturaService {
     private final FacturaRepository facturaRepository;
     private final EmpresaRepository empresaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final ServicioRepository servicioRepository;
 
 
     public FacturaServiceImpl(FacturaRepository facturaRepository,
                               EmpresaRepository empresaRepository,
-                              UsuarioRepository usuarioRepository) {
+                              UsuarioRepository usuarioRepository, ServicioRepository servicioRepository) {
         this.facturaRepository = facturaRepository;
         this.empresaRepository = empresaRepository;
         this.usuarioRepository = usuarioRepository;
 
+        this.servicioRepository = servicioRepository;
     }
 
     @Override
+    @Transactional
     public FacturaDTO crearFactura(FacturaDTO facturaDTO) {
         logger.info("Creando nueva factura número: {}", facturaDTO.getNumeroFactura());
 
@@ -47,6 +53,27 @@ public class FacturaServiceImpl implements FacturaService {
 
         Factura factura = FacturaMapper.toEntity(facturaDTO, empresa, usuario);
         Factura guardada = facturaRepository.save(factura);
+
+        if (facturaDTO.getServiciosIds() != null && !facturaDTO.getServiciosIds().isEmpty()) {
+
+            logger.info("Asociando {} servicios a la factura {}", facturaDTO.getServiciosIds().size(), guardada.getNumeroFactura());
+
+            // 1. Buscar las entidades Servicio
+            List<Servicio> serviciosParaAsociar = servicioRepository.findAllById(facturaDTO.getServiciosIds());
+
+            // 2. Iterar y actualizar
+            for (Servicio servicio : serviciosParaAsociar) {
+                //servicio.setFacturado(true);      // Marcar como facturado
+                servicio.setFactura(guardada);  // Asignar esta nueva factura
+            }
+
+            // 3. Guardar los servicios actualizados
+            servicioRepository.saveAll(serviciosParaAsociar);
+
+            // 4. (Opcional) Asignar al DTO de retorno
+            guardada.setServicios(serviciosParaAsociar);
+        }
+
 
         return FacturaMapper.toDTO(guardada);
     }
