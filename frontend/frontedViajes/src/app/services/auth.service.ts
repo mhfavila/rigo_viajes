@@ -18,16 +18,16 @@ export class AuthService {
   }
 
  guardarToken(token: string) {
-  localStorage.setItem('token', token);
-  console.log('Token guardado:', localStorage.getItem('token')); // Verifica aquí
+  sessionStorage.setItem('token', token);
+  console.log('Token guardado:', sessionStorage.getItem('token')); // Verifica aquí
 }
 
 obtenerToken(): string | null {
-  return localStorage.getItem('token');
+  return sessionStorage.getItem('token');
 }
 
   cerrarSesion(): void {
-    localStorage.removeItem('jwtToken');
+    sessionStorage.removeItem('token');
   }
  //para comprobar si esta loggeado
   isLoggedIn(): boolean {

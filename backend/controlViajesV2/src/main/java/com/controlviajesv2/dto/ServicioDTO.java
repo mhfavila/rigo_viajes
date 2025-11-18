@@ -50,8 +50,8 @@ public class ServicioDTO {
     @DecimalMin(value = "0.0", inclusive = false, message = "El importe del servicio debe ser mayor que 0")
     private BigDecimal importeServicio;
 
-    @DecimalMin(value = "0.0", inclusive = true, message = "La dieta no puede ser negativa")
-    private BigDecimal dieta;
+    @NotNull(message = "Debes indicar si aplica dieta")
+    private Boolean dieta;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "El precio de dieta no puede ser negativo")
     private BigDecimal precioDieta;

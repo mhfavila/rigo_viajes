@@ -17,7 +17,7 @@ export class EmpresaService {
   constructor(private http: HttpClient) {}
 
   getEmpresasDeUsuario(usuarioId: number): Observable<any[]> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     console.log('Llamando a:', `${this.apiUrl}${usuarioId}`);
@@ -28,7 +28,7 @@ export class EmpresaService {
 
   crearEmpresa(empresa: Empresa): Observable<Empresa> {
 
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
 
@@ -37,14 +37,14 @@ export class EmpresaService {
   }
 //  Editar empresa
   editarEmpresa(id: number, empresa: Empresa): Observable<Empresa> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.put<Empresa>(`${this.apiUrlEmpresa}/${id}`, empresa, { headers });
   }
   //  Eliminar empresa
 eliminarEmpresa(id: number): Observable<any> {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
 
   return this.http.delete(`${this.apiUrlEmpresa}/${id}`, { headers });
@@ -53,7 +53,7 @@ eliminarEmpresa(id: number): Observable<any> {
 
 //metodo para en la factura sacar la empresa
 getEmpresaPorId(empresaId: number) {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
   return this.http.get<Empresa>(`http://localhost:8080/api/empresas/${empresaId}`, { headers });
 }

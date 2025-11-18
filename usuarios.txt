@@ -1,14 +1,12 @@
-Nombre: Javier Ruiz, Contraseña: pass15
-Nombre: Felipe León, Contraseña: pass23
-Nombre: Miguel Martín, Contraseña: pass25
-Nombre: Elena Gómez, Contraseña: pass11
-Nombre: Oscar Molina, Contraseña: pass29
-Nombre: Nuria Vázquez, Contraseña: pass9
-Nombre: Juan Pérez, Contraseña: pass30
-Nombre: Carmen Soto, Contraseña: pass4
-Nombre: Sergio Peña, Contraseña: pass23
-Nombre: Andrés Fuentes, Contraseña: pass23
-Nombre: Pedro Sánchez, Contraseña: pass6
-Nombre: Rosa Delgado, Contraseña: pass27
-
-usuario1 pass9
+Nombre: Javier Ruiz, Contraseña: pass23
+Nombre: Raúl Domínguez, Contraseña: pass7
+Nombre: David Ortega, Contraseña: pass15
+Nombre: Felipe León, Contraseña: pass16
+Nombre: Elena Gómez, Contraseña: pass19
+Nombre: Isabel Morales, Contraseña: pass26
+Nombre: Carmen Soto, Contraseña: pass8
+Nombre: Marta Cabrera, Contraseña: pass18
+Nombre: Andrés Fuentes, Contraseña: pass27
+Nombre: Lucía Torres, Contraseña: pass1
+Nombre: Rosa Delgado, Contraseña: pass20
+Nombre: Carlos García, Contraseña: pass22

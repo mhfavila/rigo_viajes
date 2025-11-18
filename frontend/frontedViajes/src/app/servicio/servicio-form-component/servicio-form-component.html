@@ -24,7 +24,8 @@
       <!--
         3. El "Cajón" 1, conectado con formGroupName="viaje"
       -->
-      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4" formGroupName="viaje">
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4"
+        formGroupName="viaje">
 
         <!--
           ¡NO HAY DESPLEGABLE DE EMPRESA!
@@ -34,7 +35,8 @@
         <mat-form-field class="w-full">
           <mat-label>Tipo de Servicio</mat-label>
           <input matInput formControlName="tipoServicio" required>
-          <mat-error *ngIf="servicioForm.get('viaje.tipoServicio')?.hasError('required')">
+          <mat-error
+            *ngIf="servicioForm.get('viaje.tipoServicio')?.hasError('required')">
             El tipo es requerido.
           </mat-error>
         </mat-form-field>
@@ -42,10 +44,13 @@
         <!-- Selector de Fecha -->
         <mat-form-field class="w-full">
           <mat-label>Fecha del Servicio</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fechaServicio" required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="picker"
+            formControlName="fechaServicio" required>
+          <mat-datepicker-toggle matSuffix
+            [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="servicioForm.get('viaje.fechaServicio')?.hasError('required')">
+          <mat-error
+            *ngIf="servicioForm.get('viaje.fechaServicio')?.hasError('required')">
             La fecha es requerida.
           </mat-error>
         </mat-form-field>
@@ -53,7 +58,8 @@
         <mat-form-field class="w-full">
           <mat-label>Origen</mat-label>
           <input matInput formControlName="origen" required>
-          <mat-error *ngIf="servicioForm.get('viaje.origen')?.hasError('required')">
+          <mat-error
+            *ngIf="servicioForm.get('viaje.origen')?.hasError('required')">
             El origen es requerido.
           </mat-error>
         </mat-form-field>
@@ -61,7 +67,8 @@
         <mat-form-field class="w-full">
           <mat-label>Destino</mat-label>
           <input matInput formControlName="destino" required>
-           <mat-error *ngIf="servicioForm.get('viaje.destino')?.hasError('required')">
+          <mat-error
+            *ngIf="servicioForm.get('viaje.destino')?.hasError('required')">
             El destino es requerido.
           </mat-error>
         </mat-form-field>
@@ -79,7 +86,8 @@
     -->
     <mat-tab label="Logística y Costes">
       <!-- 3. El "Cajón" 2, conectado con formGroupName="logisticaCostes" -->
-      <div class="p-4 grid grid-cols-1 md:grid-cols-4 gap-4" formGroupName="logisticaCostes">
+      <div class="p-4 grid grid-cols-1 md:grid-cols-4 gap-4"
+        formGroupName="logisticaCostes">
 
         <mat-form-field class="w-full">
           <mat-label>Conductor</mat-label>
@@ -97,7 +105,8 @@
         <mat-form-field class="w-full">
           <mat-label>KM</mat-label>
           <input matInput type="number" formControlName="km" required>
-           <mat-error *ngIf="servicioForm.get('logisticaCostes.km')?.hasError('required')">
+          <mat-error
+            *ngIf="servicioForm.get('logisticaCostes.km')?.hasError('required')">
             Requerido.
           </mat-error>
         </mat-form-field>
@@ -105,15 +114,15 @@
         <mat-form-field class="w-full">
           <mat-label>Precio / KM (€)</mat-label>
           <input matInput type="number" formControlName="precioKm" required>
-           <mat-error *ngIf="servicioForm.get('logisticaCostes.precioKm')?.hasError('required')">
+          <mat-error
+            *ngIf="servicioForm.get('logisticaCostes.precioKm')?.hasError('required')">
             Requerido.
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-full">
-          <mat-label>Dieta (€)</mat-label>
-          <input matInput type="number" formControlName="dieta">
-        </mat-form-field>
+        <mat-slide-toggle formControlName="dieta">
+          Incluye Dieta
+        </mat-slide-toggle>
 
         <mat-form-field class="w-full">
           <mat-label>Precio Dieta (€)</mat-label>
@@ -126,7 +135,7 @@
         </mat-form-field>
 
         <mat-form-field class="w-full">
-          <mat-label>Importe Espera (€)</mat-label>
+          <mat-label>Precio Hora Espera (€)</mat-label>
           <input matInput type="number" formControlName="importeEspera">
         </mat-form-field>
 
@@ -138,7 +147,8 @@
     -->
     <mat-tab label="Documentación y Notas">
       <!-- 3. El "Cajón" 3, conectado con formGroupName="documentacion" -->
-      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4" formGroupName="documentacion">
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4"
+        formGroupName="documentacion">
 
         <mat-form-field class="w-full">
           <mat-label>Albarán</mat-label>
@@ -152,7 +162,8 @@
 
         <mat-form-field class="w-full md:col-span-2">
           <mat-label>Observaciones</mat-label>
-          <textarea matInput formControlName="observaciones" rows="5"></textarea>
+          <textarea matInput formControlName="observaciones"
+            rows="5"></textarea>
         </mat-form-field>
 
       </div>
@@ -171,9 +182,9 @@
     </button>
 
     <button mat-flat-button
-            color="primary"
-            type="submit"
-            [disabled]="!servicioForm.valid">
+      color="primary"
+      type="submit"
+      [disabled]="!servicioForm.valid">
       {{ isEditMode ? 'Actualizar Servicio' : 'Guardar Servicio' }}
     </button>
   </div>

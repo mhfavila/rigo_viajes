@@ -43,6 +43,10 @@ CREATE SCHEMA public;
 
 
 
+select * from usuarios where id=101;
+select * from empresas u where usuario_id =101;
+select * from empresas where id=201;
+
 
 
 SELECT e.id AS empresa_id,
@@ -107,6 +111,7 @@ SELECT
     s.conductor,
     s.matricula_vehiculo,
     s.km,
+	s.dieta,
     s.precio_km,
     s.importe_servicio,
     s.cliente_final,

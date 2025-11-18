@@ -505,7 +505,7 @@ public class DataLoader implements CommandLineRunner {
             BigDecimal importeServicio = precioKm.multiply(BigDecimal.valueOf(km));
 
             Servicio servicio = Servicio.builder()
-                    .empresa(empresa) // ✅ ahora obligatorio
+                    .empresa(empresa) //  ahora obligatorio
                     .tipoServicio("Transporte")
                     .fechaServicio(LocalDate.now().minusDays(random.nextInt(30)))
                     .origen(destino())
@@ -520,7 +520,7 @@ public class DataLoader implements CommandLineRunner {
             servicioRepository.save(servicio);
         }
 
-        System.out.println("✅ Servicios de prueba creados correctamente.");
+        System.out.println(" Servicios de prueba creados correctamente.");
     }
 
     private void generarFacturasDePrueba() {

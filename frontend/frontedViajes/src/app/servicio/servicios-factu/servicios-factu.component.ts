@@ -1,3 +1,5 @@
+import { EmpresaService } from './../../services/empresa.service';
+import { Empresa } from './../../empresa/empresa.model';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +21,8 @@ import { ChangeDetectorRef } from '@angular/core';
 export class ServiciosFactuComponent implements OnInit {
   servicios: Servicio[] = []; // array vacío, inicializado
   empresaId!: number;
-  totalFacturas!: number ;
+  totalFacturas!: number;
+  idUsuario!: number;
 
   constructor(
     private dialog: MatDialog,
@@ -29,6 +32,7 @@ export class ServiciosFactuComponent implements OnInit {
     private route: ActivatedRoute,
     private facturaService: FacturaService,
     private cdr: ChangeDetectorRef,
+    private empresaService: EmpresaService
   ) {}
   ngOnInit(): void {
     this.cargarServicios();
@@ -39,6 +43,20 @@ export class ServiciosFactuComponent implements OnInit {
       this.empresaId = +id;
       console.log('Empresa ID:', this.empresaId);
 
+      //saco el usuario de la empresa para tenerlo
+      //lo primero de todo voy a cargar el id del usuario para tenerlo
+      this.empresaService.getEmpresaPorId(this.empresaId).subscribe({
+        next: (data: Empresa) => {
+          if (data.usuarioId) {
+            this.idUsuario = data.usuarioId;
+            console.log("**USUARIO ID"+this.idUsuario);
+          } else {
+            console.warn('Esta empresa no tiene un usuario asignado'); //en principio es imposible que sea asi pero por si acaso
+          }
+        },
+      });
+      console.log(this.idUsuario);
+//continuamos con cargar los servicios de la empresa
       this.serviciosFactService
         .getServiciosByEmpresa(this.empresaId)
         .subscribe({
@@ -107,7 +125,7 @@ export class ServiciosFactuComponent implements OnInit {
     // abrimos el dialogo
     const dialogRef = this.dialog.open(DatosFacturaDialogComponent, {
       width: '300px',
-      data: { iva: 21, irpf: 15 },
+      data: { iva: 21, irpf: 15 },//estos datos salen por defecto en el dialogo
     });
     // esperamos a que se cierre el dialogo
     dialogRef.afterClosed().subscribe((result) => {
@@ -127,8 +145,6 @@ export class ServiciosFactuComponent implements OnInit {
         porcentajeIrpfUsuario
       );
     });
-
-
   }
   /**
    * metodo para crear la factura
@@ -138,93 +154,91 @@ export class ServiciosFactuComponent implements OnInit {
    * @param irpfPorcentaje
    */
 
+  private crearFacturaConDatos(
+    servicios: Servicio[],
+    empresaId: number,
+    ivaPorcentaje: number,
+    irpfPorcentaje: number
+  ) {
+    // 1. Calculamos todo lo que NO depende de la API
+    const totalBruto = servicios.reduce((acc, s) => acc + s.importeServicio, 0);
+    const importeIva = totalBruto * (ivaPorcentaje / 100);
+    const importeIrpf = totalBruto * (irpfPorcentaje / 100);
+    const totalFactura = totalBruto + importeIva - importeIrpf;
 
+    const usuarioId = this.idUsuario;
+    const idsDeServicios = servicios.map((s) => s.id);
 
-    private crearFacturaConDatos(
-  servicios: Servicio[],
-  empresaId: number,
-  ivaPorcentaje: number,
-  irpfPorcentaje: number
-) {
-  // 1. Calculamos todo lo que NO depende de la API
-  const totalBruto = servicios.reduce((acc, s) => acc + s.importeServicio, 0);
-  const importeIva = totalBruto * (ivaPorcentaje / 100);
-  const importeIrpf = totalBruto * (irpfPorcentaje / 100);
-  const totalFactura = totalBruto + importeIva - importeIrpf;
-  const usuarioId = 1; // modificar para sacar el usuario que corrsponda
-  const idsDeServicios = servicios.map(s => s.id);
+    // 2. PRIMERO obtenemos el total de facturas
+    this.facturaService.getFacturaByEmpresa(empresaId).subscribe({
+      next: (data) => {
+        // 3. AHORA SÍ tenemos el dato correcto
+        this.totalFacturas = data.length;
+        console.log('Cantidad de facturas existentes:', this.totalFacturas);
 
-  // 2. PRIMERO obtenemos el total de facturas
-  this.facturaService.getFacturaByEmpresa(empresaId).subscribe({
-    next: (data) => {
-      // 3. AHORA SÍ tenemos el dato correcto
-      this.totalFacturas = data.length;
-      console.log('Cantidad de facturas existentes:', this.totalFacturas);
+        const numero = this.totalFacturas + 1;
 
-      const numero = this.totalFacturas + 1;
+        // 4. Construimos el objeto factura AQUÍ DENTRO
+        const nuevaFactura: Factura = {
+          numeroFactura:
+            'F-' + empresaId + '-' + numero.toString().padStart(4, '0'),
+          fechaEmision: new Date().toISOString(),
+          empresaId: empresaId,
+          usuarioId: usuarioId,
+          totalBruto: totalBruto,
+          porcentajeIva: ivaPorcentaje,
+          importeIva: importeIva,
+          porcentajeIrpf: irpfPorcentaje,
+          importeIrpf: importeIrpf,
+          totalFactura: totalFactura,
+          estado: 'BORRADOR',
+          serviciosIds: idsDeServicios,
+        };
 
-      // 4. Construimos el objeto factura AQUÍ DENTRO
-      const nuevaFactura: Factura = {
-        numeroFactura: "F-" +empresaId+"-"+ numero.toString().padStart(4, "0"), // <-- Ahora 'numero' será 8
-        fechaEmision: new Date().toISOString(),
-        empresaId: empresaId,
-        usuarioId: usuarioId,
-        totalBruto: totalBruto,
-        porcentajeIva: ivaPorcentaje,
-        importeIva: importeIva,
-        porcentajeIrpf: irpfPorcentaje,
-        importeIrpf: importeIrpf,
-        totalFactura: totalFactura,
-        estado: 'BORRADOR',
-        serviciosIds: idsDeServicios
-      };
+        // 5. Y llamamos a la API de creación AQUÍ DENTRO
+        this.facturaService.crearFactura(nuevaFactura).subscribe({
+          next: (res) => {
+            // ----- ¡AÑADE ESTOS LOGS AQUÍ! -----
+            console.log('--- 1. RESPUESTA DEL BACKEND RECIBIDA ---');
+            console.log('facturaCreada:', res);
+            console.log('IDs que se enviaron:', res.serviciosIds);
+            console.log('Factura creada exitosamente', res);
+            if (res && res.id) {
+              console.log(
+                '--- 2. GUARDIA SUPERADA. Llamando a actualizar... ---'
+              );
+              console.log('Se usará el ID de factura:', nuevaFactura.id);
+              this.actualizarServiciosLocales(idsDeServicios, res.id);
+            } else {
+              console.error(
+                'La facturaCreada no tiene ID (o es 0, null, undefined). No se llamará a actualizarServiciosLocales.'
+              );
+            }
+            // this.cargarServicios
+          },
+          error: (err) => {
+            console.error('Error al CREAR la factura', err);
+          },
+        });
+      },
+      error: (err) => {
+        console.error('Error al OBTENER el número de facturas', err);
+      },
+    });
+  }
 
-      // 5. Y llamamos a la API de creación AQUÍ DENTRO
-      this.facturaService.crearFactura(nuevaFactura).subscribe({
-        next: (res) => {
-          // ----- ¡AÑADE ESTOS LOGS AQUÍ! -----
-         console.log('--- 1. RESPUESTA DEL BACKEND RECIBIDA ---');
-        console.log('facturaCreada:', res);
-        console.log('IDs que se enviaron:', res.serviciosIds);
-          console.log('Factura creada exitosamente', res);
-          if (res && res.id) {
-            console.log('--- 2. GUARDIA SUPERADA. Llamando a actualizar... ---');
-          console.log('Se usará el ID de factura:', nuevaFactura.id);
-          this.actualizarServiciosLocales(idsDeServicios,res.id)
-          }else{
-            console.error('La facturaCreada no tiene ID (o es 0, null, undefined). No se llamará a actualizarServiciosLocales.');
-          }
-        // this.cargarServicios
-        },
-        error: (err) => {
-          console.error('Error al CREAR la factura', err);
-        },
-      });
-    },
-    error: (err) => {
-      console.error('Error al OBTENER el número de facturas', err);
-    },
-  });
-
-
-}
-
-
-private actualizarServiciosLocales(idsFacturados: number[],nuevaFacturaId:number) {
-  this.servicios = this.servicios.map(servicio => {
-    if (idsFacturados.includes(servicio.id)) {
-      return { ...servicio, facturaId: nuevaFacturaId, seleccionado: false };
-    }
-    return servicio;
-
-  });
-  this.cdr.markForCheck();
-
-}
-
-
-
-
+  private actualizarServiciosLocales(
+    idsFacturados: number[],
+    nuevaFacturaId: number
+  ) {
+    this.servicios = this.servicios.map((servicio) => {
+      if (idsFacturados.includes(servicio.id)) {
+        return { ...servicio, facturaId: nuevaFacturaId, seleccionado: false };
+      }
+      return servicio;
+    });
+    this.cdr.markForCheck();
+  }
 
   /**
    * Abre una nueva ventana emergente con el formulario para crear un servicio,

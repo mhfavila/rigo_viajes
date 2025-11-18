@@ -35,6 +35,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.component';
 import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.component/datos-factura-dialog.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 @NgModule({
   declarations: [
     App,
@@ -52,6 +54,7 @@ import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.comp
   ],
   imports: [
     BrowserModule,
+
     CommonModule,
     RouterModule,
     AppRoutingModule,
@@ -68,7 +71,7 @@ import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.comp
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    MatSlideToggleModule,
     ReactiveFormsModule,
     MatTabsModule,
 

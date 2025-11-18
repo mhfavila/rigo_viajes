@@ -11,6 +11,8 @@ import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.UsuarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -107,13 +109,24 @@ public class UsuarioServiceImpl implements UsuarioService {
      */
     @Override
     public List<EmpresaDTO> obtenerEmpresasDeUsuario(Long usuarioId) {
-        if (!usuarioRepository.existsById(usuarioId)) {
-            throw new RuntimeException("Usuario no encontrado con id: " + usuarioId);
+        // 1. Obtener quién está haciendo la petición (del Token)
+        String usernameActual = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // 2. Buscar al usuario dueño del ID que intentan consultar
+        Usuario usuarioSolicitado = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        // 3. EL GUARDIÁN: Si los nombres no coinciden (y no eres admin), ¡FUERA!
+        // (Asumo que el username es único según tu entidad Usuario)
+        if (!usuarioSolicitado.getNombre().equals(usernameActual)) {
+            // Aquí lanzamos un error 403 si intentan espiar
+            throw new AccessDeniedException("No tienes permiso para ver los datos de otro usuario.");
         }
 
+        // 4. Si pasa el control, devolvemos los datos
         return empresaRepository.findByUsuarioId(usuarioId)
                 .stream()
-                .map(EmpresaMapper::toDTO)   // 👈 usamos tu mapper estático
+                .map(EmpresaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }

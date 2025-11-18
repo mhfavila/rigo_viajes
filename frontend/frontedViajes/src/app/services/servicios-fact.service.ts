@@ -20,7 +20,7 @@ export class ServiciosFactService {
 
   //metodo para sacar los servicios de una empresa
   getServiciosByEmpresa(empresaId: number): Observable<Servicio[]> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.get<Servicio[]>(`${this.apiUrl}/servicios/empresa/${empresaId}`, {
@@ -30,7 +30,7 @@ export class ServiciosFactService {
 
   //metodo para sacar un servicio segun su id
   getServicioPorId(servicioId: number): Observable<Servicio> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.get<Servicio>(`${this.apiUrl}/servicios/${servicioId}`, {
@@ -40,7 +40,7 @@ export class ServiciosFactService {
 
   //crear servicio
   crearServicio(servicio: Servicio): Observable<Servicio> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.post<Servicio>(`${this.apiUrl}/servicios`, servicio, { headers });
@@ -48,7 +48,7 @@ export class ServiciosFactService {
 
   //editar servicio
   editarServicio(id: number, servicio: Servicio): Observable<Servicio> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.put<Servicio>(`${this.apiUrl}/servicios/${id}`, servicio, {
@@ -58,7 +58,7 @@ export class ServiciosFactService {
 
   //eliminar servicio
   eliminarServicio(servicioId: number): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     return this.http.delete(`${this.apiUrl}/servicios/${servicioId}`, { headers });
@@ -67,7 +67,7 @@ export class ServiciosFactService {
 
 
   getEmpresaPorId(id: number): Observable<Empresa> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     // 3. Ruta corregida: apunta a '/empresas'
@@ -75,7 +75,7 @@ export class ServiciosFactService {
   }
 
   getFacturaPorId(id: number): Observable<Factura> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
     // 3. Ruta corregida: apunta a '/facturas'

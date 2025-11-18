@@ -12,30 +12,25 @@ import { Servicio } from '../servicio.model';
   styleUrl: './servicio-form-component.css',
 })
 export class ServicioFormComponent implements OnInit {
-  servicioForm!: FormGroup;//aqui es donde esta todo el formulario , es la variable donde se guarda el formulario completo con cajones y demas
+  servicioForm!: FormGroup; //aqui es donde esta todo el formulario , es la variable donde se guarda el formulario completo con cajones y demas
   isEditMode: boolean = false;
 
   servicioId: number | null = null; // ID del servicio a editar
   empresaContextId: number | null = null; // ID de la empresa a la que pertenece
 
   constructor(
-    private fb: FormBuilder,//Para construir formularios
-    private router: Router,//Para navegar entre páginas
+    private fb: FormBuilder, //Para construir formularios
+    private router: Router, //Para navegar entre páginas
     private route: ActivatedRoute, // Para leer los parámetros de la URL
     private serviciosFactService: ServiciosFactService,
-    private snackBar: MatSnackBar//para motrar notificaciones
+    private snackBar: MatSnackBar //para motrar notificaciones
   ) {}
 
   ngOnInit(): void {
-     // Buscamos el ID del servicio (para modo Editar)
+    // Buscamos el ID del servicio (para modo Editar)
     const idParam = this.route.snapshot.paramMap.get('id');
     // Buscamos el ID de la empresa (para modo Crear)
     const empresaIdParam = this.route.snapshot.paramMap.get('empresaId');
-
-
-
-
-
 
     // --- 2. CONSTRUIMOS EL FORMULARIO  ---
     this.servicioForm = this.fb.group({
@@ -53,12 +48,18 @@ export class ServicioFormComponent implements OnInit {
       logisticaCostes: this.fb.group({
         conductor: [''],
         matriculaVehiculo: [''],
-        km: [null, [Validators.required, Validators.min(0), Validators.max(1000000)]], // Límite de 1 millón
-        precioKm: [null, [Validators.required, Validators.min(0), Validators.max(99)]], // Límite de 99
-        dieta: [null, [Validators.min(0), Validators.max(99999999)]], // Límite de 100 millones
+        km: [
+          null,
+          [Validators.required, Validators.min(0), Validators.max(1000000)],
+        ], // Límite de 1 millón
+        precioKm: [
+          null,
+          [Validators.required, Validators.min(0), Validators.max(99)],
+        ], // Límite de 99
+        dieta: [false], // Límite de 100 millones
         precioDieta: [null, [Validators.min(0), Validators.max(99999999)]],
         horasEspera: [null, [Validators.min(0), Validators.max(99999999)]],
-        importeEspera: [null,  [Validators.min(0), Validators.max(99999999)]],
+        importeEspera: [null, [Validators.min(0), Validators.max(99999999)]],
       }),
 
       // -- Cajón 3: "Documentación y Notas" --
@@ -68,11 +69,6 @@ export class ServicioFormComponent implements OnInit {
         observaciones: [''],
       }),
     });
-
-
-
-
-
 
     if (idParam) {
       // --- MODO EDITAR ---  URL  /servicios/editar/123
@@ -96,16 +92,12 @@ export class ServicioFormComponent implements OnInit {
     }
   }
 
-
-
-   //Carga los datos de un servicio en modo Editar y rellena el formulario anidado.
+  //Carga los datos de un servicio en modo Editar y rellena el formulario anidado.
 
   cargarDatosServicio(id: number): void {
-
     this.serviciosFactService.getServicioPorId(id).subscribe({
       next: (data) => {
-
-        if (data.empresaId ) {
+        if (data.empresaId) {
           this.empresaContextId = data.empresaId;
         } else {
           console.error('El servicio cargado no tiene un ID de empresa.');
@@ -139,11 +131,9 @@ export class ServicioFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar el servicio:', err);
-        this.snackBar.open(
-          'Error al cargar el servicio. ¿Existe?',
-          'Cerrar',
-          { duration: 3000 }
-        );
+        this.snackBar.open('Error al cargar el servicio. ¿Existe?', 'Cerrar', {
+          duration: 3000,
+        });
       },
     });
   }
@@ -162,9 +152,7 @@ export class ServicioFormComponent implements OnInit {
 
     // Comprobación de seguridad
     if (!this.empresaContextId) {
-      console.error(
-        'Error fatal: No hay contexto de empresa para guardar.'
-      );
+      console.error('Error fatal: No hay contexto de empresa para guardar.');
       return;
     }
 
@@ -179,13 +167,36 @@ export class ServicioFormComponent implements OnInit {
     };
 
     // 3. Añadimos el ID de la empresa (del contexto)
-    // El backend espera: "empresa": { "id": 45 }
-    payload.empresaId =  this.empresaContextId ;
+
+    payload.empresaId = this.empresaContextId;
 
     // 4. Calculamos el campo 'importeServicio'
     // (Usamos || 0 para evitar NaN si los campos están vacíos)
-    payload.importeServicio =
-      (payload.km || 0) * (payload.precioKm || 0);
+    // payload.importeServicio =
+    //  (payload.km || 0) * (payload.precioKm || 0);//aqui se calcula el importe a;adir los tiempos de espera y la dieta
+
+    //(payload.dieta ? (payload.precioDieta || 0) : 0); // Si dieta es true, suma precio, si no, suma 0
+
+    // 1. Aseguramos que los valores sean números para evitar errores de texto
+    const km = Number(payload.km) || 0;
+    const precioKm = Number(payload.precioKm) || 0;
+    const precioDieta = Number(payload.precioDieta) || 0;
+    const precioEspera = Number(payload.importeEspera) || 0;
+    const horasEspera= Number(payload.horasEspera) || 0;
+    console.log("precio dieta------------"+payload.precioDieta)
+
+    // 2. Calculamos el base
+    let total = km * precioKm;
+    let importeHorasEspera = precioEspera*horasEspera;
+
+    // 3. Comprobamos la dieta
+    // Quitamos el "=== true" para que funcione si viene como 1, "true" o true
+    if (payload.dieta) {
+      total += precioDieta;
+    }
+    total +=importeHorasEspera;
+    // 4. Asignamos
+    payload.importeServicio = total;
 
     // --- 5. ENVÍO A LA API ---
     if (this.isEditMode) {
@@ -204,18 +215,15 @@ export class ServicioFormComponent implements OnInit {
         });
     } else {
       // --- Lógica de Crear ---
-      this.serviciosFactService
-        .crearServicio(payload)
-        .subscribe({
-          next: () => {
-            this.snackBar.open('Servicio creado con éxito.', 'OK', {
-              duration: 2000,
-            });
-            this.navegarDeVuelta(); // Volvemos a la lista
-          },
-          error: (err) =>
-            console.error('Error al crear el servicio:', err),
-        });
+      this.serviciosFactService.crearServicio(payload).subscribe({
+        next: () => {
+          this.snackBar.open('Servicio creado con éxito.', 'OK', {
+            duration: 2000,
+          });
+          this.navegarDeVuelta(); // Volvemos a la lista
+        },
+        error: (err) => console.error('Error al crear el servicio:', err),
+      });
     }
   }
 
@@ -232,6 +240,4 @@ export class ServicioFormComponent implements OnInit {
   cancelar(): void {
     this.navegarDeVuelta();
   }
-
-
 }

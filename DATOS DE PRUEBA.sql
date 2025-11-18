@@ -49,17 +49,35 @@ INSERT INTO viajes (id, origen, destino, fecha, distancia, precio_km, importe_to
 INSERT INTO servicios (id, factura_id, empresa_id, tipo_servicio, fecha_servicio, origen, destino, conductor, matricula_vehiculo, km, precio_km, importe_servicio, dieta, precio_dieta, horas_espera, importe_espera, albaran, cliente_final, observaciones, orden)
 VALUES
 -- Empresa 201
-(401, NULL, 201, 'Transporte', '2025-10-01', 'Valladolid', 'Madrid', 'Juan Pérez', '1234ABC', 190, 0.80, 152.00, 0, 0, 0, 0, 'A001', 'Cliente A', 'Sin incidencias', 1),
-(402, NULL, 201, 'Logística', '2025-10-02', 'Madrid', 'León', 'María López', '5678DEF', 250, 0.75, 187.50, 10, 5, 1, 10, 'A002', 'Cliente B', 'Entrega rápida', 2),
-(403, NULL, 201, 'Transporte', '2025-10-03', 'León', 'Soria', 'Carlos Ruiz', '9999GGG', 300, 0.70, 210.00, 0, 0, 0, 0, 'A003', 'Cliente C', '', 3),
-(404, NULL, 201, 'Especial', '2025-10-04', 'Soria', 'Ávila', 'Laura Díaz', '4321HJK', 280, 0.75, 210.00, 10, 5, 0, 0, 'A004', 'Cliente D', '', 4),
-(405, NULL, 201, 'Transporte', '2025-10-05', 'Ávila', 'Salamanca', 'Pablo Gómez', '3456KLM', 200, 0.80, 160.00, 0, 0, 0, 0, 'A005', 'Cliente E', '', 5),
-(406, NULL, 201, 'Transporte', '2025-10-06', 'Salamanca', 'Burgos', 'Pedro López', '1234JKL', 220, 0.75, 165.00, 0, 0, 0, 0, 'A006', 'Cliente F', '', 6),
-(407, NULL, 201, 'Transporte', '2025-10-07', 'Burgos', 'Madrid', 'Sergio Díaz', '5555LLL', 240, 0.80, 192.00, 0, 0, 0, 0, 'A007', 'Cliente G', '', 7),
-(408, NULL, 201, 'Logística', '2025-10-08', 'Madrid', 'Toledo', 'Raúl Gómez', '6543AAA', 180, 0.85, 153.00, 5, 5, 0, 0, 'A008', 'Cliente H', '', 8),
-(409, NULL, 201, 'Especial', '2025-10-09', 'Toledo', 'Cuenca', 'José Ruiz', '7777PPP', 200, 0.80, 160.00, 0, 0, 0, 0, 'A009', 'Cliente I', '', 9),
-(410, NULL, 201, 'Transporte', '2025-10-10', 'Cuenca', 'Valencia', 'Luis García', '8888TTT', 300, 0.75, 225.00, 0, 0, 0, 0, 'A010', 'Cliente J', '', 10);
+-- Fila 401: dieta era 0 -> FALSE
+(401, NULL, 201, 'Transporte', '2025-10-01', 'Valladolid', 'Madrid', 'Juan Pérez', '1234ABC', 190, 0.80, 152.00, FALSE, 0, 0, 0, 'A001', 'Cliente A', 'Sin incidencias', 1),
 
+-- Fila 402: dieta era 10 -> TRUE
+(402, NULL, 201, 'Logística', '2025-10-02', 'Madrid', 'León', 'María López', '5678DEF', 250, 0.75, 187.50, TRUE, 5, 1, 10, 'A002', 'Cliente B', 'Entrega rápida', 2),
+
+-- Fila 403: dieta era 0 -> FALSE
+(403, NULL, 201, 'Transporte', '2025-10-03', 'León', 'Soria', 'Carlos Ruiz', '9999GGG', 300, 0.70, 210.00, FALSE, 0, 0, 0, 'A003', 'Cliente C', '', 3),
+
+-- Fila 404: dieta era 10 -> TRUE
+(404, NULL, 201, 'Especial', '2025-10-04', 'Soria', 'Ávila', 'Laura Díaz', '4321HJK', 280, 0.75, 210.00, TRUE, 5, 0, 0, 'A004', 'Cliente D', '', 4),
+
+-- Fila 405: dieta era 0 -> FALSE
+(405, NULL, 201, 'Transporte', '2025-10-05', 'Ávila', 'Salamanca', 'Pablo Gómez', '3456KLM', 200, 0.80, 160.00, FALSE, 0, 0, 0, 'A005', 'Cliente E', '', 5),
+
+-- Fila 406: dieta era 0 -> FALSE
+(406, NULL, 201, 'Transporte', '2025-10-06', 'Salamanca', 'Burgos', 'Pedro López', '1234JKL', 220, 0.75, 165.00, FALSE, 0, 0, 0, 'A006', 'Cliente F', '', 6),
+
+-- Fila 407: dieta era 0 -> FALSE
+(407, NULL, 201, 'Transporte', '2025-10-07', 'Burgos', 'Madrid', 'Sergio Díaz', '5555LLL', 240, 0.80, 192.00, FALSE, 0, 0, 0, 'A007', 'Cliente G', '', 7),
+
+-- Fila 408: dieta era 5 -> TRUE
+(408, NULL, 201, 'Logística', '2025-10-08', 'Madrid', 'Toledo', 'Raúl Gómez', '6543AAA', 180, 0.85, 153.00, TRUE, 5, 0, 0, 'A008', 'Cliente H', '', 8),
+
+-- Fila 409: dieta era 0 -> FALSE
+(409, NULL, 201, 'Especial', '2025-10-09', 'Toledo', 'Cuenca', 'José Ruiz', '7777PPP', 200, 0.80, 160.00, FALSE, 0, 0, 0, 'A009', 'Cliente I', '', 9),
+
+-- Fila 410: dieta era 0 -> FALSE
+(410, NULL, 201, 'Transporte', '2025-10-10', 'Cuenca', 'Valencia', 'Luis García', '8888TTT', 300, 0.75, 225.00, FALSE, 0, 0, 0, 'A010', 'Cliente J', '', 10);
 -- Empresa 202
 INSERT INTO servicios (id, factura_id, empresa_id, tipo_servicio, fecha_servicio, origen, destino, conductor, matricula_vehiculo, km, precio_km, importe_servicio, dieta, precio_dieta, horas_espera, importe_espera, albaran, cliente_final, observaciones, orden)
 SELECT 410 + g.id AS id, NULL, 202, s.tipo_servicio, s.fecha_servicio, s.origen, s.destino, s.conductor, s.matricula_vehiculo, s.km, s.precio_km, s.importe_servicio, s.dieta, s.precio_dieta, s.horas_espera, s.importe_espera, 

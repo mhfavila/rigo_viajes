@@ -11,7 +11,7 @@ export interface Servicio {
   km: number;
   precioKm: number;
   importeServicio: number;
-  dieta?: number;
+  dieta: boolean;
   precioDieta?: number;
   horasEspera?: number;
   importeEspera?: number;

@@ -59,8 +59,8 @@ public class Servicio {
     @Column(name = "importe_servicio", precision = 100, scale = 2, nullable = false)
     private BigDecimal importeServicio;
 
-    @Column(name = "dieta", precision = 100, scale = 2)
-    private BigDecimal dieta;
+    @Column(name = "dieta")
+    private Boolean dieta;
 
     @Column(name = "precio_dieta", precision = 100, scale = 2)
     private BigDecimal precioDieta;

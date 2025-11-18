@@ -13,7 +13,7 @@ export class FacturaService {
 
   // Obtener facturas por empresa
   getFacturaByEmpresa(empresaId: number): Observable<Factura[]> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
     console.log(empresaId);
     return this.http.get<Factura[]>(`${this.baseUrl}/empresa/${empresaId}`, {
@@ -25,7 +25,7 @@ export class FacturaService {
   //Descargar PDF de factura
 
   descargarPdf(id: number): Observable<Blob> {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get(`${this.baseUrl}/${id}/pdf`, {
       headers,
@@ -37,7 +37,7 @@ export class FacturaService {
 
   crearFactura(factura: Factura): Observable<Factura> {
 
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const headers = { Authorization: `Bearer ${token}` };
 
 

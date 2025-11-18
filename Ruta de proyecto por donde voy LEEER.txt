@@ -1,51 +1,35 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 
-IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,mas adelante se puede hacer algo para pasar los viajes a servicios
+IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,mas adelante se puede hacer algo para pasar los viajes a servicios  -->PROBABLEMTE SE ELIMINE LOS VIAJES
 
 		COSAS LISTAS:
-				>agregar una columna de acciones parabotones de editar y eliminar >>LISTO
-				>meter un boton para crear nuevos servicios >>LISTO
-				en empresa esta el iban ahora hay que a;adirlo para crear empresa-->LISTO
-				>mejorar la interfaz con css >>LISTO
-				>reorganizar la tabla para mostrar menos informacion o otra informacion>>LISTO
-				>dentro de cada servicio dar forma a como ver la informacion en la pantalla a,algo estilo madrid digital o preguntar a chatgpt 
-													|>>--he creado una pestaña nueva para que se pueda ver toda la informacion del servicio ,falta completar la informacion y 
-														darle forma y colocar quizas tambien informacion d ela empresa y del usuario>>LISTO
-				 __>no esta fucnionando el boton para gnerarlas desde la pantalla de los servicios
-							ver como generar el numero de factura que se esta pasando vacios>>LISTO
-					__>revisar como se crea la factura en crearFacturaConDatos de la clase ServiciosFactuComponent por que hay datos que van fijos como el id o el usuario?id>>LISTO
-					
+			
 					
 				
 				
 POR DONDE ME LLEGO:   
+
+
+Actualmete estoy revisando la seguridad del proyecto leer lo que me pone en gemini ==> leer el final de la conversacion de navegacion y seguridad de proyectos  , ver si ya funcionan todad las pantallas
 			En la pantalla de ver servicios 
 						
 						
 						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
 						
+						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si				
 						
+			FACTURA 
 						
-						>La idea actual para generar las facturas es que desde la opantalla de servicios se ponga un boton para generar la factura con los servicios selecionados ,
-						>-Pantalla de Generar Factura: mostrar los seleccionados y confirmar.	
-						
-						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si
-						
-			Fronted>
-					
-										
-						
-			FACTURA revisar donde se estan haciendo los calculos y ver si es mejor en el backend o en el fronted
-					
+					--> ver si esta bien hecho el irpf y el iva ..>le he preguntadoa  rigo a ver
 					-->mirar para odenar que los servicios con cuadro de chak queden ariba
 					>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura 
 			
 			En ENTIDADES 
 					|> corregir datos que faltan en viajes y en empresas y servicos y facturas
 					|>	>>Probablemete habra que a;adir en los servicios algo del estilo  destino dos (hablar con rigo para ver como funciona eso)	
-					|> faltaria hacer algo que calcule el importe total del servicio (sumar precio kilometros a tiempo de espera y demas cosas)	
-					|> mirar si para meter direciones hay algo como un domi de MD que te saque en la direcion todos los datos como cp ,provincia calle etc
+					
+					|> mirar si para meter direciones hay algo como un domi de MD que te saque en la direcion todos los datos como cp ,provincia calle etc-->he visto que si que hay cosas asi que puedo hacerlo una mejor para futuro
 					-> en la clase usuario meter estos campos para poder sacarlos en la factura
 													-Direccion
 													-codigo postal y provincia
@@ -70,7 +54,7 @@ POR DONDE ME LLEGO:
 				->-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
 				->-tengo que implementar un boton para volver atras en todas las pantallas  y mirar si puedo anular las flechas de volver atrar de google
 				
-				->- revisar si se esta haciendo al suma de los costes y demas en plan el total sale de los kilometros por el precio  y luego a;adari las horas de espera y dietas etc
+			
 									
 									
 									
