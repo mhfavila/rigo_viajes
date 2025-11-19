@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing-module';
@@ -36,6 +36,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.component';
 import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.component/datos-factura-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
     ConfirmDialogComponent,
   ],
-  providers: [],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true}
+  ],
   bootstrap: [App],
 })
 export class AppModule {}

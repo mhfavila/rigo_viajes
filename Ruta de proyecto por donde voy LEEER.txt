@@ -1,9 +1,5 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
-
-IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,mas adelante se puede hacer algo para pasar los viajes a servicios  -->PROBABLEMTE SE ELIMINE LOS VIAJES
-
-		COSAS LISTAS:
 			
 					
 				
@@ -11,9 +7,8 @@ IMPORTANTE: --> demomento la tabla de viajes es solo para gusrdar un historico ,
 POR DONDE ME LLEGO:   
 
 
-Actualmete estoy revisando la seguridad del proyecto leer lo que me pone en gemini ==> leer el final de la conversacion de navegacion y seguridad de proyectos  , ver si ya funcionan todad las pantallas
-			En la pantalla de ver servicios 
-						
+
+						>>Revisar como estoy usando tailwind para hacerlo bonito y ver si lo puedo usar en el resto
 						
 						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
 						
@@ -30,6 +25,7 @@ Actualmete estoy revisando la seguridad del proyecto leer lo que me pone en gemi
 					|>	>>Probablemete habra que a;adir en los servicios algo del estilo  destino dos (hablar con rigo para ver como funciona eso)	
 					
 					|> mirar si para meter direciones hay algo como un domi de MD que te saque en la direcion todos los datos como cp ,provincia calle etc-->he visto que si que hay cosas asi que puedo hacerlo una mejor para futuro
+					
 					-> en la clase usuario meter estos campos para poder sacarlos en la factura
 													-Direccion
 													-codigo postal y provincia
@@ -52,7 +48,12 @@ Actualmete estoy revisando la seguridad del proyecto leer lo que me pone en gemi
 					
 			COSAS:
 				->-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
-				->-tengo que implementar un boton para volver atras en todas las pantallas  y mirar si puedo anular las flechas de volver atrar de google
+				->-tengo que implementar un boton para volver atras en todas las pantallas  y mirar si puedo anular las flechas de volver atrar de google--> en principio no se pueden anular por legalida pero yo creoq ue no voy a meter lo del boton
+				
+				-->Revisar lo de los refresh tokens , son para que el usuario no necesite estar logandose si se acaba el tiempo
+				
+				
+				-->puedo revisar cosas con los roles ,de momento todos se crean en ROLE_USER desde el backend
 				
 			
 									
@@ -64,7 +65,54 @@ Actualmete estoy revisando la seguridad del proyecto leer lo que me pone en gemi
 						->revisar creacion de la empresa
 						
 						-->revisar las validaciones al crear o editar empresa y servicios y las demas entidades y ver en que falla y sacar mensajes para que no pete la aplicacion
-								
+						
+
+						-->SEGURIDAD DEL BACKEND >>REVISADA
+						-->SEGURIDAD DEL FRONTED  voy a meterlo en claude a las 3 para que me lo revise bien
+						
+			REVISAR ESTO SON FALLOS DEL FRONTED			
+						⚠️ 4. DECODIFICACIÓN INSEGURA DEL TOKEN
+typescript// ⚠️ auth.service.ts
+getUsuarioId(): number | null {
+  const token = this.obtenerToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1])); // ❌ Sin validación
+    return payload.usuarioId;
+  } catch (error) {
+    console.error('Error al decodificar el token:', error);
+    return null;
+  }
+}
+Problema: No validas la estructura del token antes de decodificarlo.
+Solución: Usa una librería para JWT:
+bashnpm install jwt-decode
+
+🐛 OTROS PROBLEMAS DE SEGURIDAD Y BUENAS PRÁCTICAS
+⚠️ 7. FALTA VALIDACIÓN EN FORMULARIOS
+html<!-- ❌ registro.component.html - Sin validación real -->
+<input type="email" [(ngModel)]="email" name="email" required />
+Problema: Usas required en HTML pero no validas en el componente.
+Solución: Usa Reactive Forms con validaciones:Preparó validaciones visuales para el código HTML.Ahora voy a crear el HTML correspondiente con las validaciones visuales.Preparó ajustes visuales para componentes de error.Ahora voy a actualizar el CSS para los estilos de error.
+⚠️ 8. URL HARDCODEADAS
+typescript// ❌ URLs duplicadas en todos los servicios
+private apiUrl = 'http://localhost:8080/api/usuarios/empresas/';
+Solución: Usa environment files:environment.ts (CONFIGURACIÓN CENTRALIZADA)Código // src/environments/environment.ts
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api',
+  tokenKey: 'token'
+};
+
+// src/environments/environment.prod.ts
+export const environment = {
+  production: true,
+  apiUrl: 'httypescript// En todos tus servicios
+import { environment } from '../../environments/environment';
+
+export class AuthService {
+  private readonly API_URL = `${environment.apiUrl}/auth`; // ✅
+}
 								
 		
 								
@@ -80,7 +128,7 @@ Actualmete estoy revisando la seguridad del proyecto leer lo que me pone en gemi
 
 
 COSAS PENDIENTES:
-	-Nueva cosa a revisar , lo de que al poner la ruta http://localhost:4200/viajes me saque la tabla y revisra el flujo de la palicacion hacia atras y hacia delante
+
 	
 	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
 	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13  --> esto sigue pasando solo que si no se crea es por que ya hay uno con el nombre vaacio
@@ -176,190 +224,3 @@ el return -> Map.of("mensaje","aqui va el texto que tuvieras")
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	VISUAL PARA LA PANTALLA DE LAS EMPRESAS
-	Flujo recomendado
-
-Listado principal de empresas
-
-Tabla o tarjetas con la información básica: nombre, sector, fecha de creación, acciones.
-
-Botón flotante “+” para crear nueva empresa (no confundir con el resto de botones).
-
-Crear / Editar empresa
-
-Usar un modal (ventana emergente) con un formulario.
-
-Campos principales: nombre, dirección, sector, etc.
-
-Botones: “Guardar” y “Cancelar”.
-
-Cuando se guarda, se cierra el modal y se recarga la tabla automáticamente.
-
-Esto evita recargar toda la página y mantiene el contexto del usuario.
-
-Eliminar empresa
-
-Botón dentro de cada fila (o tarjeta) con un icono de basura.
-
-Mostrar un confirm dialog para evitar borrados accidentales.
-
-Después de confirmar, la tabla se actualiza automáticamente.
-
-Feedback visual
-
-Mensajes de éxito o error con snackbars o alertas pequeñas en la esquina.
-
-Ejemplo: “Empresa creada correctamente” o “No se pudo eliminar la empresa”.
-
-2️⃣ Diseño visual
-a) Distribución de elementos
-
-Tabla compacta o tarjetas según la cantidad de empresas:
-
-Si son pocas (<10), tarjetas con información clave y botones visibles.
-
-Si son muchas, tabla con columnas: Nombre | Sector | Acciones.
-
-Acciones:
-
-Editar → icono de lápiz o botón azul.
-
-Eliminar → icono de basura o botón rojo.
-
-Crear empresa:
-
-Botón flotante grande (FAB) en esquina inferior derecha, color destacado (ej: verde o azul).
-
-Opcionalmente un pequeño tooltip: “Crear nueva empresa”.
-
-b) Estilo de tabla / tarjetas
-
-Tabla:
-
-Cabeceras con fondo suave, texto centrado.
-
-Alternar filas claras y oscuras para facilitar la lectura.
-
-Botones de acción alineados a la derecha.
-
-Tarjetas:
-
-Box-shadow ligero, bordes redondeados.
-
-Información breve arriba, acciones abajo.
-
-Mantener colores consistentes con la paleta de la app.
-
-c) Experiencia de usuario (UX)
-
-Modal para crear/editar evita cambiar de página.
-
-Confirmaciones claras para eliminar.
-
-Feedback inmediato con snackbars.
-
-Botones grandes y claros, con iconos universales (lápiz, basura, +).
-
-3️⃣ Mi recomendación final
-
-Usar tabla si hay muchas empresas, tarjetas si son pocas.
-
-Botón flotante para crear.
-
-Modal para crear/editar.
-
-Snackbars para feedback.
-
-Confirmación para eliminar.
-
-Esto queda visualmente limpio, la lógica es sencilla y escalable, y el usuario entiende rápidamente qué hacer.
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	🎨 1. Paleta de colores
-Uso	Color HEX	Ejemplo de aplicación
-Color principal	#4CAF50	Botones de acción principales, enlaces importantes
-Color secundario	#2196F3	Botones secundarios, botones de registro, enlaces secundarios
-Fondo principal	#f4f6f8	Fondo de toda la web
-Fondo de tarjetas / cajas	#ffffff	Formulario, tarjetas de contenido
-Texto principal	#333333	Encabezados y textos importantes
-Texto secundario	#555555	Labels, subtítulos, textos secundarios
-Alertas / errores	#e53935	Mensajes de error
-
-💡 Tip: Con solo 2 colores principales (verde y azul), más neutros (blanco y gris), tu web se ve limpia y armoniosa. No necesitas usar más de 3 colores fuertes.
-
-🔤 2. Tipografía
-
-Fuente principal: Poppins o Roboto → modernas y legibles.
-
-Tamaños sugeridos:
-
-Títulos: 20–28px
-
-Labels: 14–16px
-
-Texto normal: 14px
-
-Peso:
-
-Negrita para títulos y botones
-
-Regular para inputs y textos secundarios
-
-📐 3. Estilo de botones y formularios
-
-Bordes redondeados: border-radius: 5px–10px
-
-Sombra ligera para cajas y botones: box-shadow: 0px 4px 10px rgba(0,0,0,0.1)
-
-Hover: color un poco más oscuro que el original para dar feedback visual
-
-Espaciado: padding interno de 10px–15px y margen entre elementos de 10px–15px
-
-🖼 4. Estructura uniforme
-
-Centrar formularios o contenido principal
-
-Mantener ancho fijo para formularios (250–350px)
-
-Siempre usar el mismo estilo de labels, inputs y botones
-
-Espacios consistentes: márgenes iguales arriba y abajo entre campos
-					

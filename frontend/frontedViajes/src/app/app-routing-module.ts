@@ -16,19 +16,20 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'empresas',
-    component: EmpresasComponent /*, canActivate: [AuthGuard]*/,
+    //canActivate: [AuthGuard] esto sirve para que sino hay token o esta mal te envie al login en vez de quedarse en la pantalla sin informacion
+    component: EmpresasComponent , canActivate: [AuthGuard],
   },
   //  { path: 'viajes', component: ViajesComponent /*, canActivate: [AuthGuard]*/ },
   { path: 'viajes/:empresaId', component: ViajesComponent },
-  { path: 'empresas/:empresaId/servicios', component: ServiciosFactuComponent },
-  { path: 'servicio/:id', component: ServicioDetalleComponent },
+  { path: 'empresas/:empresaId/servicios', component: ServiciosFactuComponent , canActivate: [AuthGuard]},
+  { path: 'servicio/:id', component: ServicioDetalleComponent , canActivate: [AuthGuard]},
   { path: 'registro', component: RegistroComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'facturas/:empresaId', component: FacturasComponent },
+  { path: 'facturas/:empresaId', component: FacturasComponent, canActivate: [AuthGuard] },
   //Ruta para CREAR un nuevo servicio
-  { path: 'empresas/:empresaId/servicios/nuevo',component: ServicioFormComponent},
+  { path: 'empresas/:empresaId/servicios/nuevo',component: ServicioFormComponent, canActivate: [AuthGuard]},
   //Ruta para EDITAR un servicio existente
-  { path: 'servicios/editar/:id',component: ServicioFormComponent},
+  { path: 'servicios/editar/:id',component: ServicioFormComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

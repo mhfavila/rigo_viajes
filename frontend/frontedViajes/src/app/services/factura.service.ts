@@ -13,35 +13,17 @@ export class FacturaService {
 
   // Obtener facturas por empresa
   getFacturaByEmpresa(empresaId: number): Observable<Factura[]> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-    console.log(empresaId);
-    return this.http.get<Factura[]>(`${this.baseUrl}/empresa/${empresaId}`, {
-      //se anade a la url el /empresa/id
-      headers,
-    });
+    return this.http.get<Factura[]>(`${this.baseUrl}/empresa/${empresaId}`);
   }
 
-  //Descargar PDF de factura
-
-  descargarPdf(id: number): Observable<Blob> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
+  //metodo para descargar la factura
+  descargarPdf(id: number): Observable<Blob> {// En este caso, MANTENEMOS responseType: 'blob', pero quitamos headers
     return this.http.get(`${this.baseUrl}/${id}/pdf`, {
-      headers,
-      responseType: 'blob', // importante para recibir el PDF como binario
+      responseType: 'blob', // Esto sí se queda porque es configuración de respuesta, no de Auth
     });
-
-
   }
 
   crearFactura(factura: Factura): Observable<Factura> {
-
-      const token = sessionStorage.getItem('token');
-      const headers = { Authorization: `Bearer ${token}` };
-
-
-
-      return this.http.post<Factura>(this.baseUrl, factura,{ headers });
+    return this.http.post<Factura>(this.baseUrl, factura);
   }
 }

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,10 +26,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final EmpresaRepository empresaRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.empresaRepository = empresaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -55,20 +58,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return UsuarioMapper.toDTO(usuario);
     }
 
-    /**
-     * Crea un nuevo usuario a partir del DTO recibido.//AHORA LO HAGO EN LA LCASE AUTHCONTROLLER EN EL METODO REGISTER
-     */
 
 
-    /*@Override
-    public UsuarioDTO crear(UsuarioDTO usuarioDTO) {
-        logger.info("Creando nuevo usuario: {}", usuarioDTO.getNombre());
-        Usuario usuario = UsuarioMapper.toEntity(usuarioDTO);
-        Usuario guardado = usuarioRepository.save(usuario);
-        return UsuarioMapper.toDTO(guardado);
-    }
-
-     */
 
 
 
@@ -84,8 +75,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         // Se actualizan los campos del usuario
         existente.setNombre(usuarioDTO.getNombre());
         existente.setEmail(usuarioDTO.getEmail());
-        existente.setPassword(usuarioDTO.getPassword());
-        existente.setRoles(usuarioDTO.getRoles());
+        // Solo la actualizamos si viene una nueva contraseña y no está vacía
+        if (usuarioDTO.getPassword() != null && !usuarioDTO.getPassword().isEmpty()) {
+            existente.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        }
+        //existente.setRoles(usuarioDTO.getRoles());//de momento lo comento para que no se pueda actualizar el rol desde un endpoin
 
         Usuario actualizado = usuarioRepository.save(existente);
         return UsuarioMapper.toDTO(actualizado);

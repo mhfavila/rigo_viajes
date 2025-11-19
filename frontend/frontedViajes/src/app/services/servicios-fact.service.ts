@@ -17,68 +17,38 @@ export class ServiciosFactService {
   constructor(private http: HttpClient) {}
 
 
-
+//Ya no hay const token, ni headers, ni tercer argumento en el get/post lo hace todo el interceptor
   //metodo para sacar los servicios de una empresa
   getServiciosByEmpresa(empresaId: number): Observable<Servicio[]> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
 
-    return this.http.get<Servicio[]>(`${this.apiUrl}/servicios/empresa/${empresaId}`, {
-      headers,
-    });
+    return this.http.get<Servicio[]>(`${this.apiUrl}/servicios/empresa/${empresaId}`);
   }
+
 
   //metodo para sacar un servicio segun su id
   getServicioPorId(servicioId: number): Observable<Servicio> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    return this.http.get<Servicio>(`${this.apiUrl}/servicios/${servicioId}`, {
-      headers,
-    });
+    return this.http.get<Servicio>(`${this.apiUrl}/servicios/${servicioId}`);
   }
 
-  //crear servicio
   crearServicio(servicio: Servicio): Observable<Servicio> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    return this.http.post<Servicio>(`${this.apiUrl}/servicios`, servicio, { headers });
+    return this.http.post<Servicio>(`${this.apiUrl}/servicios`, servicio);
   }
 
-  //editar servicio
   editarServicio(id: number, servicio: Servicio): Observable<Servicio> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    return this.http.put<Servicio>(`${this.apiUrl}/servicios/${id}`, servicio, {
-      headers,
-    });
+    return this.http.put<Servicio>(`${this.apiUrl}/servicios/${id}`, servicio);
   }
 
-  //eliminar servicio
   eliminarServicio(servicioId: number): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    return this.http.delete(`${this.apiUrl}/servicios/${servicioId}`, { headers });
+    return this.http.delete(`${this.apiUrl}/servicios/${servicioId}`);
   }
-
-
 
   getEmpresaPorId(id: number): Observable<Empresa> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    // 3. Ruta corregida: apunta a '/empresas'
-    return this.http.get<Empresa>(`${this.apiUrl}/empresas/${id}`, { headers });
+    return this.http.get<Empresa>(`${this.apiUrl}/empresas/${id}`);
   }
 
   getFacturaPorId(id: number): Observable<Factura> {
-    const token = sessionStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    // 3. Ruta corregida: apunta a '/facturas'
-    return this.http.get<Factura>(`${this.apiUrl}/facturas/${id}`, { headers });
+    return this.http.get<Factura>(`${this.apiUrl}/facturas/${id}`);
   }
 }
+
+

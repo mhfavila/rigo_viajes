@@ -49,6 +49,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
+        logger.debug("Filtro JWT ejecutándose. Header Authorization: {}", request.getHeader("Authorization"));
 
         logger.debug("Procesando autenticación para la petición: {} {}", request.getMethod(), request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");

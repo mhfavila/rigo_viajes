@@ -22,7 +22,8 @@ export class LoginComponent {
       next: (response) => {
         this.authService.guardarToken(response.token);
         console.log('Token recibido:', response.token);
-        this.router.navigate(['/empresas'], { replaceUrl: true });
+        //this.router.navigate(['/empresas'], { replaceUrl: true });//para que no vuelva al login sino que lo remplaza en el historial por el empresas
+        this.router.navigate(['/empresas']);
       },
       error: (error) => {
         console.error('Error al iniciar sesión:', error);

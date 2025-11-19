@@ -67,7 +67,7 @@ public class AuthController {
     }
 
     /**
-     * Registra un nuevo usuario si el nombre no está ya en uso.(TENER CUIDADO POR QUE TENGO DOS FORMAS DE CREAR USUARIOS ACTUALMETE SE USA ESTE)
+     * Registra un nuevo usuario si el nombre no está ya en uso.
      */
     // REGISTRO
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_REGISTER)
@@ -91,7 +91,9 @@ public class AuthController {
         // Asignar rol por defecto
         Set<String> roles = new HashSet<>();
         //roles.add("USER");
-        roles.add(request.getRol());
+        roles.add("ROLE_USER");// Forzamos siempre el rol básico al registrarse
+
+       // roles.add(request.getRol());
         nuevoUsuario.setRoles(roles);
 
         usuarioRepository.save(nuevoUsuario);
