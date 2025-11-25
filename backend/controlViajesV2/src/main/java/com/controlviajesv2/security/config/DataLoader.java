@@ -36,7 +36,7 @@ import java.util.*;
  * clase para cargar datos de prueba la primera vez que se crean laas tablas en la bbdd
  */
 
-
+//para usar estos datos de prueba descomentar el component
 //@Component
 public class DataLoader implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
