@@ -37,7 +37,7 @@ import java.util.*;
  */
 
 
-@Component
+//@Component
 public class DataLoader implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UsuarioRepository usuarioRepository;
