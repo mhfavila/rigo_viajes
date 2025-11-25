@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -61,5 +62,21 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ApiError> manejarResponseStatusException(ResponseStatusException ex, HttpServletRequest request) {
+        logger.warn("Error de estado HTTP: {} - {}", ex.getStatusCode(), ex.getReason());
+
+        String path = request.getRequestURI();
+
+        // Creamos el ApiError usando el status real de la excepción (401, 403, 404, etc.)
+        ApiError error = new ApiError(
+                (HttpStatus) ex.getStatusCode(), // Casteamos a HttpStatus
+                ex.getReason(),                  // El mensaje ("Usuario bloqueado...", etc.)
+                path
+        );
+
+        return new ResponseEntity<>(error, ex.getStatusCode());
     }
 }

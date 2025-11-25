@@ -7,16 +7,23 @@ import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.mapper.UsuarioMapper;
 import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.security.JwtTokenGenerator;
+import com.controlviajesv2.security.service.LoginAttemptService;
 import com.controlviajesv2.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import com.controlviajesv2.security.service.TokenBlacklistService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.HashSet;
 import java.util.Map;
@@ -35,15 +42,19 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UsuarioMapper usuarioMapper;
     private final JwtTokenGenerator jwtTokenGenerator;
+    private final TokenBlacklistService tokenBlacklistService;
+    private final LoginAttemptService loginAttemptService;
 
     public AuthController(AuthenticationManager authenticationManager,
-                          UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, UsuarioMapper usuarioMapper, JwtTokenGenerator jwtTokenGenerator) {
+                          UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, UsuarioMapper usuarioMapper, JwtTokenGenerator jwtTokenGenerator, TokenBlacklistService tokenBlacklistService, LoginAttemptService loginAttemptService) {
         this.authenticationManager = authenticationManager;
 
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.usuarioMapper = usuarioMapper;
         this.jwtTokenGenerator = jwtTokenGenerator;
+        this.tokenBlacklistService = tokenBlacklistService;
+        this.loginAttemptService = loginAttemptService;
     }
 
     /**
@@ -53,17 +64,35 @@ public class AuthController {
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         logger.info("Intento de login para el usuario: {}", request.getNombre());
+        // verificar si el usuario esta bloqueado
+        if (loginAttemptService.isBlocked(request.getNombre())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Usuario bloqueado por demasiados intentos. Inténtalo en 15 minutos."
+            );
+        }
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword())
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword())
+            );
+            //si llega aqui limpiamos el contador
+            loginAttemptService.loginSucceeded(request.getNombre());
 
-        Usuario usuario = usuarioRepository.findByNombre(request.getNombre())
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+            Usuario usuario = usuarioRepository.findByNombre(request.getNombre())
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        String token = jwtTokenGenerator.generateToken(usuario);
+            String token = jwtTokenGenerator.generateToken(usuario);
 
-        return ResponseEntity.ok(new AuthResponse(token));
+            return ResponseEntity.ok(new AuthResponse(token));
+
+        }catch (BadCredentialsException e){
+            loginAttemptService.loginFailed(request.getNombre());
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Credenciales incorrectas"
+            );
+        }
     }
 
     /**
@@ -102,5 +131,25 @@ public class AuthController {
 
 
 
+    }
+
+    /**Cierre de sesión (Logout)
+     * Invalida el token actual añadiéndolo a la lista negra.
+     */
+    @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGOUT)
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+
+            // Invalidar el token
+            tokenBlacklistService.revokeToken(token);
+            logger.info("Token revocado correctamente. Logout exitoso.");
+
+            return ResponseEntity.ok(Map.of("mensaje", "Sesión cerrada correctamente"));
+        }
+
+        return ResponseEntity.badRequest().body(Map.of("error", "No se proporcionó token válido"));
     }
 }

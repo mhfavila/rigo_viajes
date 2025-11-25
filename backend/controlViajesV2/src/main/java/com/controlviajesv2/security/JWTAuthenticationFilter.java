@@ -1,6 +1,7 @@
 package com.controlviajesv2.security;
 
 
+import com.controlviajesv2.security.service.TokenBlacklistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -35,13 +36,15 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
 
     private final JwtTokenValidator jwtTokenValidator;
     private final UserDetailsServiceImpl userDetailsService;
+    private final TokenBlacklistService tokenBlacklistService;
     @Autowired
     private JwtTokenParser jwtTokenParser;
 
-    public JWTAuthenticationFilter(JwtTokenValidator jwtTokenValidator, UserDetailsServiceImpl userDetailsService) {
+    public JWTAuthenticationFilter(JwtTokenValidator jwtTokenValidator, UserDetailsServiceImpl userDetailsService, TokenBlacklistService tokenBlacklistService) {
         this.jwtTokenValidator = jwtTokenValidator;
 
         this.userDetailsService = userDetailsService;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Override
@@ -53,7 +56,6 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
 
         logger.debug("Procesando autenticación para la petición: {} {}", request.getMethod(), request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");
-
         String username = null;
         String jwt = null;
 
@@ -61,6 +63,13 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
             jwt = authHeader.substring(7); // extrae el token sin "Bearer "
+
+            // Comprobamos si el token ha sido revocado antes de intentar procesarlo
+            if (tokenBlacklistService.isRevoked(jwt)) {
+                logger.warn("Intento de acceso con token revocado (Blacklisted)");
+                sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "El token ha sido revocado (Cierre de sesión previo)", request.getRequestURI());
+                return; // Cortamos la ejecución aquí
+            }
             try {
                 username = jwtTokenParser.extractUsername(jwt);
             } catch (ExpiredJwtException e) {

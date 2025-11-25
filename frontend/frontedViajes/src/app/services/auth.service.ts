@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,9 @@ export class AuthService {
    // URLs de los endpoints
   private loginUrl = 'http://localhost:8080/api/auth/login';
   private registerUrl = 'http://localhost:8080/api/auth/register';
+  private logoutUrl ='http://localhost:8080/api/auth/logout';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   login(credentials: { nombre: string; password: string }): Observable<any> {
     return this.http.post(this.loginUrl, credentials);
@@ -56,6 +58,27 @@ obtenerToken(): string | null {
     return null;
   }
 }
+
+// NUEVO MÉTODO LOGOUT
+  logout(): void {
+    // 1. Avisar al backend para invalidar el token (Blacklist)
+    // No necesitamos enviar el token manual en el body si tienes un Interceptor
+    // que lo mete en la cabecera automáticamente.
+    this.http.post(`${this.logoutUrl}`, {}).subscribe({
+      next: () => {
+        console.log('Backend notificado del logout');
+      },
+      error: (err) => {
+        console.warn('Error avisando al backend, pero cerramos sesión local igual', err);
+      }
+    });
+
+    // 2. Limpieza local (CRÍTICO)
+    localStorage.removeItem('token'); // O sessionStorage.removeItem('token')
+
+    // 3. Redirigir al login
+    this.router.navigate(['/login']);
+  }
 
 
 

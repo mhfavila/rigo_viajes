@@ -15,6 +15,7 @@ public final class AppConstants {
     public static final String REQUEST_AUTHCONTROLLER = "/api/auth";
     public static final String REQUEST_AUTHCONTROLLER_LOGIN =  "/login";
     public static final String REQUEST_AUTHCONTROLLER_REGISTER = "/register";
+    public static final String REQUEST_AUTHCONTROLLER_LOGOUT = "/logout";
 
     //EmpresaController
     public static final String REQUEST_EMPRESACONTROLLER = "/api/empresas" ;

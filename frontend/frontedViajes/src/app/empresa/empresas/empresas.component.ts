@@ -106,6 +106,10 @@ eliminarEmpresa(empresa: any) {
     });
   }
 }
+//boton de salir ,quitar mas adelnte
+logout() {
+  this.authService.logout();
+}
 
 
 

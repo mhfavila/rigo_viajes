@@ -1,6 +1,9 @@
 
 <div class="centered">
   <h2>Empresas asociadas a tu Usuario</h2>
+  <button (click)="logout()" class="btn btn-danger">
+  Cerrar Sesión
+</button>
   <div class="form-container-table">
     <table mat-table [dataSource]="empresas" class="mat-elevation-z8">
 

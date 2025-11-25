@@ -13,10 +13,10 @@ POR DONDE ME LLEGO:
 						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
 						
 						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si				
-						
+						PUEDO A"ADIR UNA BARRA DE NAVEGACION DONDE IRA EL BOTON DE SALIR 
 			FACTURA 
 						
-					--> ver si esta bien hecho el irpf y el iva ..>le he preguntadoa  rigo a ver
+					--> ver si esta bien hecho el irpf y el iva ..>le he preguntadoa  rigo a ver hay que mirarlo 
 					-->mirar para odenar que los servicios con cuadro de chak queden ariba
 					>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura 
 			
@@ -48,7 +48,6 @@ POR DONDE ME LLEGO:
 					
 			COSAS:
 				->-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
-				->-tengo que implementar un boton para volver atras en todas las pantallas  y mirar si puedo anular las flechas de volver atrar de google--> en principio no se pueden anular por legalida pero yo creoq ue no voy a meter lo del boton
 				
 				-->Revisar lo de los refresh tokens , son para que el usuario no necesite estar logandose si se acaba el tiempo
 				

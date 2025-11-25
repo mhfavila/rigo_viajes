@@ -5,6 +5,8 @@ import com.controlviajesv2.security.CustomAuthenticationEntryPoint;
 import com.controlviajesv2.security.JWTAuthenticationFilter;
 import com.controlviajesv2.security.UserDetailsServiceImpl;
 import com.controlviajesv2.util.AppConstants;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,12 +24,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 public class SecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
+    // Lee "cors.allowed-origins" de application.properties Si no existe, usa "http://localhost:4200" por defecto.
+    @Value("${cors.allowed-origins:http://localhost:4200}")
+    private String allowedOrigins;
 
     //Controla qué pasa cuando un usuario no está autenticado -> genera error 401 Unauthorized.
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
@@ -97,10 +103,11 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Orígenes permitidos
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:4200"  // Angular desarrollo
-                // Añade más orígenes según necesites revisar para pasar a prod
-        ));
+                    //Convertimos el String "http://localhost:4200,https://miweb.com" en una lista separando por comas.
+
+        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+
+        logger.info("Orígenes permitidos cargados: {}", configuration.getAllowedOrigins());
 
         // Métodos HTTP permitidos
         configuration.setAllowedMethods(List.of(
