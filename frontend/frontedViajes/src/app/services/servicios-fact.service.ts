@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Servicio } from './../servicio/servicio.model'; // Asegúrate que la ruta es correcta
 import { Empresa } from '../../app/empresa/empresa.model';
 import { Factura } from '../../app/factura/factura.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class ServiciosFactService {
 
 
   // Esta es ahora la URL base de TODA tu API, no solo de servicios asi puedo llamar a mas endpoints
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
