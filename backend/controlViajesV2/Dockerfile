@@ -1,6 +1,6 @@
 # --- ETAPA 1: CONSTRUCCIÓN (BUILD) ---
-# Usamos una imagen que ya tiene Maven instalado para evitar errores
-FROM maven:3.8.5-openjdk-17 AS build
+# Usamos una imagen de Maven que ya tenga Java 21
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 
 # Creamos la carpeta de trabajo
 WORKDIR /app
@@ -8,21 +8,20 @@ WORKDIR /app
 # Copiamos todo tu código al contenedor
 COPY . .
 
-# Compilamos el proyecto (saltando los tests para ir rápido y no gastar memoria)
+# Compilamos el proyecto (saltando los tests)
 RUN mvn clean package -DskipTests
 
 # --- ETAPA 2: EJECUCIÓN (RUN) ---
-# Usamos una imagen ligera de Java para arrancar
-FROM eclipse-temurin:17-jdk-alpine
+# Usamos una imagen ligera de Java 21 para arrancar
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Copiamos el archivo .jar que cocinamos en la etapa 1
+# Copiamos el archivo .jar generado en la etapa 1
 COPY --from=build /app/target/*.jar app.jar
 
-# Informamos del puerto (Render usa el 8080 internamente)
+# Informamos del puerto
 EXPOSE 8080
 
 # COMANDO DE ARRANQUE (Optimizada para plan GRATIS)
-# -Xmx350m asegura que Java no use más de 350MB de RAM (Render te da 512MB)
 ENTRYPOINT ["java", "-Xmx350m", "-jar", "app.jar"]
