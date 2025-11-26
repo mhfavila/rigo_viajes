@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Servicio } from './../servicio/servicio.model';
 import { Factura } from '../factura/factura.model';
-import { environment } from '../../environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class FacturaService {
-  private baseUrl = environment.apiUrl + '/facturas';
-  constructor(private http: HttpClient) {}
 
-  // Obtener facturas por empresa
+  private baseUrl: string;
+
+  constructor(private http: HttpClient) {
+    const host = window.location.hostname;
+    // Usamos la URL base + /facturas
+    const apiBase = (host === 'localhost')
+      ? 'http://localhost:8080/api'
+      : 'https://rigo-viajes.onrender.com/api';
+
+    this.baseUrl = `${apiBase}/facturas`;
+  }
+
   getFacturaByEmpresa(empresaId: number): Observable<Factura[]> {
     return this.http.get<Factura[]>(`${this.baseUrl}/empresa/${empresaId}`);
   }
 
-  //metodo para descargar la factura
-  descargarPdf(id: number): Observable<Blob> {// En este caso, MANTENEMOS responseType: 'blob', pero quitamos headers
-    return this.http.get(`${this.baseUrl}/${id}/pdf`, {
-      responseType: 'blob', // Esto sí se queda porque es configuración de respuesta, no de Auth
-    });
+  descargarPdf(id: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${id}/pdf`, { responseType: 'blob' });
   }
 
   crearFactura(factura: Factura): Observable<Factura> {

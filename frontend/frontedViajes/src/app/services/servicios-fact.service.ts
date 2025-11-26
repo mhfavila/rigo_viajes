@@ -1,32 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Servicio } from './../servicio/servicio.model'; // Asegúrate que la ruta es correcta
+import { Servicio } from './../servicio/servicio.model';
 import { Empresa } from '../../app/empresa/empresa.model';
 import { Factura } from '../../app/factura/factura.model';
-import { environment } from '../../environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ServiciosFactService {
 
+  private apiUrl: string;
 
-  // Esta es ahora la URL base de TODA tu API, no solo de servicios asi puedo llamar a mas endpoints
-  private apiUrl = environment.apiUrl;
+  constructor(private http: HttpClient) {
+    if (window.location.hostname === 'localhost') {
+      this.apiUrl = 'http://localhost:8080/api';
+    } else {
+      this.apiUrl = 'https://rigo-viajes.onrender.com/api';
+    }
+  }
 
-  constructor(private http: HttpClient) {}
-
-
-//Ya no hay const token, ni headers, ni tercer argumento en el get/post lo hace todo el interceptor
-  //metodo para sacar los servicios de una empresa
   getServiciosByEmpresa(empresaId: number): Observable<Servicio[]> {
-
     return this.http.get<Servicio[]>(`${this.apiUrl}/servicios/empresa/${empresaId}`);
   }
 
-
-  //metodo para sacar un servicio segun su id
   getServicioPorId(servicioId: number): Observable<Servicio> {
     return this.http.get<Servicio>(`${this.apiUrl}/servicios/${servicioId}`);
   }
@@ -51,5 +46,3 @@ export class ServiciosFactService {
     return this.http.get<Factura>(`${this.apiUrl}/facturas/${id}`);
   }
 }
-
-
