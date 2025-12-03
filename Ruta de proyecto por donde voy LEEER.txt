@@ -190,6 +190,39 @@ GastoViaje
 
 Y relacionarlas.
 
+
+
+3. Gestión de vehículos
+
+Totalmente factible
+
+Añadir nueva entidad Vehiculo:
+
+Vehiculo {
+   id
+   matricula
+   modelo
+   tipo
+   estado
+   fechaItv
+   fechaMantenimiento
+}
+
+
+Pantallas en Angular para CRUD + avisos.
+
+👨‍✈️ 4. Conductores
+
+Ya tienes Usuario, puedes añadir:
+
+Campos para documentación
+
+Fechas de caducidad
+
+Relación con viajes
+
+Todo manejable desde Spring Boot.
+
 	
 	
 	
