@@ -165,7 +165,64 @@ IDEAS A FUTURO:
 	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints
 	
 	
-	
+		FUTURO:
+📱 7. App móvil (futuro) Tienes dos opciones:
+			-PWA desde Angular (rápido)
+			-App nativa usando Ionic + Angular
+
+Ambas consumen tu API de Spring.
+
+🔐 10. Roles y permisos Spring Security ya permite:  ADMIN,USER,CONDUCTOR,CLIENTE
+
+Frontend oculta/enseña botones según rol.
+
+💰 9. Control de costes
+
+Solo necesitas añadir nuevas entidades:
+
+Gasto
+
+TipoGasto
+
+GastoVehiculo
+
+GastoViaje
+
+Y relacionarlas.
+
+
+
+3. Gestión de vehículos
+
+Totalmente factible
+
+Añadir nueva entidad Vehiculo:
+
+Vehiculo {
+   id
+   matricula
+   modelo
+   tipo
+   estado
+   fechaItv
+   fechaMantenimiento
+}
+
+
+Pantallas en Angular para CRUD + avisos.
+
+👨‍✈️ 4. Conductores
+
+Ya tienes Usuario, puedes añadir:
+
+Campos para documentación
+
+Fechas de caducidad
+
+Relación con viajes
+
+Todo manejable desde Spring Boot.
+
 	
 	
 	
