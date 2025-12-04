@@ -13,7 +13,7 @@ POR DONDE ME LLEGO:
 						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
 						
 						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si				
-						PUEDO A"ADIR UNA BARRA DE NAVEGACION DONDE IRA EL BOTON DE SALIR -->avbar.component.html
+						PUEDO A"ADIR UNA BARRA DE NAVEGACION DONDE IRA EL BOTON DE SALIR -->appbar.component.html
 			FACTURA 
 						
 					--> ver si esta bien hecho el irpf y el iva ..>le he preguntadoa  rigo a ver hay que mirarlo 
