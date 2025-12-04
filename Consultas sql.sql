@@ -49,16 +49,12 @@ select * from empresas where id=201;
 
 
 
-SELECT e.id AS empresa_id,
-       e.nombre AS empresa_nombre,
-       v.id AS viaje_id,
-       v.destino AS viaje_destino,
-       v.fecha AS viaje_fecha,
-       v.precio_km AS viaje_precio
+SELECT *
+       
 FROM empresas e
 JOIN usuarios u ON e.usuario_id = u.id
-LEFT JOIN viajes v ON v.empresa_id = e.id
-WHERE u.id = 2  -- aquí reemplaza con el ID del usuario
+LEFT JOIN servicios v ON v.empresa_id = e.id
+WHERE u.id = 101  -- aquí reemplaza con el ID del usuario
 ORDER BY e.id, v.id;
 
 
