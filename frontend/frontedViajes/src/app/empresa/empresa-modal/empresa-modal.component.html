@@ -1,57 +1,69 @@
-
 <h2 mat-dialog-title>{{ isEditMode ? 'Editar Empresa' : 'Crear Empresa' }}</h2>
 
 <mat-dialog-content translate="no">
-  <form [formGroup]="empresaForm">
+  <form [formGroup]="empresaForm" class="form-grid">
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>Nombre</mat-label>
-      <input matInput formControlName="nombre"
-        placeholder="Nombre de la empresa" />
-    </mat-form-field>
+    <!-- FILA 1: NOMBRE + CIF -->
+    <div class="row two-columns">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" placeholder="Nombre de la empresa" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>CIF</mat-label>
-      <input matInput formControlName="cif" placeholder="CIF de la empresa" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>CIF</mat-label>
+        <input matInput formControlName="cif" placeholder="CIF de la empresa" />
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>Dirección</mat-label>
-      <input matInput formControlName="direccion" placeholder="Dirección" />
-    </mat-form-field>
+    <!-- FILA 2: DIRECCIÓN -->
+    <div class="row">
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion" placeholder="Dirección" />
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>Teléfono</mat-label>
-      <input matInput
-        formControlName="telefono"
-        placeholder="Teléfono"
-        type="text" />
+    <!-- FILA 3: TELÉFONO + EMAIL -->
+    <div class="row two-columns">
 
-      <mat-error *ngIf="empresaForm.get('telefono')?.hasError('required')">
-        El teléfono es obligatorio
-      </mat-error>
-      <mat-error *ngIf="empresaForm.get('telefono')?.hasError('pattern')">
-        Solo se permiten números
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Teléfono</mat-label>
+        <input matInput
+               formControlName="telefono"
+               placeholder="Teléfono"
+               type="text" />
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" placeholder="Email"
-        type="email" />
-    </mat-form-field>
+        <mat-error *ngIf="empresaForm.get('telefono')?.hasError('required')">
+          El teléfono es obligatorio
+        </mat-error>
+        <mat-error *ngIf="empresaForm.get('telefono')?.hasError('pattern')">
+          Solo se permiten números
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>IBAN</mat-label>
-      <input matInput formControlName="iban" placeholder="iban"
-        type="text" />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Email" type="email" />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-widthCrearEmpresa">
-      <mat-label>ID Usuario</mat-label>
-      <input matInput formControlName="usuarioId"
-        placeholder="ID del usuario" />
-    </mat-form-field>
+    </div>
+
+    <!-- FILA 4: IBAN -->
+    <div class="row">
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>IBAN</mat-label>
+        <input matInput formControlName="iban" placeholder="iban" type="text" />
+      </mat-form-field>
+    </div>
+
+    <!-- FILA 5: ID USUARIO -->
+    <div class="row">
+      <mat-form-field appearance="fill" class="full">
+        <mat-label>ID Usuario</mat-label>
+        <input matInput formControlName="usuarioId" placeholder="ID del usuario" />
+      </mat-form-field>
+    </div>
 
   </form>
 </mat-dialog-content>

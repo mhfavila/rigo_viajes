@@ -64,7 +64,7 @@ export class EmpresasComponent implements OnInit {
   }
   crearEmpresa() {
   const dialogRef = this.dialog.open(EmpresaModalComponent, {
-    width: '400px',
+    width: '800px',
     data: {
       usuarioId: this.authService.getUsuarioId()
     }
@@ -78,7 +78,7 @@ export class EmpresasComponent implements OnInit {
 }
 editarEmpresa(empresa: any) {
   const dialogRef = this.dialog.open(EmpresaModalComponent, {
-    width: '400px',
+    width: '800px',
     data: { ...empresa,isEditMode:true } // pasamos los datos de la empresa
   });
 

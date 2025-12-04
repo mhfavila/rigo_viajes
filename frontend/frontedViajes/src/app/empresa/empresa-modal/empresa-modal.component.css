@@ -1,0 +1,31 @@
+/* Contenedor general */
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;   /* separación entre filas */
+}
+
+/* Cada fila */
+.row {
+  width: 100%;
+}
+
+/* Fila con 2 columnas */
+.two-columns {
+  display: flex;
+  gap: 20px;
+}
+
+.two-columns mat-form-field {
+  flex: 1; /* que ocupen 50% cada uno */
+}
+
+/* Campos que ocupan todo */
+.full {
+  width: 100%;
+}
+
+/* Aumenta un poco el ancho visual del dialog */
+mat-dialog-content {
+  padding-top: 10px;
+}
