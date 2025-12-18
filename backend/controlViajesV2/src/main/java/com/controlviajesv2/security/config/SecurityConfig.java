@@ -104,8 +104,17 @@ public class SecurityConfig {
 
         // Orígenes permitidos
                     //Convertimos el String "http://localhost:4200,https://miweb.com" en una lista separando por comas.
+        //esta es la configuracion que tenia antes el cors
+        //configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
 
-        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+        // En lugar de setAllowedOrigins, usamos setAllowedOriginPatterns
+        // Esto permite subdominios dinámicos de Vercel
+        configuration.setAllowedOriginPatterns(List.of(
+                "http://localhost:4200",     // Angular local
+                "http://localhost:3000",     // React/Next local
+                "https://*-favilas-projects.vercel.app", // CUALQUIER deploy de Vercel en tu cuenta
+                "https://rigo-viajes.vercel.app" // Tu dominio principal si tienes uno fijo
+        ));
 
         logger.info("Orígenes permitidos cargados: {}", configuration.getAllowedOrigins());
 
