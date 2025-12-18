@@ -24,6 +24,9 @@ export class ServiciosFactuComponent implements OnInit {
   totalFacturas!: number;
   idUsuario!: number;
 
+  ordenAscendente: boolean = true;
+  columnaOrdenada: string = '';
+
   constructor(
     private dialog: MatDialog,
     private serviciosFactService: ServiciosFactService,
@@ -365,6 +368,36 @@ export class ServiciosFactuComponent implements OnInit {
         });
       }
       // Si 'confirmed' es false, no hacemos nada (el usuario canceló)
+    });
+  }
+
+  ordenarPor(columna: string) {
+    if (this.columnaOrdenada === columna) {
+      this.ordenAscendente = !this.ordenAscendente;
+    } else {
+      this.columnaOrdenada = columna;
+      this.ordenAscendente = true;
+    }
+
+    this.servicios.sort((a: any, b: any) => {
+      let valorA = a[columna];
+      let valorB = b[columna];
+
+      // Manejo de valores nulos o indefinidos
+      if (valorA == null) valorA = '';
+      if (valorB == null) valorB = '';
+
+      // Si es string, comparar ignorando mayúsculas
+      if (typeof valorA === 'string') valorA = valorA.toLowerCase();
+      if (typeof valorB === 'string') valorB = valorB.toLowerCase();
+
+      if (valorA < valorB) {
+        return this.ordenAscendente ? -1 : 1;
+      }
+      if (valorA > valorB) {
+        return this.ordenAscendente ? 1 : -1;
+      }
+      return 0;
     });
   }
 }

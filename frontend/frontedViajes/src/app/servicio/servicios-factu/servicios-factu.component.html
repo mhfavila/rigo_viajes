@@ -39,13 +39,25 @@
               'th' (Celdas de cabecera)
             -->
             <th scope="col" class="px-6 py-3"></th> <!-- Checkbox -->
-            <th scope="col" class="px-6 py-3">ID</th>
-            <th scope="col" class="px-6 py-3">Tipo</th>
-            <th scope="col" class="px-6 py-3">Fecha</th>
+            <th scope="col" class="px-6 py-3 cursor-pointer hover:text-white" (click)="ordenarPor('id')">
+              ID <span *ngIf="columnaOrdenada === 'id'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+            </th>
+            <th scope="col" class="px-6 py-3 cursor-pointer hover:text-white" (click)="ordenarPor('tipoServicio')">
+              Tipo <span *ngIf="columnaOrdenada === 'tipoServicio'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+            </th>
+            <th scope="col" class="px-6 py-3 cursor-pointer hover:text-white" (click)="ordenarPor('fechaServicio')">
+              Fecha <span *ngIf="columnaOrdenada === 'fechaServicio'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+            </th>
             <th scope="col" class="px-6 py-3">Destino</th>
-            <th scope="col" class="px-6 py-3">KM</th>
-            <th scope="col" class="px-6 py-3">Importe (€)</th>
-            <th scope="col" class="px-6 py-3">Factura</th>
+            <th scope="col" class="px-6 py-3 cursor-pointer hover:text-white" (click)="ordenarPor('km')">
+              KM <span *ngIf="columnaOrdenada === 'km'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+            </th>
+            <th scope="col" class="px-6 py-3 cursor-pointer hover:text-white" (click)="ordenarPor('importeServicio')">
+              Importe (€) <span *ngIf="columnaOrdenada === 'importeServicio'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+            </th>
+            <th scope="col" class="px-6 py-3 cursor-pointer hover:text-white" (click)="ordenarPor('facturaId')">
+              Factura <span *ngIf="columnaOrdenada === 'facturaId'">{{ ordenAscendente ? '▲' : '▼' }}</span>
+            </th>
             <th scope="col" class="px-6 py-3 text-center">Acciones</th>
           </tr>
         </thead>
