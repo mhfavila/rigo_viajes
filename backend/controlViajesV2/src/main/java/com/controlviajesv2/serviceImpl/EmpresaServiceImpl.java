@@ -2,6 +2,7 @@ package com.controlviajesv2.serviceImpl;
 
 import com.controlviajesv2.dto.EmpresaConViajesDTO;
 import com.controlviajesv2.dto.EmpresaDTO;
+import com.controlviajesv2.entity.Direccion;
 import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.exception.ResourceNotFoundException;
@@ -82,7 +83,18 @@ public class EmpresaServiceImpl implements EmpresaService {
         // Actualizamos los datos básicos
         existente.setNombre(empresaDTO.getNombre());
         existente.setCif(empresaDTO.getCif());
-        //existente.setDireccion(empresaDTO.getDireccion());
+        if (empresaDTO.getDireccion() != null) {
+            
+            Direccion nuevaDireccion = new Direccion();
+            nuevaDireccion.setCalle(empresaDTO.getDireccion().getCalle());
+            nuevaDireccion.setNumero(empresaDTO.getDireccion().getNumero());
+            nuevaDireccion.setCodigoPostal(empresaDTO.getDireccion().getCodigoPostal());
+            nuevaDireccion.setCiudad(empresaDTO.getDireccion().getCiudad());
+            nuevaDireccion.setProvincia(empresaDTO.getDireccion().getProvincia());
+            nuevaDireccion.setPais(empresaDTO.getDireccion().getPais());
+
+            existente.setDireccion(nuevaDireccion);
+        }
         existente.setTelefono(empresaDTO.getTelefono());
         existente.setEmail(empresaDTO.getEmail());
 

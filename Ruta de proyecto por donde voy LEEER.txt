@@ -16,7 +16,7 @@ POR DONDE ME LLEGO:
 						PUEDO A"ADIR UNA BARRA DE NAVEGACION DONDE IRA EL BOTON DE SALIR -->appbar.component.html
 			FACTURA 
 						
-					--> ver si esta bien hecho el irpf y el iva ..>le he preguntadoa  rigo a ver hay que mirarlo 
+					
 					-->mirar para odenar que los servicios con cuadro de chak queden ariba
 					>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura 
 			
@@ -24,7 +24,6 @@ POR DONDE ME LLEGO:
 					|> corregir datos que faltan en viajes y en empresas y servicos y facturas
 					|>	>>Probablemete habra que a;adir en los servicios algo del estilo  destino dos (hablar con rigo para ver como funciona eso)	
 					
-					|> mirar si para meter direciones hay algo como un domi de MD que te saque en la direcion todos los datos como cp ,provincia calle etc-->he visto que si que hay cosas asi que puedo hacerlo una mejor para futuro
 					
 					-> en la clase usuario meter estos campos para poder sacarlos en la factura
 													-Direccion
@@ -33,9 +32,6 @@ POR DONDE ME LLEGO:
 													- su dni
 													-numero de cuenta
 													Volver a poner lo  de por defecto en el registro el rol ROL_USER en el fronted va esto
-					-> en la clase empresa a;adir campos para poder meterlos en la factura
-														codigo postal 
-														provincia
 														
 					>faltan por a;adir datos a la factura	
 					
@@ -60,223 +56,11 @@ POR DONDE ME LLEGO:
 									
 									
 				REVISIONES FINALES 
-						->Al crear o editar una empresa el telefono puede ser mas lasrgo de 9 numeros
-						->revisar creacion de la empresa
 						
-						-->revisar las validaciones al crear o editar empresa y servicios y las demas entidades y ver en que falla y sacar mensajes para que no pete la aplicacion
+						
+						
+					
 						
 
-						-->SEGURIDAD DEL BACKEND >>REVISADA
 						-->SEGURIDAD DEL FRONTED  voy a meterlo en claude a las 3 para que me lo revise bien
 						
-			REVISAR ESTO SON FALLOS DEL FRONTED			
-						⚠️ 4. DECODIFICACIÓN INSEGURA DEL TOKEN
-typescript// ⚠️ auth.service.ts
-getUsuarioId(): number | null {
-  const token = this.obtenerToken();
-  if (!token) return null;
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1])); // ❌ Sin validación
-    return payload.usuarioId;
-  } catch (error) {
-    console.error('Error al decodificar el token:', error);
-    return null;
-  }
-}
-Problema: No validas la estructura del token antes de decodificarlo.
-Solución: Usa una librería para JWT:
-bashnpm install jwt-decode
-
-🐛 OTROS PROBLEMAS DE SEGURIDAD Y BUENAS PRÁCTICAS
-⚠️ 7. FALTA VALIDACIÓN EN FORMULARIOS
-html<!-- ❌ registro.component.html - Sin validación real -->
-<input type="email" [(ngModel)]="email" name="email" required />
-Problema: Usas required en HTML pero no validas en el componente.
-Solución: Usa Reactive Forms con validaciones:Preparó validaciones visuales para el código HTML.Ahora voy a crear el HTML correspondiente con las validaciones visuales.Preparó ajustes visuales para componentes de error.Ahora voy a actualizar el CSS para los estilos de error.
-⚠️ 8. URL HARDCODEADAS
-typescript// ❌ URLs duplicadas en todos los servicios
-private apiUrl = 'http://localhost:8080/api/usuarios/empresas/';
-Solución: Usa environment files:environment.ts (CONFIGURACIÓN CENTRALIZADA)Código // src/environments/environment.ts
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api',
-  tokenKey: 'token'
-};
-
-// src/environments/environment.prod.ts
-export const environment = {
-  production: true,
-  apiUrl: 'httypescript// En todos tus servicios
-import { environment } from '../../environments/environment';
-
-export class AuthService {
-  private readonly API_URL = `${environment.apiUrl}/auth`; // ✅
-}
-								
-		
-								
-								
-								
-											
-											
-													
-													
-
-
-
-
-
-COSAS PENDIENTES:
-
-	
-	-poner algo para que dependiendo el tipo de rol del usuario , pues pueda o no borrar usuarios
-	-reevisar el registro por que se pueden crear usuarios vacios ejemplo id 13  --> esto sigue pasando solo que si no se crea es por que ya hay uno con el nombre vaacio
-	
-	-revisar la creacion de facturas pues si falla no crea la factura pero al crear la sigueinte el id a saltado uno ya 
-	
-	
-	
-	
-	
-	
-		
-				 
-				 
-	
-	
-				 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	REVISAR ESTO EN UN FUTUTO,-->vale , lo unico me acabo de dar cuenta de un eeror que no se como solucionar ,yo en mi aplicacion al logearme me genera un token y ese toquen tiene aceso a todos los usuarios , 
-				a mi me gustaria es que al logearme con un usuario solo tuviera aceso a los datos de ese usuario
-
-
-	  
-IDEAS A FUTURO:
-	-->buenas , tengo una duda , tengo un backend en springboot con java , hay alguna forma de poder hacer una aplicacion movil que tire contra eso? -->la idea es intentar hacer una aplicacion movil que pueda tirar de esos endpoints
-	
-	
-		FUTURO:
-📱 7. App móvil (futuro) Tienes dos opciones:
-			-PWA desde Angular (rápido)
-			-App nativa usando Ionic + Angular
-
-Ambas consumen tu API de Spring.
-
-🔐 10. Roles y permisos Spring Security ya permite:  ADMIN,USER,CONDUCTOR,CLIENTE
-
-Frontend oculta/enseña botones según rol.
-
-💰 9. Control de costes
-
-Solo necesitas añadir nuevas entidades:
-
-Gasto
-
-TipoGasto
-
-GastoVehiculo
-
-GastoViaje
-
-Y relacionarlas.
-
-
-
-3. Gestión de vehículos
-
-Totalmente factible
-
-Añadir nueva entidad Vehiculo:
-
-Vehiculo {
-   id
-   matricula
-   modelo
-   tipo
-   estado
-   fechaItv
-   fechaMantenimiento
-}
-
-
-Pantallas en Angular para CRUD + avisos.
-
-👨‍✈️ 4. Conductores
-
-Ya tienes Usuario, puedes añadir:
-
-Campos para documentación
-
-Fechas de caducidad
-
-Relación con viajes
-
-Todo manejable desde Spring Boot.
-
-	
-	
-	
-	
-	
-				
-				
-				
-				
-				
-				
-				
-				
-				
-	
-	
-	
-	
-	
-					
-
-
-					
-					
-					
-					
-					
-					
-					
-					
-					
-PROBLEMAS QUE HE TENIDO:
-si el backend esta guardando los datos en  la base pero el fronted no lo detecta (ejemplo: lo que me ha pasado con el registro que me lo guardaba en la bbdd pero salia el menaje 
-en rojo de Error al registrar usuario) esto es por la respuesta que esta mandando el metodo , esta mandando un string o otra cosa en vez de un json, para corregirlo mete esto en 
-el return -> Map.of("mensaje","aqui va el texto que tuvieras")
-    -->return ResponseEntity.ok(Map.of("mensaje", "Usuario registrado correctamente"));
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	Comandos para angular
-	# Borrar carpeta node_modules
-	Remove-Item -Recurse -Force .\node_modules
-
-	# Borrar package-lock.json
-	Remove-Item -Force .\package-lock.json
-	
-	
-	
