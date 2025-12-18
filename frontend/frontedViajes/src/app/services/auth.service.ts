@@ -53,4 +53,10 @@ export class AuthService {
      try { return JSON.parse(atob(token.split('.')[1])).usuarioId; }
      catch (e) { return null; }
   }
+
+ wakeUpServer() {
+  // Truco: Reemplazamos '/auth' por '/ping' para salir de la ruta de seguridad
+  const pingUrl = this.authUrl.replace('/auth', '/ping');
+  this.http.get(pingUrl).subscribe();
+}
 }

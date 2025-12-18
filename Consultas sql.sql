@@ -6,6 +6,24 @@ select * from viajes;
 select * from facturas;
 SELECT * from servicios ;
 
+
+
+------------------------
+--para arreglar las secuencias
+
+-- Arreglar secuencia de EMPRESAS (El error actual)
+SELECT setval('empresas_id_seq', (SELECT MAX(3) FROM empresas));
+
+
+-- Arreglar secuencia de USUARIOS (Para evitar el mismo error al crear usuarios)
+SELECT setval('usuarios_id_seq', (SELECT MAX(5) FROM usuarios));
+
+-- Arreglar secuencia de FACTURAS
+SELECT setval('facturas_id_seq', (SELECT MAX(7) FROM facturas));
+
+-- Arreglar secuencia de SERVICIOS
+SELECT setval('servicios_id_seq', (SELECT MAX(21) FROM servicios));
+----------------
 ----para ver los servicios que tiene una factura
 SELECT *
 FROM servicios
@@ -146,6 +164,41 @@ JOIN facturas f ON s.factura_id = f.id
 WHERE f.numero_factura = 'F-0NaN';
 
 -------------------------
+--insertar empresas para probar lo de la direccion
+INSERT INTO empresas (
+    nombre, 
+    cif, 
+    telefono, 
+    email, 
+    iban, 
+    usuario_id,
+    -- CAMPOS DE LA DIRECCIÓN EMBEBIDA --
+    direccion_calle, 
+    direccion_numero, 
+    direccion_cp, 
+    direccion_ciudad, 
+    direccion_provincia, 
+    direccion_pais
+) VALUES (
+    'Transportes Pepe S.L.', 
+    'B12345678', 
+    '600123456', 
+    'pepe@transportes.com', 
+    'ES1234567890123456789012', 
+    101, -- ID del usuario existente
+    -- DATOS DIRECCIÓN --
+    'Calle Gran Vía', 
+    '45', 
+    '28013', 
+    'Madrid', 
+    'Madrid', 
+    'España'
+);
+
+
+
+
+---------------------
 
 --++++++++++++++++
 --BORRAR TABLAS> +

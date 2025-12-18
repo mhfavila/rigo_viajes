@@ -24,8 +24,16 @@ public class Empresa {
     @Column(nullable = false)
     private String cif;
 
-    @Column(nullable = false)
-    private String direccion;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "calle", column = @Column(name = "direccion_calle")),
+            @AttributeOverride(name = "numero", column = @Column(name = "direccion_numero")),
+            @AttributeOverride(name = "codigoPostal", column = @Column(name = "direccion_cp")),
+            @AttributeOverride(name = "ciudad", column = @Column(name = "direccion_ciudad")),
+            @AttributeOverride(name = "provincia", column = @Column(name = "direccion_provincia")),
+            @AttributeOverride(name = "pais", column = @Column(name = "direccion_pais"))
+    })
+    private Direccion direccion;
 
     @Column(nullable = false)
     private String telefono;

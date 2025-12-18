@@ -12,7 +12,8 @@
     Contenedor de la tabla con sombra, bordes redondeados
     y 'overflow-hidden' para que los bordes redondeados funcionen
   -->
-  <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+  <div
+    class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
 
     <!--
       *** CAMBIO 1: EL CONTENEDOR DE SCROLL ***
@@ -20,7 +21,8 @@
       - 'max-h-[60vh]' se añade para limitar la altura (¡ajusta 60vh a tu gusto!)
       - 'relative' se añade para que 'sticky' funcione correctamente.
     -->
-    <div *ngIf="servicios.length > 0; else noServicios" class="overflow-auto max-h-[60vh] relative">
+    <div *ngIf="servicios.length > 0; else noServicios"
+      class="overflow-auto max-h-[60vh] relative">
       <!--
         Tabla principal
       -->
@@ -51,29 +53,45 @@
           Cuerpo de la tabla (Este es el que tendrá scroll)
         -->
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr *ngFor="let s of servicios" class="hover:bg-gray-50 transition-colors">
+          <tr *ngFor="let s of servicios"
+            class="hover:bg-gray-50 transition-colors">
             <!--
               'td' (Celdas de datos)
             -->
             <td class="px-6 py-4">
               <ng-container *ngIf="!s.facturaId; else vacio">
                 <!-- Checkbox estilizado -->
-                <input type="checkbox" [(ngModel)]="s.seleccionado" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <input type="checkbox" [(ngModel)]="s.seleccionado"
+                  class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
               </ng-container>
               <ng-template #vacio></ng-template>
             </td>
             <td class="px-6 py-4 text-sm font-medium text-gray-900">
               <!-- Enlace estilizado -->
-              <a href="#" (click)="abrirServicio(s.id, $event)" class="text-blue-600 hover:text-blue-900 hover:underline">
+              <a href="#" (click)="abrirServicio(s.id, $event)"
+                class="text-blue-600 hover:text-blue-900 hover:underline">
                 {{ s.id }}
               </a>
             </td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ s.tipoServicio }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{ s.fechaServicio | date:'shortDate' }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ s.destino }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700 text-right">{{ s.km }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700 text-right font-medium">{{ s.importeServicio | number:'1.2-2' }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700 text-center">{{ s.facturaId || '—' }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ s.tipoServicio
+              }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{{
+              s.fechaServicio | date:'shortDate' }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">
+              <span *ngIf="s.destino">
+                {{ s.destino.calle }} {{ s.destino.numero }}, {{
+                s.destino.ciudad }}
+              </span>
+              <span *ngIf="!s.destino" class="text-gray-400 italic">Sin
+                destino</span>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-700 text-right">{{ s.km
+              }}</td>
+            <td
+              class="px-6 py-4 text-sm text-gray-700 text-right font-medium">{{
+              s.importeServicio | number:'1.2-2' }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700 text-center">{{
+              s.facturaId || '—' }}</td>
 
             <!-- Celda para los botones de Angular Material -->
             <td class="px-6 py-4 text-center whitespace-nowrap">
@@ -95,7 +113,8 @@
     </div>
 
     <ng-template #noServicios>
-      <p class="p-6 text-gray-500">No hay servicios registrados para esta empresa.</p>
+      <p class="p-6 text-gray-500">No hay servicios registrados para esta
+        empresa.</p>
     </ng-template>
   </div> <!-- Fin de la tarjeta de la tabla -->
 
@@ -106,12 +125,12 @@
   <div class="mt-6 flex gap-4">
     <!-- Botones estilizados con Tailwind -->
     <button (click)="generarFacturaDeSeleccionados()"
-            class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+      class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
       Mostrar seleccionados
     </button>
 
     <button (click)="anadirServicios()"
-            class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+      class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
       Añadir Servicios
     </button>
   </div>

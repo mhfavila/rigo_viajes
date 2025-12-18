@@ -55,23 +55,49 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-full">
-          <mat-label>Origen</mat-label>
-          <input matInput formControlName="origen" required>
-          <mat-error
-            *ngIf="servicioForm.get('viaje.origen')?.hasError('required')">
-            El origen es requerido.
-          </mat-error>
-        </mat-form-field>
+        <div class="w-full flex gap-2 items-baseline">
+          <mat-form-field class="flex-grow">
+            <mat-label>Origen</mat-label>
+            <input matInput
+              [value]="getDireccionTexto('origen')"
+              readonly
+              placeholder="Selecciona una dirección">
 
-        <mat-form-field class="w-full">
-          <mat-label>Destino</mat-label>
-          <input matInput formControlName="destino" required>
-          <mat-error
-            *ngIf="servicioForm.get('viaje.destino')?.hasError('required')">
-            El destino es requerido.
-          </mat-error>
-        </mat-form-field>
+            <mat-error
+              *ngIf="servicioForm.get('viaje.origen')?.hasError('required')">
+              El origen es requerido.
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-mini-fab color="primary"
+            type="button"
+            (click)="abrirDialogoDireccion('origen')"
+            matTooltip="Editar Origen">
+            <mat-icon>edit_location</mat-icon>
+          </button>
+        </div>
+
+        <div class="w-full flex gap-2 items-baseline">
+          <mat-form-field class="flex-grow">
+            <mat-label>Destino</mat-label>
+            <input matInput
+              [value]="getDireccionTexto('destino')"
+              readonly
+              placeholder="Selecciona una dirección">
+
+            <mat-error
+              *ngIf="servicioForm.get('viaje.destino')?.hasError('required')">
+              El destino es requerido.
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-mini-fab color="accent"
+            type="button"
+            (click)="abrirDialogoDireccion('destino')"
+            matTooltip="Editar Destino">
+            <mat-icon>edit_location</mat-icon>
+          </button>
+        </div>
 
         <mat-form-field class="w-full">
           <mat-label>Cliente Final</mat-label>

@@ -1,20 +1,35 @@
 <div class="centered">
+  <div class="form-container">
+    <h2>Iniciar sesión</h2>
 
+    <form (ngSubmit)="onSubmit()">
+      <label>Usuario:</label>
+      <input type="text" [(ngModel)]="nombre" name="username" required [disabled]="isLoading" />
 
-<div class="form-container">
-  <h2>Iniciar sesión</h2>
-  <form (ngSubmit)="onSubmit()">
-    <label>Usuario:</label>
-    <input type="text" [(ngModel)]="nombre" name="username" required />
+      <label>Contraseña:</label>
+      <input type="password" [(ngModel)]="password" name="password" required [disabled]="isLoading" />
 
-    <label>Contraseña:</label>
-    <input type="password" [(ngModel)]="password" name="password" required />
+      <button type="submit" class="btn-login" [disabled]="isLoading || !nombre || !password">
 
-    <button type="submit" class="btn-login">Login</button>
+        <span *ngIf="!isLoading">Login</span>
 
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-  </form>
+        <span *ngIf="isLoading" class="loading-box">
+          <div class="spinner"></div>
+          <span>Conectando...</span>
+        </span>
 
-  <button class="btn-secondary" (click)="irARegistro()">Crear nuevo usuario</button>
-</div>
+      </button>
+
+      <div *ngIf="showSlowServerMessage" class="server-waking-up">
+        <small>⏳ <strong>El servidor se está despertando.</strong><br>
+        Al ser la versión gratuita, esto puede tardar unos segundos. ¡Gracias por esperar!</small>
+      </div>
+
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+
+    <button class="btn-secondary" (click)="irARegistro()" [disabled]="isLoading">
+      Crear nuevo usuario
+    </button>
+  </div>
 </div>

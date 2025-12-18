@@ -1,6 +1,8 @@
 package com.controlviajesv2.serviceImpl;
 
+import com.controlviajesv2.dto.DireccionDTO;
 import com.controlviajesv2.dto.ServicioDTO;
+import com.controlviajesv2.entity.Direccion;
 import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
@@ -112,8 +114,8 @@ public class ServicioServiceImpl implements ServicioService {
         // Actualizamos todos los campos
         existente.setTipoServicio(servicioDTO.getTipoServicio());
         existente.setFechaServicio(servicioDTO.getFechaServicio());
-        existente.setOrigen(servicioDTO.getOrigen());
-        existente.setDestino(servicioDTO.getDestino());
+        //existente.setOrigen(servicioDTO.getOrigen());
+        //existente.setDestino(servicioDTO.getDestino());
         existente.setConductor(servicioDTO.getConductor());
         existente.setMatriculaVehiculo(servicioDTO.getMatriculaVehiculo());
         existente.setKm(servicioDTO.getKm());
@@ -127,6 +129,14 @@ public class ServicioServiceImpl implements ServicioService {
         existente.setClienteFinal(servicioDTO.getClienteFinal());
         existente.setObservaciones(servicioDTO.getObservaciones());
         existente.setOrden(servicioDTO.getOrden());
+
+        if (servicioDTO.getOrigen() != null) {
+            existente.setOrigen(mapToDireccion(servicioDTO.getOrigen()));
+        }
+
+        if (servicioDTO.getDestino() != null) {
+            existente.setDestino(mapToDireccion(servicioDTO.getDestino()));
+        }
 
         Servicio actualizado = servicioRepository.save(existente);
         return ServicioMapper.toDTO(actualizado);
@@ -152,5 +162,22 @@ public class ServicioServiceImpl implements ServicioService {
                 .stream()
                 .map(ServicioMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Método auxiliar para convertir DireccionDTO a la entidad Direccion (Embeddable)
+     * Esto evita repetir código para Origen y Destino.
+     */
+    private Direccion mapToDireccion(DireccionDTO dto) {
+        if (dto == null) return null;
+
+        return Direccion.builder()
+                .calle(dto.getCalle())
+                .numero(dto.getNumero())
+                .codigoPostal(dto.getCodigoPostal())
+                .ciudad(dto.getCiudad())
+                .provincia(dto.getProvincia())
+                .pais(dto.getPais())
+                .build();
     }
 }

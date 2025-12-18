@@ -1,11 +1,20 @@
+export interface Direccion {
+  calle: string;
+  numero: string;
+  codigoPostal: string;
+  ciudad: string;
+  provincia: string;
+  pais: string;
+}
+
 export interface Servicio {
   id: number;
   facturaId?: number;
   empresaId: number;
   tipoServicio: string;
   fechaServicio: string; // formato ISO: '2025-10-22'
-  origen: string;
-  destino: string;
+  origen: Direccion;
+  destino: Direccion;
   conductor?: string;
   matriculaVehiculo?: string;
   km: number;

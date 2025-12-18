@@ -38,11 +38,29 @@ public class Servicio {
     @Column(name = "fecha_servicio", nullable = false)
     private LocalDate fechaServicio;
 
-    @Column(nullable = false)
-    private String origen;
+    // --- ORIGEN ---
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "calle", column = @Column(name = "origen_calle")),
+            @AttributeOverride(name = "numero", column = @Column(name = "origen_numero")),
+            @AttributeOverride(name = "codigoPostal", column = @Column(name = "origen_cp")),
+            @AttributeOverride(name = "ciudad", column = @Column(name = "origen_ciudad")),
+            @AttributeOverride(name = "provincia", column = @Column(name = "origen_provincia")),
+            @AttributeOverride(name = "pais", column = @Column(name = "origen_pais"))
+    })
+    private Direccion origen;
 
-    @Column(nullable = false)
-    private String destino;
+    // --- DESTINO ---
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "calle", column = @Column(name = "destino_calle")),
+            @AttributeOverride(name = "numero", column = @Column(name = "destino_numero")),
+            @AttributeOverride(name = "codigoPostal", column = @Column(name = "destino_cp")),
+            @AttributeOverride(name = "ciudad", column = @Column(name = "destino_ciudad")),
+            @AttributeOverride(name = "provincia", column = @Column(name = "destino_provincia")),
+            @AttributeOverride(name = "pais", column = @Column(name = "destino_pais"))
+    })
+    private Direccion destino;
 
     @Column
     private String conductor;

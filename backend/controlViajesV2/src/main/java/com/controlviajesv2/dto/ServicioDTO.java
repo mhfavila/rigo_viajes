@@ -1,5 +1,6 @@
 package com.controlviajesv2.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,11 +29,13 @@ public class ServicioDTO {
     @NotNull(message = "La fecha del servicio no puede ser nula")
     private LocalDate fechaServicio;
 
-    @NotBlank(message = "El origen no puede estar vacío")
-    private String origen;
+    @NotNull(message = "El origen es obligatorio")
+    @Valid
+    private DireccionDTO origen;
 
-    @NotBlank(message = "El destino no puede estar vacío")
-    private String destino;
+    @NotNull(message = "El destino es obligatorio")
+    @Valid
+    private DireccionDTO destino;
 
     private String conductor;
 

@@ -1,5 +1,6 @@
 package com.controlviajesv2.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,9 @@ public class EmpresaDTO {
     )
     private String cif;
 
-    @NotBlank(message = "La dirección es obligatoria")
-    private String direccion;
+    @NotNull(message = "El objeto dirección no puede ser nulo")
+    @Valid
+    private DireccionDTO direccion;
 
     @NotBlank(message = "El teléfono es obligatorio")
     @Pattern(

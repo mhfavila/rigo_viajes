@@ -3,74 +3,127 @@
 <mat-dialog-content translate="no">
   <form [formGroup]="empresaForm" class="form-grid">
 
-    <!-- FILA 1: NOMBRE + CIF -->
-    <div class="row two-columns">
-      <mat-form-field appearance="fill">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="nombre" placeholder="Nombre de la empresa" />
-      </mat-form-field>
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" dynamicHeight animationDuration="0ms">
 
-      <mat-form-field appearance="fill">
-        <mat-label>CIF</mat-label>
-        <input matInput formControlName="cif" placeholder="CIF de la empresa" />
-      </mat-form-field>
-    </div>
+      <mat-tab label="Datos Generales">
+        <div style="padding-top: 20px;">
 
-    <!-- FILA 2: DIRECCIÓN -->
-    <div class="row">
-      <mat-form-field appearance="fill" class="full">
-        <mat-label>Dirección</mat-label>
-        <input matInput formControlName="direccion" placeholder="Dirección" />
-      </mat-form-field>
-    </div>
+          <div class="row two-columns">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre" placeholder="Nombre de la empresa" />
+              <mat-error *ngIf="empresaForm.get('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
+            </mat-form-field>
 
-    <!-- FILA 3: TELÉFONO + EMAIL -->
-    <div class="row two-columns">
+            <mat-form-field appearance="fill">
+              <mat-label>CIF</mat-label>
+              <input matInput formControlName="cif" placeholder="CIF" />
+              <mat-error *ngIf="empresaForm.get('cif')?.hasError('required')">El CIF es obligatorio</mat-error>
+              <mat-error *ngIf="empresaForm.get('cif')?.hasError('cifInvalido')">Formato inválido (Ej: B12345678)</mat-error>
+            </mat-form-field>
+          </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Teléfono</mat-label>
-        <input matInput
-               formControlName="telefono"
-               placeholder="Teléfono"
-               type="text" />
+          <div class="row two-columns">
+            <mat-form-field appearance="fill">
+              <mat-label>Teléfono</mat-label>
+              <input matInput formControlName="telefono" placeholder="Teléfono" type="text" />
+              <mat-error *ngIf="empresaForm.get('telefono')?.hasError('required')">Obligatorio</mat-error>
+              <mat-error *ngIf="empresaForm.get('telefono')?.hasError('pattern')">Debe tener 9 números exactamente.</mat-error>
+            </mat-form-field>
 
-        <mat-error *ngIf="empresaForm.get('telefono')?.hasError('required')">
-          El teléfono es obligatorio
-        </mat-error>
-        <mat-error *ngIf="empresaForm.get('telefono')?.hasError('pattern')">
-          Solo se permiten números
-        </mat-error>
-      </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Email" type="email" />
+              <mat-error *ngIf="empresaForm.get('email')?.hasError('required')">Obligatorio</mat-error>
+              <mat-error *ngIf="empresaForm.get('email')?.hasError('email')">Email inválido</mat-error>
+            </mat-form-field>
+          </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" placeholder="Email" type="email" />
-      </mat-form-field>
+          <div class="row">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>IBAN</mat-label>
+              <input matInput formControlName="iban" placeholder="ES00..." type="text" />
+              <mat-error *ngIf="empresaForm.get('iban')?.hasError('required')">Obligatorio</mat-error>
+              <mat-error *ngIf="empresaForm.get('iban')?.hasError('tieneEspacios')">Quita los espacios</mat-error>
+              <mat-error *ngIf="empresaForm.get('iban')?.hasError('longitudIncorrecta')">Longitud incorrecta (24 chars)</mat-error>
+              <mat-error *ngIf="empresaForm.get('iban')?.hasError('noEsEspanol')">Debe empezar por ES</mat-error>
+            </mat-form-field>
+          </div>
 
-    </div>
+          <div class="row">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>ID Usuario</mat-label>
+              <input matInput formControlName="usuarioId" placeholder="ID" />
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-tab>
 
-    <!-- FILA 4: IBAN -->
-    <div class="row">
-      <mat-form-field appearance="fill" class="full">
-        <mat-label>IBAN</mat-label>
-        <input matInput formControlName="iban" placeholder="iban" type="text" />
-      </mat-form-field>
-    </div>
 
-    <!-- FILA 5: ID USUARIO -->
-    <div class="row">
-      <mat-form-field appearance="fill" class="full">
-        <mat-label>ID Usuario</mat-label>
-        <input matInput formControlName="usuarioId" placeholder="ID del usuario" />
-      </mat-form-field>
-    </div>
+      <mat-tab label="Dirección">
+
+        <div formGroupName="direccion" style="padding-top: 20px;">
+
+          <div class="row two-columns">
+            <mat-form-field appearance="fill">
+              <mat-label>Calle</mat-label>
+              <input matInput formControlName="calle" placeholder="Calle / Avda" />
+              <mat-error *ngIf="empresaForm.get('direccion.calle')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Número</mat-label>
+              <input matInput formControlName="numero" placeholder="Nº" />
+              <mat-error *ngIf="empresaForm.get('direccion.numero')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row three-columns" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+            <mat-form-field appearance="fill">
+              <mat-label>CP</mat-label>
+              <input matInput formControlName="codigoPostal" placeholder="CP" />
+              <mat-error *ngIf="empresaForm.get('direccion.codigoPostal')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Ciudad</mat-label>
+              <input matInput formControlName="ciudad" placeholder="Ciudad" />
+              <mat-error *ngIf="empresaForm.get('direccion.ciudad')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Provincia</mat-label>
+              <input matInput formControlName="provincia" placeholder="Provincia" />
+              <mat-error *ngIf="empresaForm.get('direccion.provincia')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>País</mat-label>
+              <input matInput formControlName="pais" placeholder="País" />
+              <mat-error *ngIf="empresaForm.get('direccion.pais')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+
+
+      </mat-tab>
+
+    </mat-tab-group>
+    <div *ngIf="empresaForm.get('direccion')?.invalid && empresaForm.get('direccion')?.touched"
+             style="color: #f44336; margin-top: 10px; font-weight: bold;">
+             ⚠️ Revisa los campos de la dirección.
+        </div>
 
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" translate="no">
   <button mat-button (click)="cancelar()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="guardar()" [disabled]="empresaForm.invalid">
+  <button mat-raised-button color="primary" (click)="guardar()">
     {{ isEditMode ? 'Actualizar' : 'Guardar' }}
   </button>
 </mat-dialog-actions>

@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ titulo }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="grid grid-cols-2 gap-4 pt-4">
+
+    <mat-form-field class="col-span-1">
+      <mat-label>Calle</mat-label>
+      <input matInput formControlName="calle">
+      <mat-error *ngIf="form.get('calle')?.hasError('required')">Requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-span-1">
+      <mat-label>Número</mat-label>
+      <input matInput formControlName="numero">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>CP</mat-label>
+      <input matInput formControlName="codigoPostal">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Ciudad</mat-label>
+      <input matInput formControlName="ciudad">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Provincia</mat-label>
+      <input matInput formControlName="provincia">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>País</mat-label>
+      <input matInput formControlName="pais">
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="guardar()">Aceptar</button>
+</mat-dialog-actions>

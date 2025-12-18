@@ -68,7 +68,7 @@ public class SecurityConfig {
 
                 // Configuración de autorización -> se puede usar sin estar logueaso :loguin y registro
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(AppConstants.API_AUTH_PATH).permitAll()
+                        .requestMatchers(AppConstants.API_AUTH_PATH,"/api/ping").permitAll()
                         .anyRequest().authenticated()
                 )
 

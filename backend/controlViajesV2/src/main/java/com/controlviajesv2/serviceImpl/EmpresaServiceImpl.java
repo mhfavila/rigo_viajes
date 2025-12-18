@@ -82,7 +82,7 @@ public class EmpresaServiceImpl implements EmpresaService {
         // Actualizamos los datos básicos
         existente.setNombre(empresaDTO.getNombre());
         existente.setCif(empresaDTO.getCif());
-        existente.setDireccion(empresaDTO.getDireccion());
+        //existente.setDireccion(empresaDTO.getDireccion());
         existente.setTelefono(empresaDTO.getTelefono());
         existente.setEmail(empresaDTO.getEmail());
 
@@ -112,7 +112,7 @@ public class EmpresaServiceImpl implements EmpresaService {
             EmpresaConViajesDTO dto = new EmpresaConViajesDTO();
             dto.setId(empresa.getId());
             dto.setNombre(empresa.getNombre());
-            dto.setDireccion(empresa.getDireccion());
+           // dto.setDireccion(empresa.getDireccion());
             dto.setTelefono(empresa.getTelefono());
             dto.setViajes(empresa.getViajes().stream()
                     .map(ViajeMapper::toDTO)

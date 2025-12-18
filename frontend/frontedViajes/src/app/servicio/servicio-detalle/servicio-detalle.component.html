@@ -13,19 +13,47 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-      <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-200">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-blue-600"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M12 18v-2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2"/><path d="M12 12v-2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2"/><circle cx="18" cy="8" r="2"/><circle cx="18" cy="16" r="2"/></svg>
+      <div
+        class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-200">
+        <h2
+          class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="mr-2 text-blue-600"><path
+              d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /><path
+              d="M15 18H9" /><path
+              d="M12 18v-2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2" /><path
+              d="M12 12v-2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2" /><circle cx="18"
+              cy="8" r="2" /><circle cx="18" cy="16" r="2" /></svg>
           Detalles del Servicio
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
           <p><strong>Tipo:</strong> {{ srv.tipoServicio }}</p>
-          <p><strong>Fecha:</strong> {{ srv.fechaServicio | date:'dd/MM/yyyy' }}</p>
-          <p><strong>Origen:</strong> {{ srv.origen }}</p>
-          <p><strong>Destino:</strong> {{ srv.destino }}</p>
-          <p><strong>Conductor:</strong> {{ srv.conductor || 'No asignado' }}</p>
-          <p><strong>Vehículo:</strong> {{ srv.matriculaVehiculo || 'No asignado' }}</p>
+          <p><strong>Fecha:</strong> {{ srv.fechaServicio | date:'dd/MM/yyyy'
+            }}</p>
+          <p><strong>Origen:</strong>
+            <span *ngIf="srv.origen">
+              {{ srv.origen.calle }} {{ srv.origen.numero }}, {{ srv.origen.codigoPostal
+              }} {{ srv.origen.ciudad }}
+            </span>
+            <span *ngIf="!srv.origen" class="text-gray-400 italic">No
+              especificado</span>
+          </p>
+
+          <p><strong>Destino:</strong>
+            <span *ngIf="srv.destino">
+              {{ srv.destino.calle }} {{ srv.destino.numero }}, {{
+              srv.destino.codigoPostal }} {{ srv.destino.ciudad }}
+            </span>
+            <span *ngIf="!srv.destino" class="text-gray-400 italic">No
+              especificado</span>
+          </p>
+          <p><strong>Conductor:</strong> {{ srv.conductor || 'No asignado'
+            }}</p>
+          <p><strong>Vehículo:</strong> {{ srv.matriculaVehiculo ||
+            'No asignado' }}</p>
           <p><strong>Albarán:</strong> {{ srv.albaran || 'N/A' }}</p>
         </div>
 
@@ -35,18 +63,22 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-3 text-sm">
           <div>
             <p><strong>Km:</strong> {{ srv.km }}</p>
-            <p><strong>Precio/Km:</strong> {{ srv.precioKm | currency:'EUR' }}</p>
+            <p><strong>Precio/Km:</strong> {{ srv.precioKm | currency:'EUR'
+              }}</p>
           </div>
           <div>
             <p><strong>Horas Espera:</strong> {{ srv.horasEspera || 0 }}</p>
-            <p><strong>Importe Espera:</strong> {{ srv.importeEspera | currency:'EUR' }}</p>
+            <p><strong>Importe Espera:</strong> {{ srv.importeEspera |
+              currency:'EUR' }}</p>
           </div>
           <div>
             <p><strong>Dietas:</strong> {{ srv.dieta || 0 }}</p>
-            <p><strong>Precio Dieta:</strong> {{ srv.precioDieta | currency:'EUR' }}</p>
+            <p><strong>Precio Dieta:</strong> {{ srv.precioDieta |
+              currency:'EUR' }}</p>
           </div>
           <div class="md:col-span-3 mt-2 font-semibold text-base">
-            <p><strong>Importe Total Servicio:</strong> {{ srv.importeServicio | currency:'EUR' }}</p>
+            <p><strong>Importe Total Servicio:</strong> {{ srv.importeServicio |
+              currency:'EUR' }}</p>
           </div>
         </div>
 
@@ -60,9 +92,16 @@
 
       <div class="lg:col-span-1 flex flex-col gap-6">
 
-        <div *ngIf="srv.clienteFinal" class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-green-600"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <div *ngIf="srv.clienteFinal"
+          class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <h2
+            class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="mr-2 text-green-600"><path
+                d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12"
+                cy="7" r="4" /></svg>
             Cliente Final
           </h2>
           <div class="space-y-2 text-sm">
@@ -70,21 +109,34 @@
           </div>
         </div>
 
-        <div *ngIf="factura as fac; else noFactura" class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-purple-600"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <div *ngIf="factura as fac; else noFactura"
+          class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <h2
+            class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="mr-2 text-purple-600"><path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline
+                points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8"
+                y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline
+                points="10 9 9 9 8 9" /></svg>
             Facturación
           </h2>
           <div class="space-y-2 text-sm">
             <p><strong>Nº Factura:</strong> {{ fac.numeroFactura }}</p>
-            <p><strong>Fecha:</strong> {{ fac.fechaEmision | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Fecha:</strong> {{ fac.fechaEmision | date:'dd/MM/yyyy'
+              }}</p>
             <p><strong>Base:</strong> {{ fac.totalBruto | currency:'EUR' }}</p>
-            <p><strong>IVA ({{ fac.porcentajeIva }}%):</strong> {{ fac.importeIva | currency:'EUR' }}</p>
-            <p><strong>Total Factura:</strong> <span class="font-bold text-base">{{ fac.totalFactura | currency:'EUR' }}</span></p>
+            <p><strong>IVA ({{ fac.porcentajeIva }}%):</strong> {{
+              fac.importeIva | currency:'EUR' }}</p>
+            <p><strong>Total Factura:</strong> <span
+                class="font-bold text-base">{{ fac.totalFactura | currency:'EUR'
+                }}</span></p>
             <p>
               <strong>Estado:</strong>
               <span class="px-2 py-0.5 rounded-full text-xs font-medium"
-                    [ngClass]="{
+                [ngClass]="{
                       'bg-green-100 text-green-800': fac.estado === 'COBRADA',
                       'bg-blue-100 text-blue-800': fac.estado === 'ENVIADA',
                       'bg-yellow-100 text-yellow-800': fac.estado === 'BORRADOR'
@@ -95,18 +147,35 @@
           </div>
         </div>
         <ng-template #noFactura>
-          <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 opacity-60">
-            <h2 class="text-xl font-semibold text-gray-500 mb-2 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <div
+            class="bg-white p-6 rounded-xl shadow-md border border-gray-200 opacity-60">
+            <h2
+              class="text-xl font-semibold text-gray-500 mb-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="mr-2 text-gray-500"><path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline
+                  points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8"
+                  y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline
+                  points="10 9 9 9 8 9" /></svg>
               Facturación
             </h2>
             <p class="text-sm text-gray-600">Servicio pendiente de facturar.</p>
           </div>
         </ng-template>
 
-        <div *ngIf="empresa as emp" class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-600"><rect width="20" height="20" x="2" y="2" rx="2" ry="2"/><path d="M6 9h4"/><path d="M6 13h4"/><path d="M6 17h4"/><path d="M10 9v8"/><path d="M14 17h4"/><path d="M14 13h4"/><path d="M14 9h4"/></svg>
+        <div *ngIf="empresa as emp"
+          class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <h2
+            class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="mr-2 text-gray-600"><rect width="20" height="20" x="2"
+                y="2" rx="2" ry="2" /><path d="M6 9h4" /><path
+                d="M6 13h4" /><path d="M6 17h4" /><path d="M10 9v8" /><path
+                d="M14 17h4" /><path d="M14 13h4" /><path d="M14 9h4" /></svg>
             Empresa (Proveedor)
           </h2>
           <div class="space-y-2 text-sm">
@@ -115,16 +184,21 @@
             <p><strong>Email:</strong> {{ emp.email }}</p>
             <p><strong>Teléfono:</strong> {{ emp.telefono }}</p>
             <p><strong>IBAN:</strong> {{ emp.iban }}</p>
-            <p><strong>Dirección:</strong> {{ emp.direccion }}</p>
+            <p><strong>Dirección:</strong>
+  <span *ngIf="emp.direccion">
+    {{ emp.direccion.calle }} {{ emp.direccion.numero }}, {{ emp.direccion.codigoPostal }} {{ emp.direccion.ciudad }}
+  </span>
+  <span *ngIf="!emp.direccion" class="text-gray-400 italic">Sin dirección</span>
+</p>
           </div>
         </div>
-        </div> </div>
+      </div> </div>
   </div>
 
   <ng-template #cargando>
     <div class="text-center p-10 bg-white rounded-lg shadow">
       <p class="text-gray-600">Cargando datos del servicio...</p>
-      </div>
+    </div>
   </ng-template>
 
 </div>

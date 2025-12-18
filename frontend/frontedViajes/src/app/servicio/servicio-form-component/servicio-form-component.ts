@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServiciosFactService } from '../../services/servicios-fact.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Servicio } from '../servicio.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DireccionDialogComponent } from '../../direccion-dialog.component/direccion-dialog.component';
 
 @Component({
   selector: 'app-servicio-form-component',
@@ -23,7 +25,8 @@ export class ServicioFormComponent implements OnInit {
     private router: Router, //Para navegar entre páginas
     private route: ActivatedRoute, // Para leer los parámetros de la URL
     private serviciosFactService: ServiciosFactService,
-    private snackBar: MatSnackBar //para motrar notificaciones
+    private snackBar: MatSnackBar, //para motrar notificaciones
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -39,8 +42,8 @@ export class ServicioFormComponent implements OnInit {
         // NO hay 'empresaId' aquí, lo tenemos en 'empresaContextId'
         tipoServicio: ['', Validators.required],
         fechaServicio: [new Date(), Validators.required],
-        origen: ['', Validators.required],
-        destino: ['', Validators.required],
+        origen: [null, Validators.required],
+        destino: [null, Validators.required],
         clienteFinal: [''],
       }),
 
@@ -182,19 +185,19 @@ export class ServicioFormComponent implements OnInit {
     const precioKm = Number(payload.precioKm) || 0;
     const precioDieta = Number(payload.precioDieta) || 0;
     const precioEspera = Number(payload.importeEspera) || 0;
-    const horasEspera= Number(payload.horasEspera) || 0;
-    console.log("precio dieta------------"+payload.precioDieta)
+    const horasEspera = Number(payload.horasEspera) || 0;
+    console.log('precio dieta------------' + payload.precioDieta);
 
     // 2. Calculamos el base
     let total = km * precioKm;
-    let importeHorasEspera = precioEspera*horasEspera;
+    let importeHorasEspera = precioEspera * horasEspera;
 
     // 3. Comprobamos la dieta
     // Quitamos el "=== true" para que funcione si viene como 1, "true" o true
     if (payload.dieta) {
       total += precioDieta;
     }
-    total +=importeHorasEspera;
+    total += importeHorasEspera;
     // 4. Asignamos
     payload.importeServicio = total;
 
@@ -239,5 +242,39 @@ export class ServicioFormComponent implements OnInit {
    */
   cancelar(): void {
     this.navegarDeVuelta();
+  }
+  //metodo para poder meter las direciones del origen y del destino
+  abrirDialogoDireccion(campo: 'origen' | 'destino') {
+    const control = this.servicioForm.get('viaje.' + campo);
+    const valorActual = control?.value;
+
+    const dialogRef = this.dialog.open(DireccionDialogComponent, {
+      width: '600px',
+      data: {
+        titulo:
+          campo === 'origen' ? 'Dirección de Origen' : 'Dirección de Destino',
+        direccion: valorActual, // Pasamos lo que haya (o null)
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Si el usuario guardó, actualizamos el formulario con el objeto completo
+        control?.setValue(result);
+        control?.markAsDirty(); // Marcamos como modificado
+      }
+    });
+  }
+
+  // Función auxiliar para mostrar texto bonito en el input (Readonly)
+  getDireccionTexto(campo: 'origen' | 'destino'): string {
+    const val = this.servicioForm.get('viaje.' + campo)?.value;
+    if (!val) return '';
+    // Si es un objeto (nueva estructura)
+    if (typeof val === 'object') {
+      return `${val.calle} ${val.numero}, ${val.ciudad}`;
+    }
+    // Si viene del backend antiguo como string simple (fallback)
+    return val;
   }
 }

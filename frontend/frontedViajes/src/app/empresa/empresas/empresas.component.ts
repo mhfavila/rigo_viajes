@@ -53,7 +53,7 @@ export class EmpresasComponent implements OnInit {
 
   verEmpresa(empresa: any) {
     this.dialog.open(EmpresaDetalleDialog, {
-      width: '400px',
+      width: '600px',
       data: empresa,
     });
   }

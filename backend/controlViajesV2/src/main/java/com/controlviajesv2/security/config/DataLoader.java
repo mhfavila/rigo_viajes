@@ -342,7 +342,7 @@ public class DataLoader implements CommandLineRunner {
 
             //nuevaEmpresa.setUsuarioId(1L);
             nuevaEmpresa.setNombre(nombreEmpresa());
-            nuevaEmpresa.setDireccion(obtenerDireccionAleatoria());
+            //nuevaEmpresa.setDireccion(obtenerDireccionAleatoria());
             nuevaEmpresa.setCif(obtenerCifAleatorio());
             nuevaEmpresa.setTelefono(obtenerTelefonoAleatorio());
             nuevaEmpresa.setEmail(nuevaEmpresa.getNombre() + "@gmail.com");
@@ -508,8 +508,8 @@ public class DataLoader implements CommandLineRunner {
                     .empresa(empresa) //  ahora obligatorio
                     .tipoServicio("Transporte")
                     .fechaServicio(LocalDate.now().minusDays(random.nextInt(30)))
-                    .origen(destino())
-                    .destino(destino())
+                    //.origen(destino())
+                   // .destino(destino())
                     .km(km)
                     .precioKm(precioKm)
                     .importeServicio(importeServicio)

@@ -37,6 +37,7 @@ import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.com
 import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.component/datos-factura-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { DireccionDialogComponent } from './direccion-dialog.component/direccion-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ServicioDetalleComponent,
     ServicioFormComponent,
     DatosFacturaDialogComponent,
+    DireccionDialogComponent,
   ],
   imports: [
     BrowserModule,

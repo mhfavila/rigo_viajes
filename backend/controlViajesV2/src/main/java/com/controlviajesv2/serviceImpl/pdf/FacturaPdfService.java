@@ -80,7 +80,7 @@ public class FacturaPdfService {
         empresaTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         //empresaTable.addCell(new Phrase("Empresa:", bold));
         empresaTable.addCell(new Phrase("Cliente: " + empresa.getNombre()));
-        empresaTable.addCell(new Phrase( empresa.getDireccion()));
+       // empresaTable.addCell(new Phrase( empresa.getDireccion()));
         empresaTable.addCell(new Phrase( empresa.getCif()));
         empresaTable.addCell(new Phrase("iria el codigo postal y la provincia "));
 
