@@ -3,7 +3,28 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 			
 					
 				
-				
+			
+
+
+
+
+
+
+
+
+
+MEJORAS HABLADAS CON RIGO			
+				-El número de la factura tiene que tener un formato preguntarle cuál
+				-El precio del kilometraje y la hora de espera y el precio de la dieta va en la empresa 
+				-Duplicar servicios por qué hay servicios que son muy parecidos 
+				-Ajustar lo de la fecha para origen y destino dejarlo como estaba antes
+				-Poder borrar facturas y que vuelvan aparecer los servicios desmarcados
+
+				-Poner lo del servicio mínimo que menos de 100km son 50€ y es un servicio mínimo 
+				-Añadir datos del usuario en plan lo que falte
+
+
+			
 POR DONDE ME LLEGO:   
 
 
