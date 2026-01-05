@@ -225,9 +225,11 @@ cargarPreciosPorDefecto(empresaId: number) {
     if (km < 100) {
       // REGLA: Menos de 100km son 50€ (Servicio Mínimo)
       total = 50.00;
-      // Opcional: Podrías guardar en observaciones que fue servicio mínimo
-      // if (!payload.observaciones) payload.observaciones = '';
-      // payload.observaciones += ' (Aplicado Servicio Mínimo 50€)';
+      //guardamos en observaciones que fue servicio mínimo
+
+       if (!payload.observaciones) payload.observaciones = '';
+       payload.observaciones += ' (Aplicado Servicio Mínimo 50€)';
+       console.log("Aplicado Servicio Mínimo 50€");
     } else {
       // Cálculo normal
       total = km * precioKm;

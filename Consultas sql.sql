@@ -114,24 +114,25 @@ SELECT * FROM empresas e WHERE e.usuario_id = 1;
 
 -----------------
 
---ver los servicio sde la empresa 201
+--ver los servicio sde la empresa 5
 
 SELECT 
     s.id AS servicio_id,
     s.tipo_servicio,
     s.fecha_servicio,
-    s.origen,
-    s.destino,
+    
     s.conductor,
     s.matricula_vehiculo,
     s.km,
+	s.importe_espera,
+	
 	s.dieta,
     s.precio_km,
     s.importe_servicio,
     s.cliente_final,
     s.observaciones
 FROM servicios s
-WHERE s.empresa_id = 201
+WHERE s.empresa_id = 5
 ORDER BY s.id;
 ------------------------
 --consulta para ver las facturas de una empresa

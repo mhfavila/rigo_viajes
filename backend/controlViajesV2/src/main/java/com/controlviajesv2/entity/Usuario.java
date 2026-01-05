@@ -27,13 +27,13 @@ public class Usuario {
     private String email;
 
     // --- NUEVOS CAMPOS FISCALES ---
-    @Column(length = 20)
+    @Column(length = 24)
     private String cuentaBancaria; // DNI o CIF del autónomo/empresa emisora
 
-    @Column(length = 20)
+    @Column(length = 9)
     private String nif; // DNI o CIF del autónomo/empresa emisora
 
-    @Column(length = 20)
+    @Column(length = 9)
     private String telefono;
 
     // Reutilizamos tu clase Direccion para tener calle, cp, ciudad, etc.

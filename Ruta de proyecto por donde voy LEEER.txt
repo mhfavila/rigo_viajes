@@ -17,7 +17,7 @@ MEJORAS HABLADAS CON RIGO
 				-El número de la factura tiene que tener un formato preguntarle cuál
 				-El precio del kilometraje y la hora de espera y el precio de la dieta va en la empresa 
 				-Duplicar servicios por qué hay servicios que son muy parecidos 
-				-Ajustar lo de la fecha para origen y destino dejarlo como estaba antes
+				-Ajustar lo de la direccion para origen y destino dejarlo como estaba antes
 				-Poder borrar facturas y que vuelvan aparecer los servicios desmarcados   -->LISTO hacer mas pruebas
 
 				-Poner lo del servicio mínimo que menos de 100km son 50€ y es un servicio mínimo ,podmeos maracar de alguna forma que s un servicio minimo
