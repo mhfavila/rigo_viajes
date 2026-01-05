@@ -1,0 +1,91 @@
+<div class="container mx-auto p-4 max-w-4xl mt-6">
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Mi Perfil Fiscal</h1>
+    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="perfilForm.invalid || loading">
+      <mat-icon>save</mat-icon> Guardar Cambios
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="flex justify-center p-10">
+    <p>Cargando datos...</p>
+    </div>
+
+  <form [formGroup]="perfilForm" *ngIf="!loading" class="bg-white p-6 rounded-lg shadow-md">
+
+    <h3 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Datos de Cuenta</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="nombre">
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <h3 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Datos Fiscales (Para Facturas)</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <mat-form-field appearance="outline">
+        <mat-label>NIF / CIF</mat-label>
+        <input matInput formControlName="nif" placeholder="12345678Z" style="text-transform:uppercase">
+        <mat-error *ngIf="perfilForm.get('nif')?.hasError('pattern')">Formato inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono">
+        <mat-error *ngIf="perfilForm.get('telefono')?.hasError('pattern')">Solo números y espacios</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="md:col-span-2">
+        <mat-label>Cuenta Bancaria (IBAN)</mat-label>
+        <input matInput formControlName="cuentaBancaria">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="md:col-span-2">
+        <mat-label>URL Logo (Opcional)</mat-label>
+        <input matInput formControlName="imagenUrl" placeholder="https://miweb.com/logo.png">
+        <mat-hint>Pega el enlace directo a tu imagen de logo</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <h3 class="text-lg font-semibold text-primary mb-4 border-b pb-2 mt-6">Dirección Fiscal</h3>
+    <div formGroupName="direccion" class="grid grid-cols-1 md:grid-cols-6 gap-3">
+
+      <mat-form-field appearance="outline" class="md:col-span-4">
+        <mat-label>Calle</mat-label>
+        <input matInput formControlName="calle">
+        <mat-error *ngIf="perfilForm.get('direccion.calle')?.invalid">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="md:col-span-2">
+        <mat-label>Número</mat-label>
+        <input matInput formControlName="numero">
+        <mat-error *ngIf="perfilForm.get('direccion.numero')?.invalid">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="md:col-span-2">
+        <mat-label>Código Postal</mat-label>
+        <input matInput formControlName="codigoPostal">
+        <mat-error *ngIf="perfilForm.get('direccion.codigoPostal')?.invalid">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="md:col-span-2">
+        <mat-label>Ciudad</mat-label>
+        <input matInput formControlName="ciudad">
+        <mat-error *ngIf="perfilForm.get('direccion.ciudad')?.invalid">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="md:col-span-2">
+        <mat-label>Provincia</mat-label>
+        <input matInput formControlName="provincia">
+        <mat-error *ngIf="perfilForm.get('direccion.provincia')?.invalid">Requerido</mat-error>
+      </mat-form-field>
+    </div>
+
+  </form>
+</div>

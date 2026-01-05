@@ -3,7 +3,8 @@
 <mat-dialog-content translate="no">
   <form [formGroup]="empresaForm" class="form-grid">
 
-    <mat-tab-group [(selectedIndex)]="selectedTabIndex" dynamicHeight animationDuration="0ms">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" dynamicHeight
+      animationDuration="0ms">
 
       <mat-tab label="Datos Generales">
         <div style="padding-top: 20px;">
@@ -11,54 +12,104 @@
           <div class="row two-columns">
             <mat-form-field appearance="fill">
               <mat-label>Nombre</mat-label>
-              <input matInput formControlName="nombre" placeholder="Nombre de la empresa" />
-              <mat-error *ngIf="empresaForm.get('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
+              <input matInput formControlName="nombre"
+                placeholder="Nombre de la empresa" />
+              <mat-error
+                *ngIf="empresaForm.get('nombre')?.hasError('required')">El
+                nombre es obligatorio</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
-              <mat-label>CIF</mat-label>
+              <mat-label>CIF / NIF</mat-label>
               <input matInput formControlName="cif" placeholder="CIF" />
-              <mat-error *ngIf="empresaForm.get('cif')?.hasError('required')">El CIF es obligatorio</mat-error>
-              <mat-error *ngIf="empresaForm.get('cif')?.hasError('cifInvalido')">Formato inválido (Ej: B12345678)</mat-error>
+              <mat-error *ngIf="empresaForm.get('cif')?.hasError('required')">El
+                CIF es obligatorio</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('cif')?.hasError('cifInvalido')">Formato
+                inválido (Ej: B12345678)</mat-error>
             </mat-form-field>
           </div>
 
           <div class="row two-columns">
             <mat-form-field appearance="fill">
               <mat-label>Teléfono</mat-label>
-              <input matInput formControlName="telefono" placeholder="Teléfono" type="text" />
-              <mat-error *ngIf="empresaForm.get('telefono')?.hasError('required')">Obligatorio</mat-error>
-              <mat-error *ngIf="empresaForm.get('telefono')?.hasError('pattern')">Debe tener 9 números exactamente.</mat-error>
+              <input matInput formControlName="telefono" placeholder="Teléfono"
+                type="text" />
+              <mat-error
+                *ngIf="empresaForm.get('telefono')?.hasError('required')">Obligatorio</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('telefono')?.hasError('pattern')">Debe
+                tener 9 números exactamente.</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Email</mat-label>
-              <input matInput formControlName="email" placeholder="Email" type="email" />
-              <mat-error *ngIf="empresaForm.get('email')?.hasError('required')">Obligatorio</mat-error>
-              <mat-error *ngIf="empresaForm.get('email')?.hasError('email')">Email inválido</mat-error>
+              <input matInput formControlName="email" placeholder="Email"
+                type="email" />
+              <mat-error
+                *ngIf="empresaForm.get('email')?.hasError('required')">Obligatorio</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('email')?.hasError('email')">Email
+                inválido</mat-error>
             </mat-form-field>
           </div>
 
           <div class="row">
             <mat-form-field appearance="fill" class="full">
               <mat-label>IBAN</mat-label>
-              <input matInput formControlName="iban" placeholder="ES00..." type="text" />
-              <mat-error *ngIf="empresaForm.get('iban')?.hasError('required')">Obligatorio</mat-error>
-              <mat-error *ngIf="empresaForm.get('iban')?.hasError('tieneEspacios')">Quita los espacios</mat-error>
-              <mat-error *ngIf="empresaForm.get('iban')?.hasError('longitudIncorrecta')">Longitud incorrecta (24 chars)</mat-error>
-              <mat-error *ngIf="empresaForm.get('iban')?.hasError('noEsEspanol')">Debe empezar por ES</mat-error>
+              <input matInput formControlName="iban" placeholder="ES00..."
+                type="text" />
+              <mat-error
+                *ngIf="empresaForm.get('iban')?.hasError('required')">Obligatorio</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('iban')?.hasError('tieneEspacios')">Quita
+                los espacios</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('iban')?.hasError('longitudIncorrecta')">Longitud
+                incorrecta (24 chars)</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('iban')?.hasError('noEsEspanol')">Debe
+                empezar por ES</mat-error>
             </mat-form-field>
           </div>
 
-          <div class="row">
+
+            <h3 class="text-sm font-semibold text-gray-500 mb-2">PRECIOS
+              PACTADOS </h3>
+            <div class="grid grid-cols-3 gap-3">
+
+              <mat-form-field appearance="fill" >
+                <mat-label>Precio Km</mat-label>
+                <input matInput type="number" formControlName="precioKmDefecto"
+                  min="0">
+                <span matSuffix class="text-gray-500 text-xs">€/km&nbsp;</span>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Hora Espera</mat-label>
+                <input matInput type="number"
+                  formControlName="precioHoraEsperaDefecto" min="0">
+                <span matSuffix class="text-gray-500 text-xs">€/h&nbsp;</span>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" >
+                <mat-label>Dieta</mat-label>
+                <input matInput type="number"
+                  formControlName="precioDietaDefecto" min="0">
+                <span matSuffix class="text-gray-500 text-xs">€&nbsp;</span>
+              </mat-form-field>
+
+            </div>
+
+
+          <!-- <div class="row">
             <mat-form-field appearance="fill" class="full">
               <mat-label>ID Usuario</mat-label>
               <input matInput formControlName="usuarioId" placeholder="ID" />
             </mat-form-field>
-          </div>
+          </div>-->
         </div>
       </mat-tab>
-
 
       <mat-tab label="Dirección">
 
@@ -67,34 +118,42 @@
           <div class="row two-columns">
             <mat-form-field appearance="fill">
               <mat-label>Calle</mat-label>
-              <input matInput formControlName="calle" placeholder="Calle / Avda" />
-              <mat-error *ngIf="empresaForm.get('direccion.calle')?.hasError('required')">Requerido</mat-error>
+              <input matInput formControlName="calle"
+                placeholder="Calle / Avda" />
+              <mat-error
+                *ngIf="empresaForm.get('direccion.calle')?.hasError('required')">Requerido</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Número</mat-label>
               <input matInput formControlName="numero" placeholder="Nº" />
-              <mat-error *ngIf="empresaForm.get('direccion.numero')?.hasError('required')">Requerido</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('direccion.numero')?.hasError('required')">Requerido</mat-error>
             </mat-form-field>
           </div>
 
-          <div class="row three-columns" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+          <div class="row three-columns"
+            style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
             <mat-form-field appearance="fill">
               <mat-label>CP</mat-label>
               <input matInput formControlName="codigoPostal" placeholder="CP" />
-              <mat-error *ngIf="empresaForm.get('direccion.codigoPostal')?.hasError('required')">Requerido</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('direccion.codigoPostal')?.hasError('required')">Requerido</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Ciudad</mat-label>
               <input matInput formControlName="ciudad" placeholder="Ciudad" />
-              <mat-error *ngIf="empresaForm.get('direccion.ciudad')?.hasError('required')">Requerido</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('direccion.ciudad')?.hasError('required')">Requerido</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Provincia</mat-label>
-              <input matInput formControlName="provincia" placeholder="Provincia" />
-              <mat-error *ngIf="empresaForm.get('direccion.provincia')?.hasError('required')">Requerido</mat-error>
+              <input matInput formControlName="provincia"
+                placeholder="Provincia" />
+              <mat-error
+                *ngIf="empresaForm.get('direccion.provincia')?.hasError('required')">Requerido</mat-error>
             </mat-form-field>
           </div>
 
@@ -102,21 +161,21 @@
             <mat-form-field appearance="fill" class="full">
               <mat-label>País</mat-label>
               <input matInput formControlName="pais" placeholder="País" />
-              <mat-error *ngIf="empresaForm.get('direccion.pais')?.hasError('required')">Requerido</mat-error>
+              <mat-error
+                *ngIf="empresaForm.get('direccion.pais')?.hasError('required')">Requerido</mat-error>
             </mat-form-field>
           </div>
 
         </div>
 
-
-
       </mat-tab>
 
     </mat-tab-group>
-    <div *ngIf="empresaForm.get('direccion')?.invalid && empresaForm.get('direccion')?.touched"
-             style="color: #f44336; margin-top: 10px; font-weight: bold;">
-             ⚠️ Revisa los campos de la dirección.
-        </div>
+    <div
+      *ngIf="empresaForm.get('direccion')?.invalid && empresaForm.get('direccion')?.touched"
+      style="color: #f44336; margin-top: 10px; font-weight: bold;">
+      ⚠️ Revisa los campos de la dirección.
+    </div>
 
   </form>
 </mat-dialog-content>

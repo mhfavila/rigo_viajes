@@ -24,7 +24,7 @@ export class RegistroComponent {
     this.authService.registrar(nuevoUsuario).subscribe({
       next: (res) => {
         this.mensaje = 'Usuario creado correctamente';
-        setTimeout(() => this.router.navigate(['/login']), 2000); // redirige al login
+        setTimeout(() => this.router.navigate(['/login']), 1000); // redirige al login
       },
       error: (err) => {
         this.error = 'Error al registrar usuario';

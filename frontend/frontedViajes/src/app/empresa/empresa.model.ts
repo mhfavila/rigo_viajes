@@ -18,5 +18,8 @@ export interface Empresa {
   email: string;
   iban: string;
   usuarioId?: number;  // referencia al usuario propietario
+  precioKmDefecto?: number;
+  precioHoraEsperaDefecto?: number;
+  precioDietaDefecto?: number;
 
 }

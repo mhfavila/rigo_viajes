@@ -19,5 +19,8 @@ export interface EmpresaModalData {
   telefono?: string;
   email?: string;
   iban?: string;
+  precioKmDefecto?: number;
+  precioHoraEsperaDefecto?: number;
+  precioDietaDefecto?: number;
 
 }

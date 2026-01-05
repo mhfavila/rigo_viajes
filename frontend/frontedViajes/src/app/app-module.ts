@@ -32,12 +32,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ServicioFormComponent } from './servicio/servicio-form-component/servicio-form-component';
 
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ConfirmDialogComponent } from './confirmacionDialogo/confirm-dialog.component';
 import { DatosFacturaDialogComponent } from './factura/datos-factura-dialog.component/datos-factura-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { DireccionDialogComponent } from './direccion-dialog.component/direccion-dialog.component';
+import { PerfilComponent } from './usuario/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { DireccionDialogComponent } from './direccion-dialog.component/direccion
     ServicioFormComponent,
     DatosFacturaDialogComponent,
     DireccionDialogComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,7 @@ import { DireccionDialogComponent } from './direccion-dialog.component/direccion
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatTabsModule,
-
+    MatToolbarModule,
     ConfirmDialogComponent,
   ],
   providers: [
@@ -86,7 +88,8 @@ import { DireccionDialogComponent } from './direccion-dialog.component/direccion
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true}
+      multi: true,
+    },
   ],
   bootstrap: [App],
 })

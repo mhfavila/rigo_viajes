@@ -1,0 +1,16 @@
+/* Empuja los elementos a la derecha en el toolbar */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Un poco de padding para que el contenido no se pegue a los bordes */
+.contenido-principal {
+  min-height: 90vh;
+  background-color: #f5f5f5; /* Un gris muy clarito de fondo queda profesional */
+}
+
+/* Ajuste para que el toolbar no quede pegado si usas sombras */
+.navbar {
+  position: relative;
+  z-index: 10;
+}

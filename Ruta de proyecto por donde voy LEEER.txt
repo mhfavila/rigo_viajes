@@ -20,9 +20,12 @@ MEJORAS HABLADAS CON RIGO
 				-Ajustar lo de la fecha para origen y destino dejarlo como estaba antes
 				-Poder borrar facturas y que vuelvan aparecer los servicios desmarcados   -->LISTO hacer mas pruebas
 
-				-Poner lo del servicio mínimo que menos de 100km son 50€ y es un servicio mínimo 
-				-Añadir datos del usuario en plan lo que falte
-				-modificar para que en la empresa aparte de un cif se pueda meter un cnif de autonomo que es un nif normal
+				-Poner lo del servicio mínimo que menos de 100km son 50€ y es un servicio mínimo ,podmeos maracar de alguna forma que s un servicio minimo
+				-Añadir datos del usuario en plan lo que falte  
+				-modificar para que en la empresa aparte de un cif se pueda meter un cnif de autonomo que es un nif normal hay que revisarlo en el fronted
+				
+				-revisar el fronted la estetica
+				-revisar lo de la longitud de la cuante bancaria del usuario en el backen tienen que ser 24 caracteres creo
 
 
 			

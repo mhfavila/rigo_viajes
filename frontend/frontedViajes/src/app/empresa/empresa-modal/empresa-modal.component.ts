@@ -27,10 +27,13 @@ export class EmpresaModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    const cifPattern = /^[A-Z0-9]{8,10}$/;
     this.empresaForm = this.fb.group({
       nombre: [this.data.nombre || '', Validators.required],
 
-      cif: [this.data.cif || '', [Validators.required, cifValidator()]],
+      //cif: [this.data.cif || '', [Validators.required, cifValidator()]],
+      cif: [this.data?.cif || '', [Validators.required, Validators.pattern(cifPattern)]],
       direccion: this.fb.group({
         calle: [this.data.direccion?.calle || '', Validators.required],
         numero: [this.data.direccion?.numero || '', Validators.required],
@@ -50,6 +53,10 @@ export class EmpresaModalComponent implements OnInit {
       email: [this.data.email || '', [Validators.required, Validators.email]],
       //iban:[this.data.iban || '', [Validators.required]],
       iban: [this.data.iban || '', [Validators.required, ibanValidator()]],
+      // Inicializamos a 0 si es null para evitar errores visuales
+      precioKmDefecto: [this.data?.precioKmDefecto || 0, [Validators.min(0)]],
+      precioHoraEsperaDefecto: [this.data?.precioHoraEsperaDefecto || 0, [Validators.min(0)]],
+      precioDietaDefecto: [this.data?.precioDietaDefecto || 0, [Validators.min(0)]],
       usuarioId: [
         { value: this.data.usuarioId, disabled: true }, // 'usuarioId' siempre vendrá en 'data'
         Validators.required,
@@ -97,6 +104,8 @@ guardar() {
 
 
     const empresaData = this.empresaForm.getRawValue();
+    empresaData.cif = empresaData.cif.toUpperCase();
+
 
     if (this.isEditMode) {
       this.empresaService.editarEmpresa(this.data.id!, empresaData).subscribe({

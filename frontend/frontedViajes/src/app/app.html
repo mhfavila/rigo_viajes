@@ -1,1 +1,26 @@
-<router-outlet></router-outlet>
+
+<mat-toolbar color="primary" *ngIf="authService.isLoggedIn()" class="navbar shadow-md">
+
+  <button mat-button routerLink="/empresas" class="font-bold text-lg">
+    <mat-icon>local_shipping</mat-icon> Control Viajes
+  </button>
+
+  <span class="spacer"></span>
+
+  <button mat-button routerLink="/empresas" routerLinkActive="bg-white/20">
+    <mat-icon>business</mat-icon> Empresas
+  </button>
+
+  <button mat-button routerLink="/perfil" routerLinkActive="bg-white/20">
+    <mat-icon>person</mat-icon> Mi Perfil
+  </button>
+
+  <button mat-icon-button (click)="logout()" matTooltip="Cerrar Sesión">
+    <mat-icon>logout</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<div class="contenido-principal">
+  <router-outlet></router-outlet>
+</div>

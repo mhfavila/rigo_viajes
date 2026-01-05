@@ -82,6 +82,8 @@ export class ServicioFormComponent implements OnInit {
       // --- MODO CREAR --- URL  /empresas/45/servicios/nuevo
       this.isEditMode = false;
       this.empresaContextId = +empresaIdParam; // Guardamos el contexto
+
+      this.cargarPreciosPorDefecto(this.empresaContextId);
     } else {
       // Error: No tenemos contexto
       console.error(
@@ -94,6 +96,35 @@ export class ServicioFormComponent implements OnInit {
       this.navegarDeVuelta();
     }
   }
+
+/**
+ * para cargar los precios que hemos metido en la empresa
+ * @param empresaId
+ */
+cargarPreciosPorDefecto(empresaId: number) {
+    this.serviciosFactService.getEmpresaPorId(empresaId).subscribe({
+      next: (empresa) => {
+        // Si la empresa trae precios, los ponemos en el formulario
+        if (empresa) {
+          this.servicioForm.patchValue({
+            logisticaCostes: {
+              // Usamos el operador || 0 por si vienen nulos
+              precioKm: empresa.precioKmDefecto || 0,
+              precioDieta: empresa.precioDietaDefecto || 0,
+              importeEspera: empresa.precioHoraEsperaDefecto || 0 // Ojo: en tu form se llama importeEspera al precio hora
+            }
+          });
+          // Avisamos discretamente
+          if (empresa.precioKmDefecto && empresa.precioKmDefecto > 0) {
+            this.snackBar.open('Precios de empresa cargados', '', { duration: 2000 });
+          }
+        }
+      },
+      error: (err) => console.error('No se pudieron cargar precios de empresa', err)
+    });
+  }
+
+
 
   //Carga los datos de un servicio en modo Editar y rellena el formulario anidado.
 
@@ -188,8 +219,21 @@ export class ServicioFormComponent implements OnInit {
     const horasEspera = Number(payload.horasEspera) || 0;
     console.log('precio dieta------------' + payload.precioDieta);
 
+
+    let total = 0;
+
+    if (km < 100) {
+      // REGLA: Menos de 100km son 50€ (Servicio Mínimo)
+      total = 50.00;
+      // Opcional: Podrías guardar en observaciones que fue servicio mínimo
+      // if (!payload.observaciones) payload.observaciones = '';
+      // payload.observaciones += ' (Aplicado Servicio Mínimo 50€)';
+    } else {
+      // Cálculo normal
+      total = km * precioKm;
+    }
     // 2. Calculamos el base
-    let total = km * precioKm;
+   // let total = km * precioKm;
     let importeHorasEspera = precioEspera * horasEspera;
 
     // 3. Comprobamos la dieta

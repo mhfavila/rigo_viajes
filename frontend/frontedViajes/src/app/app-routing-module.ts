@@ -11,6 +11,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ServiciosFactuComponent } from './servicio/servicios-factu/servicios-factu.component';
 import { ServicioDetalleComponent } from './servicio/servicio-detalle/servicio-detalle.component';
 import { ServicioFormComponent } from './servicio/servicio-form-component/servicio-form-component';
+import { PerfilComponent } from './usuario/perfil/perfil.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +31,8 @@ const routes: Routes = [
   { path: 'empresas/:empresaId/servicios/nuevo',component: ServicioFormComponent, canActivate: [AuthGuard]},
   //Ruta para EDITAR un servicio existente
   { path: 'servicios/editar/:id',component: ServicioFormComponent, canActivate: [AuthGuard]},
+
+  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
