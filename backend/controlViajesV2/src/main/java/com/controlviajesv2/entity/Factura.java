@@ -61,7 +61,7 @@ public class Factura {
     @Column(columnDefinition = "TEXT")
     private String observaciones;
 
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "factura", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Servicio> servicios = new ArrayList<>();
 
     @Column(length = 20)

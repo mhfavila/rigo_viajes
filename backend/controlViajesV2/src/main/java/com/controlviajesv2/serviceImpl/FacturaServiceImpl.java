@@ -133,12 +133,25 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
     @Override
+    @Transactional
     public void eliminarFactura(Long id) {
         logger.info("Eliminando factura con ID: {}", id);
-        if (!facturaRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Factura no encontrada con ID: " + id);
+        Factura factura = facturaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Factura no encontrada con ID: " + id));
+
+        // 1. DESVINCULAR LOS SERVICIOS
+        // Recorremos los servicios de esta factura y les quitamos la referencia
+        if (factura.getServicios() != null) {
+            for (Servicio servicio : factura.getServicios()) {
+                servicio.setFactura(null); // El servicio queda "libre"
+            }
+            // Guardamos los cambios en los servicios (ahora huérfanos de factura, pero vivos)
+            servicioRepository.saveAll(factura.getServicios());
         }
-        facturaRepository.deleteById(id);
+
+
+        // Ahora que está vacía de servicios, la borramos tranquilamente
+        facturaRepository.delete(factura);
     }
 
 
