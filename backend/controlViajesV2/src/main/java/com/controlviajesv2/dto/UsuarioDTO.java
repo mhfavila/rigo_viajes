@@ -3,6 +3,7 @@ package com.controlviajesv2.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid; // <--- IMPORTANTE
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,20 @@ public class UsuarioDTO {
     @Email(message = "Debe ser un email válido")
     private String email;
 
-
     private Set<String> roles;
+
+    private String cuentaBancaria;
+
+    @Size(max = 20, message = "El NIF no puede superar los 20 caracteres")
+    private String nif;
+
+    @Size(max = 20, message = "El teléfono no puede superar los 20 caracteres")
+    private String telefono;
+
+
+    @Valid
+    private DireccionDTO direccion;
+
+    private String imagenUrl;
+
 }

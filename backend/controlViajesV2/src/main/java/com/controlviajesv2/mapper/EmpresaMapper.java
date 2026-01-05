@@ -23,8 +23,12 @@ public class EmpresaMapper {
         dto.setTelefono(empresa.getTelefono());
         dto.setIban(empresa.getIban());
         dto.setEmail(empresa.getEmail());
-        dto.setUsuarioId(empresa.getUsuario().getId());
         //Solo se incluye el id del usuario (usuario.getId()), no toda la entidad Usuario
+        dto.setUsuarioId(empresa.getUsuario().getId());
+        dto.setPrecioKmDefecto(empresa.getPrecioKmDefecto());
+        dto.setPrecioHoraEsperaDefecto(empresa.getPrecioHoraEsperaDefecto());
+        dto.setPrecioDietaDefecto(empresa.getPrecioDietaDefecto());
+
 
         return dto;
     }
@@ -40,6 +44,9 @@ public class EmpresaMapper {
                 .telefono(dto.getTelefono())
                 .email(dto.getEmail())
                 .iban(dto.getIban())
+                .precioDietaDefecto(dto.getPrecioDietaDefecto())
+                .precioHoraEsperaDefecto(dto.getPrecioHoraEsperaDefecto())
+                .precioKmDefecto(dto.getPrecioKmDefecto())
                 .usuario(usuario) // Asignamos la entidad completa
                 .build();
         //Usamos el patrón Builder que ya tienes definido con Lombok para construir la entidad de forma limpia.

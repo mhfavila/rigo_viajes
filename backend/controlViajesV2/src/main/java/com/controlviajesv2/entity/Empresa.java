@@ -3,6 +3,7 @@ package com.controlviajesv2.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -43,6 +44,16 @@ public class Empresa {
 
     @Column(name = "iban", length = 34)
     private String iban; // IBAN de la empresa emisora
+
+    // --- NUEVOS CAMPOS PARA PRECIOS POR DEFECTO ---
+    @Column(name = "precio_km_defecto", precision = 10, scale = 2)
+    private BigDecimal precioKmDefecto;
+
+    @Column(name = "precio_hora_espera_defecto", precision = 10, scale = 2)
+    private BigDecimal precioHoraEsperaDefecto;
+
+    @Column(name = "precio_dieta_defecto", precision = 10, scale = 2)
+    private BigDecimal precioDietaDefecto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)

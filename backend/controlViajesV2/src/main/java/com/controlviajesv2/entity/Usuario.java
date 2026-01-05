@@ -26,6 +26,31 @@ public class Usuario {
     @Column(nullable = false)
     private String email;
 
+    // --- NUEVOS CAMPOS FISCALES ---
+    @Column(length = 20)
+    private String cuentaBancaria; // DNI o CIF del autónomo/empresa emisora
+
+    @Column(length = 20)
+    private String nif; // DNI o CIF del autónomo/empresa emisora
+
+    @Column(length = 20)
+    private String telefono;
+
+    // Reutilizamos tu clase Direccion para tener calle, cp, ciudad, etc.
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "calle", column = @Column(name = "direccion_calle")),
+            @AttributeOverride(name = "numero", column = @Column(name = "direccion_numero")),
+            @AttributeOverride(name = "codigoPostal", column = @Column(name = "direccion_cp")),
+            @AttributeOverride(name = "ciudad", column = @Column(name = "direccion_ciudad")),
+            @AttributeOverride(name = "provincia", column = @Column(name = "direccion_provincia")),
+            @AttributeOverride(name = "pais", column = @Column(name = "direccion_pais"))
+    })
+    private Direccion direccion;
+
+    @Column(name = "imagen_url")
+    private String imagenUrl; // Para guardar la URL de tu logo si lo subes a la nube
+
 
     //esto servira para crear una tabla usuario_roles donde un usauario podra tener varios roles
     @ElementCollection(fetch = FetchType.EAGER)

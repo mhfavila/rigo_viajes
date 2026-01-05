@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.math.BigDecimal; // <--- AÑADIR IMPORT
 
 @Getter
 @Setter
@@ -46,4 +47,14 @@ public class EmpresaDTO {
 
     @NotNull(message = "El ID del usuario es obligatorio")
     private Long usuarioId;
+
+
+    @DecimalMin(value = "0.0", inclusive = true, message = "El precio km debe ser positivo")
+    private BigDecimal precioKmDefecto;
+
+    @DecimalMin(value = "0.0", inclusive = true, message = "El precio hora debe ser positivo")
+    private BigDecimal precioHoraEsperaDefecto;
+
+    @DecimalMin(value = "0.0", inclusive = true, message = "El precio dieta debe ser positivo")
+    private BigDecimal precioDietaDefecto;
 }
