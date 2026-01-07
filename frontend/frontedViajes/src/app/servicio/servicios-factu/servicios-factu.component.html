@@ -94,6 +94,11 @@
 
             <!-- Celda para los botones de Angular Material -->
             <td class="px-6 py-4 text-center whitespace-nowrap">
+              <button mat-icon-button class="btn-duplicar text-blue-500"
+                matTooltip="Duplicar Servicio"
+                (click)="duplicarServicio(s)">
+                <mat-icon>content_copy</mat-icon>
+              </button>
               <!-- No he tocado los botones 'mat-icon-button' -->
               <button mat-icon-button class="btn-editar" color="accent"
                 matTooltip="Editar Servicio"

@@ -367,4 +367,19 @@ export class ServiciosFactuComponent implements OnInit {
       // Si 'confirmed' es false, no hacemos nada (el usuario canceló)
     });
   }
+  duplicarServicio(servicio: Servicio) {
+    // 1. Hacemos una copia limpia (sin ID, sin factura, sin selección)
+    const copia = {
+      ...servicio,
+      id: null,        // Será un servicio nuevo
+      facturaId: null, // No pertenece a ninguna factura aún
+      seleccionado: false
+    };
+
+    // 2. Guardamos en localStorage para pasarlo a la otra ventana
+    localStorage.setItem('servicioParaDuplicar', JSON.stringify(copia));
+
+    // 3. Abrimos la ventana de "Nuevo Servicio" (igual que anadirServicios)
+    this.anadirServicios();
+  }
 }

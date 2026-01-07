@@ -26,6 +26,12 @@ MEJORAS HABLADAS CON RIGO
 				
 				-revisar el fronted la estetica
 				-revisar lo de la longitud de la cuante bancaria del usuario en el backen tienen que ser 24 caracteres creo
+				
+				--revisar algo para que al crear una empresa no falle por tener el mismo correo que otra
+				
+				-meter los datos del usuario en la factura
+				-revisar que datos saca la factura
+				--revisar como funciona la barra de navegacion
 
 
 			

@@ -39,7 +39,7 @@ public class Empresa {
     @Column(nullable = false)
     private String telefono;
 
-    @Column(nullable = false, unique = true, length = 150)
+    @Column(nullable = false,  length = 150)
     private String email;
 
     @Column(name = "iban", length = 34)

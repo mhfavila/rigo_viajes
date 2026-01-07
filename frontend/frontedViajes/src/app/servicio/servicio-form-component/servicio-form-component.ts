@@ -79,11 +79,51 @@ export class ServicioFormComponent implements OnInit {
       this.servicioId = +idParam;
       this.cargarDatosServicio(this.servicioId);
     } else if (empresaIdParam) {
-      // --- MODO CREAR --- URL  /empresas/45/servicios/nuevo
+      // --- MODO CREAR ---
       this.isEditMode = false;
-      this.empresaContextId = +empresaIdParam; // Guardamos el contexto
+      this.empresaContextId = +empresaIdParam;
 
-      this.cargarPreciosPorDefecto(this.empresaContextId);
+      // 1. ¿HAY DATOS PARA DUPLICAR?
+      const duplicadoJson = localStorage.getItem('servicioParaDuplicar');
+
+      if (duplicadoJson) {
+        // A) SI HAY: Rellenamos el formulario con los datos copiados
+        const data = JSON.parse(duplicadoJson);
+
+        // Limpiamos para la próxima vez
+        localStorage.removeItem('servicioParaDuplicar');
+
+        this.servicioForm.patchValue({
+          viaje: {
+            tipoServicio: data.tipoServicio,
+            fechaServicio: new Date(), // Ponemos fecha de HOY
+            origen: data.origen,
+            destino: data.destino,
+            clienteFinal: data.clienteFinal,
+          },
+          logisticaCostes: {
+            conductor: data.conductor,
+            matriculaVehiculo: data.matriculaVehiculo,
+            km: data.km,
+            precioKm: data.precioKm,
+            dieta: data.dieta,
+            precioDieta: data.precioDieta,
+            horasEspera: data.horasEspera,
+            importeEspera: data.importeEspera,
+          },
+          documentacion: {
+            albaran: '', // El albarán suele cambiar, lo dejamos vacío
+            orden: data.orden,
+            observaciones: data.observaciones,
+          }
+        });
+
+        this.snackBar.open('Datos duplicados. ¡Revisa la fecha!', 'OK', { duration: 3000 });
+
+      } else {
+        // B) NO HAY: Cargamos precios por defecto (Comportamiento normal)
+        this.cargarPreciosPorDefecto(this.empresaContextId);
+      }
     } else {
       // Error: No tenemos contexto
       console.error(
