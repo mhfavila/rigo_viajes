@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
@@ -39,6 +40,7 @@ export class PerfilComponent implements OnInit {
   }
 
   initForm(): void {
+    const cifPattern = /^[A-Z0-9]{8,10}$/;
     this.perfilForm = this.fb.group({
       id: [null],
       nombre: [{value: '', disabled: true}], // Solo lectura
@@ -46,9 +48,9 @@ export class PerfilComponent implements OnInit {
 
       // --- DATOS FISCALES ---
       // Acepta DNI (12345678Z) o CIF (B12345678)
-      nif: ['', [Validators.pattern(/^[A-Z0-9]{8,10}$/)]],
+      nif: ['',  [Validators.required, Validators.pattern(cifPattern)]],
       telefono: ['', Validators.pattern(/^[0-9+\-\s]{9,20}$/)],
-      cuentaBancaria: [''],
+      cuentaBancaria: ['',[Validators.required, ibanValidator()]],
       imagenUrl: [''],
 
       // --- DIRECCIÓN (Grupo Anidado) ---
@@ -117,3 +119,51 @@ export class PerfilComponent implements OnInit {
     });
   }
 }
+
+  // --- VALIDATOR 1: CIF ESPAÑOL (Simplificado para Regex) ---
+export function cifValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    if (!value) return null; // Si está vacío, dejamos que el Validators.required se encargue
+
+    // Regex básica para CIF/NIF: Letra inicial + números + letra/número final
+    // Ejemplo: B12345678
+    const cifRegex = /^[A-HJ-NP-SUVW][0-9]{7}[0-9A-J]$/i;
+
+    // Si NO cumple el regex, devolvemos el error 'cifInvalido'
+    return cifRegex.test(value) ? null : { cifInvalido: true };
+  };
+}
+
+// --- VALIDATOR 2: IBAN (Sin espacios y longitud exacta) ---
+export function ibanValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    let value = control.value;
+    if (!value) return null;
+
+    // 1. Comprobamos si tiene espacios
+    if (value.toString().includes(' ')) {
+      return { tieneEspacios: true };
+    }
+
+    // 2. Comprobamos longitud (IBAN español son 24 caracteres: ES + 2 dígitos control + 20 cuenta)
+    if (value.length !== 24) {
+      return { longitudIncorrecta: true };
+    }
+
+    // 3. Comprobamos que empiece por ES (opcional, pero recomendado)
+    if (!value.toString().toUpperCase().startsWith('ES')) {
+      return { noEsEspanol: true };
+    }
+
+    return null; // Todo correcto
+  };
+}
+
+
+
+
+
+
+
+

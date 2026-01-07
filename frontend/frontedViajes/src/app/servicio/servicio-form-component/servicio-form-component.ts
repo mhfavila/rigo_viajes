@@ -5,7 +5,7 @@ import { ServiciosFactService } from '../../services/servicios-fact.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Servicio } from '../servicio.model';
 import { MatDialog } from '@angular/material/dialog';
-import { DireccionDialogComponent } from '../../direccion-dialog.component/direccion-dialog.component';
+//import { DireccionDialogComponent } from '../../direccion-dialog.component/direccion-dialog.component';
 
 @Component({
   selector: 'app-servicio-form-component',
@@ -42,8 +42,8 @@ export class ServicioFormComponent implements OnInit {
         // NO hay 'empresaId' aquí, lo tenemos en 'empresaContextId'
         tipoServicio: ['', Validators.required],
         fechaServicio: [new Date(), Validators.required],
-        origen: [null, Validators.required],
-        destino: [null, Validators.required],
+        origen: ['', Validators.required],
+        destino: ['', Validators.required],
         clienteFinal: [''],
       }),
 
@@ -290,7 +290,7 @@ cargarPreciosPorDefecto(empresaId: number) {
     this.navegarDeVuelta();
   }
   //metodo para poder meter las direciones del origen y del destino
-  abrirDialogoDireccion(campo: 'origen' | 'destino') {
+  /*abrirDialogoDireccion(campo: 'origen' | 'destino') {
     const control = this.servicioForm.get('viaje.' + campo);
     const valorActual = control?.value;
 
@@ -310,7 +310,7 @@ cargarPreciosPorDefecto(empresaId: number) {
         control?.markAsDirty(); // Marcamos como modificado
       }
     });
-  }
+  }*/
 
   // Función auxiliar para mostrar texto bonito en el input (Readonly)
   getDireccionTexto(campo: 'origen' | 'destino'): string {

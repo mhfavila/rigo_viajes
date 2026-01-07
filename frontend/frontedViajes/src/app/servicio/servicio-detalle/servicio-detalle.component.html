@@ -35,8 +35,7 @@
             }}</p>
           <p><strong>Origen:</strong>
             <span *ngIf="srv.origen">
-              {{ srv.origen.calle }} {{ srv.origen.numero }}, {{ srv.origen.codigoPostal
-              }} {{ srv.origen.ciudad }}
+              {{ srv.origen}}
             </span>
             <span *ngIf="!srv.origen" class="text-gray-400 italic">No
               especificado</span>
@@ -44,8 +43,7 @@
 
           <p><strong>Destino:</strong>
             <span *ngIf="srv.destino">
-              {{ srv.destino.calle }} {{ srv.destino.numero }}, {{
-              srv.destino.codigoPostal }} {{ srv.destino.ciudad }}
+              {{ srv.destino}}
             </span>
             <span *ngIf="!srv.destino" class="text-gray-400 italic">No
               especificado</span>

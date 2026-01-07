@@ -79,8 +79,7 @@
               s.fechaServicio | date:'shortDate' }}</td>
             <td class="px-6 py-4 text-sm text-gray-700">
               <span *ngIf="s.destino">
-                {{ s.destino.calle }} {{ s.destino.numero }}, {{
-                s.destino.ciudad }}
+                {{ s.destino }}
               </span>
               <span *ngIf="!s.destino" class="text-gray-400 italic">Sin
                 destino</span>

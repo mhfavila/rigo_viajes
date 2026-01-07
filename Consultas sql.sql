@@ -125,7 +125,8 @@ SELECT
     s.matricula_vehiculo,
     s.km,
 	s.importe_espera,
-	
+	s.horas_espera,
+	s.importe_espera,
 	s.dieta,
     s.precio_km,
     s.importe_servicio,

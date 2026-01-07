@@ -1,6 +1,5 @@
 package com.controlviajesv2.dto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,12 +29,12 @@ public class ServicioDTO {
     private LocalDate fechaServicio;
 
     @NotNull(message = "El origen es obligatorio")
-    @Valid
-    private DireccionDTO origen;
+    //@Valid
+    private String origen;
 
     @NotNull(message = "El destino es obligatorio")
-    @Valid
-    private DireccionDTO destino;
+    //@Valid
+    private String destino;
 
     private String conductor;
 

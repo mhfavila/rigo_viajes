@@ -131,11 +131,11 @@ public class ServicioServiceImpl implements ServicioService {
         existente.setOrden(servicioDTO.getOrden());
 
         if (servicioDTO.getOrigen() != null) {
-            existente.setOrigen(mapToDireccion(servicioDTO.getOrigen()));
+            existente.setOrigen(servicioDTO.getOrigen());
         }
 
         if (servicioDTO.getDestino() != null) {
-            existente.setDestino(mapToDireccion(servicioDTO.getDestino()));
+            existente.setDestino(servicioDTO.getDestino());
         }
 
         Servicio actualizado = servicioRepository.save(existente);
@@ -168,7 +168,7 @@ public class ServicioServiceImpl implements ServicioService {
      * Método auxiliar para convertir DireccionDTO a la entidad Direccion (Embeddable)
      * Esto evita repetir código para Origen y Destino.
      */
-    private Direccion mapToDireccion(DireccionDTO dto) {
+   /* private Direccion mapToDireccion(DireccionDTO dto) {
         if (dto == null) return null;
 
         return Direccion.builder()
@@ -180,4 +180,6 @@ public class ServicioServiceImpl implements ServicioService {
                 .pais(dto.getPais())
                 .build();
     }
+
+    */
 }

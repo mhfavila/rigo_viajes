@@ -75,6 +75,30 @@ public class UsuarioServiceImpl implements UsuarioService {
         // Se actualizan los campos del usuario
         existente.setNombre(usuarioDTO.getNombre());
         existente.setEmail(usuarioDTO.getEmail());
+        existente.setCuentaBancaria(usuarioDTO.getCuentaBancaria());
+
+        existente.setNif(usuarioDTO.getNif());
+        existente.setTelefono(usuarioDTO.getTelefono());
+        existente.setImagenUrl(usuarioDTO.getImagenUrl());
+        // --- 4. DIRECCIÓN ---
+        // Tenemos que convertir el DTO de dirección a la entidad Dirección incrustada
+        if (usuarioDTO.getDireccion() != null) {
+            // Si la entidad ya tenía dirección, actualizamos sus campos. Si no, creamos una nueva.
+            if (existente.getDireccion() == null) {
+                existente.setDireccion(new com.controlviajesv2.entity.Direccion());
+            }
+
+            existente.getDireccion().setCalle(usuarioDTO.getDireccion().getCalle());
+            existente.getDireccion().setNumero(usuarioDTO.getDireccion().getNumero());
+            existente.getDireccion().setCodigoPostal(usuarioDTO.getDireccion().getCodigoPostal());
+            existente.getDireccion().setCiudad(usuarioDTO.getDireccion().getCiudad());
+            existente.getDireccion().setProvincia(usuarioDTO.getDireccion().getProvincia());
+            existente.getDireccion().setPais(usuarioDTO.getDireccion().getPais());
+        } else {
+            // Opcional: Si mandan la dirección vacía, ¿quieres borrarla?
+            // existente.setDireccion(null);
+        }
+
         // Solo la actualizamos si viene una nueva contraseña y no está vacía
         if (usuarioDTO.getPassword() != null && !usuarioDTO.getPassword().isEmpty()) {
             existente.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));

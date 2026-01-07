@@ -18,8 +18,8 @@ public class ServicioMapper {
                 .empresaId(servicio.getEmpresa().getId())
                 .tipoServicio(servicio.getTipoServicio())
                 .fechaServicio(servicio.getFechaServicio())
-                .origen(toDireccionDTO(servicio.getOrigen()))
-                .destino(toDireccionDTO(servicio.getDestino()))
+                .origen(servicio.getOrigen())
+                .destino(servicio.getDestino())
                 .conductor(servicio.getConductor())
                 .matriculaVehiculo(servicio.getMatriculaVehiculo())
                 .km(servicio.getKm())
@@ -46,8 +46,8 @@ public class ServicioMapper {
                 .empresa(empresa)
                 .tipoServicio(dto.getTipoServicio())
                 .fechaServicio(dto.getFechaServicio())
-                .origen(toDireccionEntity(dto.getOrigen()))
-                .destino(toDireccionEntity(dto.getDestino()))
+                .origen(dto.getOrigen())
+                .destino(dto.getDestino())
                 .conductor(dto.getConductor())
                 .matriculaVehiculo(dto.getMatriculaVehiculo())
                 .km(dto.getKm())
@@ -63,36 +63,9 @@ public class ServicioMapper {
                 .orden(dto.getOrden())
                 .build();
     }
-
-
-
-    // ========================================================================
-    // MÉTODOS AUXILIARES (Para reutilizar la conversión)
-    // ========================================================================
-
-    private static DireccionDTO toDireccionDTO(Direccion direccion) {
-        if (direccion == null) return null;
-
-        return DireccionDTO.builder()
-                .calle(direccion.getCalle())
-                .numero(direccion.getNumero())
-                .codigoPostal(direccion.getCodigoPostal())
-                .ciudad(direccion.getCiudad())
-                .provincia(direccion.getProvincia())
-                .pais(direccion.getPais())
-                .build();
-    }
-
-    private static Direccion toDireccionEntity(DireccionDTO dto) {
-        if (dto == null) return null;
-
-        return Direccion.builder()
-                .calle(dto.getCalle())
-                .numero(dto.getNumero())
-                .codigoPostal(dto.getCodigoPostal())
-                .ciudad(dto.getCiudad())
-                .provincia(dto.getProvincia())
-                .pais(dto.getPais())
-                .build();
-    }
 }
+
+
+
+
+

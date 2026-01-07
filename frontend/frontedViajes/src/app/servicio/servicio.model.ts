@@ -13,8 +13,8 @@ export interface Servicio {
   empresaId: number;
   tipoServicio: string;
   fechaServicio: string; // formato ISO: '2025-10-22'
-  origen: Direccion;
-  destino: Direccion;
+  origen: String;
+  destino: String;
   conductor?: string;
   matriculaVehiculo?: string;
   km: number;

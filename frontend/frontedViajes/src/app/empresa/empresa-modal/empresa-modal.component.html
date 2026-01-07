@@ -23,7 +23,7 @@
               <mat-label>CIF / NIF</mat-label>
               <input matInput formControlName="cif" placeholder="CIF" />
               <mat-error *ngIf="empresaForm.get('cif')?.hasError('required')">El
-                CIF es obligatorio</mat-error>
+                CIF/NIF es obligatorio</mat-error>
               <mat-error
                 *ngIf="empresaForm.get('cif')?.hasError('cifInvalido')">Formato
                 inválido (Ej: B12345678)</mat-error>
