@@ -31,10 +31,10 @@ public class UsuarioDTO {
 
     private String cuentaBancaria;
 
-    @Size(max = 20, message = "El NIF no puede superar los 20 caracteres")
+    @Size(max = 9, message = "El NIF no puede superar los 9 caracteres")
     private String nif;
 
-    @Size(max = 20, message = "El teléfono no puede superar los 20 caracteres")
+    @Size(max = 9, message = "El teléfono no puede superar los 9 caracteres")
     private String telefono;
 
 

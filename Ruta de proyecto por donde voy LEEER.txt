@@ -14,7 +14,7 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 
 MEJORAS HABLADAS CON RIGO			
-				-El número de la factura tiene que tener un formato preguntarle cuál
+				-El número de la factura tiene que tener un formato preguntarle cuál  tiene que ser asi N-001/2026
 				-El precio del kilometraje y la hora de espera y el precio de la dieta va en la empresa 
 				-Duplicar servicios por qué hay servicios que son muy parecidos 
 				-Ajustar lo de la direccion para origen y destino dejarlo como estaba antes
@@ -32,6 +32,9 @@ MEJORAS HABLADAS CON RIGO
 				-meter los datos del usuario en la factura
 				-revisar que datos saca la factura
 				--revisar como funciona la barra de navegacion
+				--quitar iban y email de la empresa
+				--revisar por que ha fallado al crear la empresa
+				--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
 
 
 			
