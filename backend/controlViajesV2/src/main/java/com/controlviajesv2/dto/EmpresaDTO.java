@@ -34,15 +34,19 @@ public class EmpresaDTO {
             message = "El teléfono solo puede contener números"
     )
     private String telefono;
-
+/*
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Debe ser un email válido")
-    private String email;
 
+ */
+    private String email;
+/*
     @Pattern(
             regexp = "^[A-Z]{2}\\d{2}[A-Z0-9]{1,30}$",
             message = "El IBAN debe tener un formato válido (por ejemplo, ES76...)"
     )
+
+ */
     private String iban;
 
     @NotNull(message = "El ID del usuario es obligatorio")

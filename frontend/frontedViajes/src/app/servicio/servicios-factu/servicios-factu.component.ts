@@ -176,12 +176,14 @@ export class ServiciosFactuComponent implements OnInit {
         this.totalFacturas = data.length;
         console.log('Cantidad de facturas existentes:', this.totalFacturas);
 
-        const numero = this.totalFacturas + 1;
+        const year = new Date().getFullYear();
+        const correlativo = (this.totalFacturas + 1).toString().padStart(3, '0');
+        //Formato: N-001/2026
+        const numeroFacturaReal = `N-${correlativo}/${year}`;
 
         // 4. Construimos el objeto factura AQUÍ DENTRO
         const nuevaFactura: Factura = {
-          numeroFactura:
-            'F-' + empresaId + '-' + numero.toString().padStart(4, '0'),
+          numeroFactura:numeroFacturaReal,
           fechaEmision: new Date().toISOString(),
           empresaId: empresaId,
           usuarioId: usuarioId,

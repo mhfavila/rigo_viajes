@@ -14,18 +14,17 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 
 
 MEJORAS HABLADAS CON RIGO			
-				-El número de la factura tiene que tener un formato preguntarle cuál  tiene que ser asi N-001/2026
-				-Añadir datos del usuario en plan lo que falte  en la factura  -meter los datos del usuario en la factura
+				
+				
 				-modificar para que en la empresa aparte de un cif se pueda meter un cnif de autonomo que es un nif normal hay que revisarlo en el fronted			
 				-revisar el fronted la estetica				
 				-meter los datos del usuario en la factura
 				-revisar que datos saca la factura
 				--revisar como funciona la barra de navegacion
-				--quitar iban y email de la empresa
-				--revisar por que ha fallado al crear la empresa
+				--revisar que al crear una empresa el nif o cif lo compruebe bien
 				-- meter para dar avisos en la pesta;a de registro como que la contrase;a tiene que ser de 6 caracteres o q el email ya se usa
 				--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
-				--generar apartir del codigo del backend datos de prueba para poder probar la plicacion completa meter 2 usuarios con 10 empresas cada uno y que cada empresa tenga 10 viajesy de esos 10 viajes 4 no esten facturados pero el resto si
+				--CAMBIO IMPORTANTE >> Cambiar el metodo de entrar en vez de usar en nombre que use el correo
 
 			
 POR DONDE ME LLEGO:   

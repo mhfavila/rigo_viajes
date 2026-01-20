@@ -67,23 +67,24 @@ public class FacturaPdfService {
 
 // --- Columna 1: Usuario ---
         PdfPTable usuarioTable = new PdfPTable(1);
-        usuarioTable.getDefaultCell().setBorder(Rectangle.NO_BORDER); //los datos sigueintes se tendran que modificar
-        usuarioTable.addCell(new Phrase("Email: " + usuario.getEmail()));
-        usuarioTable.addCell(new Phrase("Dato de prueba: C/ Mayor 12"));
-        usuarioTable.addCell(new Phrase("Dato de prueba: 47001, Valladolid"));
-        usuarioTable.addCell(new Phrase("María Teresa Conde Vidal"));
-        usuarioTable.addCell(new Phrase("44907514Z"));
-        usuarioTable.addCell(new Phrase("ES19 1465 0310 38 1726846022"));
+        usuarioTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        usuarioTable.addCell(new Phrase(usuario.getNombre()));
+        usuarioTable.addCell(new Phrase(usuario.getNif()));
+        usuarioTable.addCell(new Phrase(usuario.getEmail()));
+        usuarioTable.addCell(new Phrase(usuario.getDireccion().getCalle()+" "+usuario.getDireccion().getNumero()));
+        usuarioTable.addCell(new Phrase(usuario.getDireccion().getCodigoPostal()+", "+usuario.getDireccion().getCiudad()));
+
+
 
 // --- Columna 2: Empresa ---
         PdfPTable empresaTable = new PdfPTable(1);
         empresaTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         //empresaTable.addCell(new Phrase("Empresa:", bold));
-        empresaTable.addCell(new Phrase("Cliente: " + empresa.getNombre()));
+        empresaTable.addCell(new Phrase(empresa.getNombre()));
        // empresaTable.addCell(new Phrase( empresa.getDireccion()));
         empresaTable.addCell(new Phrase( empresa.getCif()));
-        empresaTable.addCell(new Phrase("iria el codigo postal y la provincia "));
-
+        empresaTable.addCell(new Phrase(empresa.getDireccion().getCalle()+" "+empresa.getDireccion().getNumero()));
+        empresaTable.addCell(new Phrase(empresa.getDireccion().getCodigoPostal()+", "+empresa.getDireccion().getCiudad()));
 
 // --- Añadir las tablas como celdas ---
         PdfPCell usuarioCell = new PdfPCell(usuarioTable);
@@ -128,8 +129,8 @@ public class FacturaPdfService {
             // --- Contenido del bloque ---
             Paragraph contenido = new Paragraph();
             contenido.add(new Chunk(
-                    contador + "     Servicio "+ s.getTipoServicio()+"       " + s.getFechaServicio() +
-                            "         para            " + s.getClienteFinal() + "\n", bold
+                    contador + "           Servicio "+ s.getTipoServicio()+"       " + s.getFechaServicio() +
+                            "             para            " + s.getClienteFinal() + "\n", bold
             ));
             contenido.add(new Chunk("SALIDA: " + s.getOrigen() + "\n", normal));
             contenido.add(new Chunk("DESTINO: " + s.getDestino() + "\n", normal));
@@ -138,7 +139,7 @@ public class FacturaPdfService {
 
 
             if (s.getHorasEspera() != null) {
-                contenido.add(new Chunk("Tiempo Espera: " + s.getHorasEspera() + "h                                            Precio: " + s.getImporteEspera() +  " € \n", normal));
+                contenido.add(new Chunk("Tiempo Espera: " + s.getHorasEspera() + "h                                          Precio: " + s.getImporteEspera() +  " € \n", normal));
             }
 
 

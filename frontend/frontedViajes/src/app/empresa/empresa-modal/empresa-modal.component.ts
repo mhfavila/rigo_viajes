@@ -50,9 +50,11 @@ export class EmpresaModalComponent implements OnInit {
           Validators.pattern(/^[0-9]{9}$/),
         ],
       ],
-      email: [this.data.email || '', [Validators.required, Validators.email]],
+      //email: [this.data.email || '', [Validators.required, Validators.email]],
+      email: [this.data.email || ''],
       //iban:[this.data.iban || '', [Validators.required]],
-      iban: [this.data.iban || '', [Validators.required, ibanValidator()]],
+      //iban: [this.data.iban || '', [Validators.required, ibanValidator()]],
+      iban: [this.data.iban || ''],
       // Inicializamos a 0 si es null para evitar errores visuales
       precioKmDefecto: [this.data?.precioKmDefecto || 0, [Validators.min(0)]],
       precioHoraEsperaDefecto: [this.data?.precioHoraEsperaDefecto || 0, [Validators.min(0)]],
