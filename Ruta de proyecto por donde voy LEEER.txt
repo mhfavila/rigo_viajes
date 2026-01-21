@@ -17,14 +17,14 @@ MEJORAS HABLADAS CON RIGO
 				
 				
 				-modificar para que en la empresa aparte de un cif se pueda meter un cnif de autonomo que es un nif normal hay que revisarlo en el fronted			
-				-revisar el fronted la estetica				
+				-revisar el fronted la estetica	,unificar sobre todos los mensajes de los registros para que todos seandel mismo estilo al de el correo ya exite			
 				-meter los datos del usuario en la factura
 				-revisar que datos saca la factura
 				--revisar como funciona la barra de navegacion
 				--revisar que al crear una empresa el nif o cif lo compruebe bien
 				-- meter para dar avisos en la pesta;a de registro como que la contrase;a tiene que ser de 6 caracteres o q el email ya se usa
 				--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
-				--CAMBIO IMPORTANTE >> Cambiar el metodo de entrar en vez de usar en nombre que use el correo
+			
 
 			
 POR DONDE ME LLEGO:   

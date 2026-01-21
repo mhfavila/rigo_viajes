@@ -125,7 +125,7 @@ public class EmpresaServiceImpl implements EmpresaService {
             dto.setNombre(empresa.getNombre());
            // dto.setDireccion(empresa.getDireccion());
             dto.setTelefono(empresa.getTelefono());
-            
+
             return dto;
         }).collect(Collectors.toList());
     }

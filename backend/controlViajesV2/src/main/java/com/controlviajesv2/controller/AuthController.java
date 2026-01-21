@@ -102,18 +102,18 @@ public class AuthController {
     // REGISTRO
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_REGISTER)
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
-        logger.info("Intento de registro para el usuario: {}", request.getNombre());
+        logger.info("Intento de registro para el usuario: {}", request.getEmail());
         // Comprobamos explícitamente que la contraseña venga rellena y tenga longitud mínima.
         if (request.getPassword() == null || request.getPassword().trim().length() < 6) {
             // Si falla, lanzamos un error que impedirá el registro
             throw new IllegalArgumentException("La contraseña es obligatoria y debe tener al menos 6 caracteres para registrarse");
         }
 
-        // Verificar si ya existe usuario con ese nombre
-        if (usuarioRepository.findByNombre(request.getNombre()).isPresent()) {
+
+        if (usuarioRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body("Error: El nombre de usuario ya está en uso");
+                    .body("Error: ¡El email ya está en uso!");
         }
 
         // Crear nuevo usuario con password cifrada

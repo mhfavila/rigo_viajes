@@ -1,25 +1,49 @@
 <div class="centered">
-
   <div class="form-container">
     <h2>Crear nuevo usuario</h2>
 
-    <form (ngSubmit)="onSubmit()">
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
 
       <label>Nombre:</label>
-      <input type="text" [(ngModel)]="nombre" name="nombre" required />
-
-      <label>Contraseña:</label>
-      <input type="password" [(ngModel)]="password" name="password" required />
+      <input type="text" formControlName="nombre"
+             [class.input-error]="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched"/>
+      <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
+        <small style="color: red;">El nombre es obligatorio.</small>
+      </div>
 
       <label>Email:</label>
-      <input type="email" [(ngModel)]="email" name="email" required />
+      <input type="email" formControlName="email"
+             [class.input-error]="registroForm.get('email')?.invalid && registroForm.get('email')?.touched"/>
+      <div *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched">
+        <small *ngIf="registroForm.get('email')?.hasError('required')" style="color: red;">El email es obligatorio.</small>
+        <small *ngIf="registroForm.get('email')?.hasError('email')" style="color: red;">Formato de correo incorrecto.</small>
+      </div>
+
+      <label>Contraseña:</label>
+      <input type="password" formControlName="password"
+             [class.input-error]="registroForm.get('password')?.invalid && registroForm.get('password')?.touched"/>
+
+      <div *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched">
+        <small *ngIf="registroForm.get('password')?.hasError('required')" style="color: red;">La contraseña es obligatoria.</small>
+        <small *ngIf="registroForm.get('password')?.hasError('minlength')" style="color: red; font-weight: bold;">
+          ⚠️ La contraseña debe tener al menos 6 caracteres.
+        </small>
+      </div>
 
       <label>Rol:</label>
-      <input type="text" [(ngModel)]="rol" name="rol" required />
-      <button type="submit" class="btn-registrar">Registrar</button>
-      <p *ngIf="mensaje" style="color:green;">{{ mensaje }}</p>
-      <p *ngIf="error" style="color:red;">{{ error }}</p>
-    </form>
+      <input type="text" formControlName="rol" />
 
+      <button type="submit" class="btn-registrar" [disabled]="isLoading || registroForm.invalid">
+        <span *ngIf="!isLoading">Registrar</span>
+        <span *ngIf="isLoading">Procesando...</span>
+      </button>
+
+      <p *ngIf="successMessage" style="color:green; font-weight: bold; margin-top: 10px;">{{ successMessage }}</p>
+
+      <div *ngIf="errorMessage" style="background-color: #fee2e2; color: #dc2626; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #dc2626;">
+        {{ errorMessage }}
+      </div>
+
+    </form>
   </div>
 </div>
