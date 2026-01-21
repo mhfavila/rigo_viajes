@@ -3,26 +3,15 @@ package com.controlviajesv2.security.config;
 import com.controlviajesv2.controller.AuthController;
 import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
-import com.controlviajesv2.dto.ViajeDTO;
 import com.controlviajesv2.entity.*;
-import com.controlviajesv2.exception.ResourceNotFoundException;
 import com.controlviajesv2.mapper.EmpresaMapper;
-import com.controlviajesv2.mapper.ViajeMapper;
 import com.controlviajesv2.repository.*;
 import com.controlviajesv2.serviceImpl.EmpresaServiceImpl;
 import com.controlviajesv2.serviceImpl.UsuarioServiceImpl;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -45,17 +34,17 @@ public class DataLoader implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final EmpresaRepository empresaRepository;
     private final EmpresaServiceImpl empresaServiceImpl;
-    private final ViajeRepository viajeRepository;
+
     private final FacturaRepository facturaRepository;
     private final ServicioRepository servicioRepository;
 
-    public DataLoader(UsuarioRepository usuarioRepository, UsuarioServiceImpl usuarioServiceImpl, PasswordEncoder passwordEncoder, EmpresaRepository empresaRepository, EmpresaServiceImpl empresaServiceImpl, ViajeRepository viajeRepository, FacturaRepository facturaRepository, ServicioRepository servicioRepository) {
+    public DataLoader(UsuarioRepository usuarioRepository, UsuarioServiceImpl usuarioServiceImpl, PasswordEncoder passwordEncoder, EmpresaRepository empresaRepository, EmpresaServiceImpl empresaServiceImpl,  FacturaRepository facturaRepository, ServicioRepository servicioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioServiceImpl = usuarioServiceImpl;
         this.passwordEncoder = passwordEncoder;
         this.empresaRepository = empresaRepository;
         this.empresaServiceImpl = empresaServiceImpl;
-        this.viajeRepository = viajeRepository;
+
         this.facturaRepository = facturaRepository;
         this.servicioRepository = servicioRepository;
     }
@@ -98,7 +87,7 @@ public class DataLoader implements CommandLineRunner {
             }
             guardarEnTxt(usuarios);
             crearEmpresas();
-            crearViajes();
+
             cargarServiciosDePrueba();
             generarFacturasDePrueba();
 
@@ -124,51 +113,7 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-    private void crearViajes() {
 
-
-        for (int i = 1; i < 40; i++) {
-            Random random = new Random();
-            int numero = random.nextInt(10); // genera de 0 a 9
-            if (numero == 0) {
-                numero = 12;
-            }
-            System.out.println(numero);
-            long numeroLong = numero;
-
-            EmpresaDTO empresaDTO = empresaServiceImpl.obtenerEmpresaPorId(numeroLong);
-
-
-            ViajeDTO nuevoViaje = new ViajeDTO();
-
-
-            nuevoViaje.setFecha(fechaViaje());
-            nuevoViaje.setPrecioKm(precioKM());
-            nuevoViaje.setOrigen("Valladolid");
-            nuevoViaje.setDestino(destino());
-            nuevoViaje.setDistancia(distancia());
-            //nuevoViaje.setOrigen();
-
-            nuevoViaje.setEmpresaId(empresaDTO.getId());
-
-
-            Optional<Empresa> optionalEmpresa = empresaRepository.findById(nuevoViaje.getEmpresaId());
-            if (optionalEmpresa.isPresent()) {
-                Empresa empresa = optionalEmpresa.get();
-                Viaje viaje = ViajeMapper.toEntity(nuevoViaje, empresa);
-
-
-                viajeRepository.save(viaje);
-
-
-            } else {
-
-            }
-
-        }
-
-
-    }
 
     private BigDecimal distancia() {
         List<BigDecimal> distancias = new ArrayList<>();

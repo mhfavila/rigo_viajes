@@ -29,10 +29,10 @@ public class JwtTokenGenerator {
 
     // Genera token con el nombre del usuario
     public  String generateToken(Usuario usuario) throws JwtException {
-        logger.debug("Generando token para el usuario: {}", usuario.getNombre());
+        logger.debug("Generando token para el usuario: {}", usuario.getEmail());
         SecretKey key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
-                .setSubject(usuario.getNombre())
+                .setSubject(usuario.getEmail())
                 .claim("usuarioId", usuario.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration()))

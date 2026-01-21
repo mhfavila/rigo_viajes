@@ -7,7 +7,6 @@ import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.exception.ResourceNotFoundException;
 import com.controlviajesv2.mapper.EmpresaMapper;
-import com.controlviajesv2.mapper.ViajeMapper;
 import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.EmpresaService;
@@ -126,9 +125,7 @@ public class EmpresaServiceImpl implements EmpresaService {
             dto.setNombre(empresa.getNombre());
            // dto.setDireccion(empresa.getDireccion());
             dto.setTelefono(empresa.getTelefono());
-            dto.setViajes(empresa.getViajes().stream()
-                    .map(ViajeMapper::toDTO)
-                    .collect(Collectors.toList()));
+            
             return dto;
         }).collect(Collectors.toList());
     }

@@ -54,11 +54,8 @@ public final class AppConstants {
     public static final String REQUEST_USUARIOCONTROLLER_empresas ="/empresas/{id}";
 
 
-    //ViajeController
-    public static final String REQUEST_VIAJECONTROLLER = "/api/viajes" ;
-    public static final String REQUEST_VIAJECONTROLLER_ID ="/{id}"  ;
-    public static final String REQUEST_VIAJECONTROLLER_IDEMPRESA = "/empresa/{empresaId}";
-   // public static final String REQUEST_VIAJECONTROLLER =  ;
+
+
 
 
 

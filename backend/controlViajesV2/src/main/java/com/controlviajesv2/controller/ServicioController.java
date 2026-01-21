@@ -1,13 +1,10 @@
 package com.controlviajesv2.controller;
 
 import com.controlviajesv2.dto.ServicioDTO;
-import com.controlviajesv2.dto.ViajeDTO;
-import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.service.ServicioService;
 import com.controlviajesv2.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

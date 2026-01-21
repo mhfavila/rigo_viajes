@@ -12,5 +12,5 @@ public class EmpresaConViajesDTO {
     private String nombre;
     private String direccion;
     private String telefono;
-    private List<ViajeDTO> viajes;
+
 }

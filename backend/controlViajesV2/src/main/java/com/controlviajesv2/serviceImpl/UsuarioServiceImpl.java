@@ -136,7 +136,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         // 3. EL GUARDIÁN: Si los nombres no coinciden (y no eres admin), ¡FUERA!
         // (Asumo que el username es único según tu entidad Usuario)
-        if (!usuarioSolicitado.getNombre().equals(usernameActual)) {
+        if (!usuarioSolicitado.getEmail().equals(usernameActual)) {
             // Aquí lanzamos un error 403 si intentan espiar
             throw new AccessDeniedException("No tienes permiso para ver los datos de otro usuario.");
         }

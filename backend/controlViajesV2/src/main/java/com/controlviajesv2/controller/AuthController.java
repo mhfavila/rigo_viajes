@@ -63,7 +63,8 @@ public class AuthController {
 
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        logger.info("Intento de login para el usuario: {}", request.getEmail());
+        //el request.getNombre() esta recibiendo el email ,no el nombre ,esta asi por que desde el fronted se llama nombre
+        logger.info("Intento de login para el usuario: {}", request.getNombre());
         // verificar si el usuario esta bloqueado
         if (loginAttemptService.isBlocked(request.getNombre())) {
             throw new ResponseStatusException(
@@ -74,12 +75,12 @@ public class AuthController {
 
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword())
             );
             //si llega aqui limpiamos el contador
-            loginAttemptService.loginSucceeded(request.getEmail());
+            loginAttemptService.loginSucceeded(request.getNombre());
 
-            Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
+            Usuario usuario = usuarioRepository.findByEmail(request.getNombre())
                     .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
             String token = jwtTokenGenerator.generateToken(usuario);
@@ -87,7 +88,7 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(token));
 
         }catch (BadCredentialsException e){
-            loginAttemptService.loginFailed(request.getEmail());
+            loginAttemptService.loginFailed(request.getNombre());
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
                     "Credenciales incorrectas"

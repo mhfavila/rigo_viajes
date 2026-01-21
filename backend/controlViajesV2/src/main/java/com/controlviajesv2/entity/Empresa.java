@@ -39,7 +39,7 @@ public class Empresa {
     @Column(nullable = false)
     private String telefono;
 
-    @Column(nullable = false,  length = 150)
+    @Column(length = 150)
     private String email;
 
     @Column(name = "iban", length = 34)
@@ -59,8 +59,7 @@ public class Empresa {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Viaje> viajes;
+
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Factura> facturas;

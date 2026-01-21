@@ -1,11 +1,8 @@
 package com.controlviajesv2.service;
 
 import com.controlviajesv2.dto.ServicioDTO;
-import com.controlviajesv2.dto.ViajeDTO;
-import com.controlviajesv2.entity.Servicio;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interfaz que define las operaciones CRUD para la entidad Servicio.
