@@ -31,7 +31,7 @@ public class UsuarioPrincipal implements UserDetails{
 
     @Override
     public String getUsername() {
-        return usuario.getNombre(); // o .getEmail() si usas email para login
+        return usuario.getEmail();
     }
 
     @Override

@@ -2,14 +2,32 @@
   <div class="form-container">
     <h2>Iniciar sesión</h2>
 
-    <form (ngSubmit)="onSubmit()">
-      <label>Usuario:</label>
-      <input type="text" [(ngModel)]="nombre" name="username" required [disabled]="isLoading" />
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <label>Correo Electrónico:</label>
+      <input
+        type="email"
+        formControlName="nombreUsuario"
+        placeholder="ejemplo@correo.com"
+        [class.input-error]="loginForm.get('nombreUsuario')?.invalid && loginForm.get('nombreUsuario')?.touched"
+      />
+
+      <div *ngIf="loginForm.get('nombreUsuario')?.invalid && (loginForm.get('nombreUsuario')?.dirty || loginForm.get('nombreUsuario')?.touched)" class="error-text">
+        <small *ngIf="loginForm.get('nombreUsuario')?.hasError('required')" style="color: red;">
+          El correo es obligatorio.
+        </small>
+        <small *ngIf="loginForm.get('nombreUsuario')?.hasError('email')" style="color: red;">
+          Introduce un correo válido.
+        </small>
+      </div>
 
       <label>Contraseña:</label>
-      <input type="password" [(ngModel)]="password" name="password" required [disabled]="isLoading" />
+      <input
+        type="password"
+        formControlName="password"
+      />
 
-      <button type="submit" class="btn-login" [disabled]="isLoading || !nombre || !password">
+      <button type="submit" class="btn-login" [disabled]="isLoading || loginForm.invalid">
 
         <span *ngIf="!isLoading">Login</span>
 
@@ -25,7 +43,7 @@
         Al ser la versión gratuita, esto puede tardar unos segundos. ¡Gracias por esperar!</small>
       </div>
 
-      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <p *ngIf="errorMessage" class="error-message" style="color: red;">{{ errorMessage }}</p>
     </form>
 
     <button class="btn-secondary" (click)="irARegistro()" [disabled]="isLoading">

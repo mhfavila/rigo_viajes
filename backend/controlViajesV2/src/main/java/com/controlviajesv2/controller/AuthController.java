@@ -63,7 +63,7 @@ public class AuthController {
 
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        logger.info("Intento de login para el usuario: {}", request.getNombre());
+        logger.info("Intento de login para el usuario: {}", request.getEmail());
         // verificar si el usuario esta bloqueado
         if (loginAttemptService.isBlocked(request.getNombre())) {
             throw new ResponseStatusException(
@@ -74,12 +74,12 @@ public class AuthController {
 
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
             //si llega aqui limpiamos el contador
-            loginAttemptService.loginSucceeded(request.getNombre());
+            loginAttemptService.loginSucceeded(request.getEmail());
 
-            Usuario usuario = usuarioRepository.findByNombre(request.getNombre())
+            Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
             String token = jwtTokenGenerator.generateToken(usuario);
@@ -87,7 +87,7 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(token));
 
         }catch (BadCredentialsException e){
-            loginAttemptService.loginFailed(request.getNombre());
+            loginAttemptService.loginFailed(request.getEmail());
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
                     "Credenciales incorrectas"
