@@ -14,7 +14,6 @@ import { RegistroComponent } from './usuario/registro/registro.component';
 import { EmpresasComponent } from './empresa/empresas/empresas.component';
 import { EmpresaDetalleDialog } from './empresa/empresa-detalle-dialog/empresa-detalle-dialog';
 import { EmpresaModalComponent } from './empresa/empresa-modal/empresa-modal.component';
-import { ViajesComponent } from './viaje/viajes/viajes.component';
 import { FacturasComponent } from './factura/facturas/facturas.component';
 import { ServiciosFactuComponent } from './servicio/servicios-factu/servicios-factu.component';
 import { ServicioDetalleComponent } from './servicio/servicio-detalle/servicio-detalle.component';
@@ -48,7 +47,6 @@ import { PerfilComponent } from './usuario/perfil/perfil.component';
     EmpresasComponent,
     EmpresaDetalleDialog,
     EmpresaModalComponent,
-    ViajesComponent,
     FacturasComponent,
     ServiciosFactuComponent,
     ServicioDetalleComponent,
