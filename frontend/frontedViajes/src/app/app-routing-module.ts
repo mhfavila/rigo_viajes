@@ -1,4 +1,4 @@
-import { ViajesComponent } from './viaje/viajes/viajes.component';
+
 import { EmpresasComponent } from './empresa/empresas/empresas.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,7 +21,7 @@ const routes: Routes = [
     component: EmpresasComponent , canActivate: [AuthGuard],
   },
   //  { path: 'viajes', component: ViajesComponent /*, canActivate: [AuthGuard]*/ },
-  { path: 'viajes/:empresaId', component: ViajesComponent },
+
   { path: 'empresas/:empresaId/servicios', component: ServiciosFactuComponent , canActivate: [AuthGuard]},
   { path: 'servicio/:id', component: ServicioDetalleComponent , canActivate: [AuthGuard]},
   { path: 'registro', component: RegistroComponent },
