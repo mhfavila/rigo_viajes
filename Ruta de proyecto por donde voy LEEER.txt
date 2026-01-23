@@ -24,7 +24,7 @@ MEJORAS HABLADAS CON RIGO
 				--revisar que al crear una empresa el nif o cif lo compruebe bien
 				-- meter para dar avisos en la pesta;a de registro como que la contrase;a tiene que ser de 6 caracteres o q el email ya se usa
 				--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
-			
+				--limpiar comentarios y log innecesarios y mirar los comentarios y demas informacion que hay en el codigo
 
 			
 POR DONDE ME LLEGO:   
