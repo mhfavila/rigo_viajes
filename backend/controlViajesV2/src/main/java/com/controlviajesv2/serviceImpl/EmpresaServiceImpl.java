@@ -1,6 +1,5 @@
 package com.controlviajesv2.serviceImpl;
 
-import com.controlviajesv2.dto.EmpresaConViajesDTO;
 import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.entity.Direccion;
 import com.controlviajesv2.entity.Empresa;
@@ -115,20 +114,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 
 
-    @Override
-    public List<EmpresaConViajesDTO> listarEmpresas_Viajes() {
-        logger.info("Listando empresas con sus viajes asociados");
 
-        return empresaRepository.findAll().stream().map(empresa -> {
-            EmpresaConViajesDTO dto = new EmpresaConViajesDTO();
-            dto.setId(empresa.getId());
-            dto.setNombre(empresa.getNombre());
-           // dto.setDireccion(empresa.getDireccion());
-            dto.setTelefono(empresa.getTelefono());
-
-            return dto;
-        }).collect(Collectors.toList());
-    }
 
 
 }

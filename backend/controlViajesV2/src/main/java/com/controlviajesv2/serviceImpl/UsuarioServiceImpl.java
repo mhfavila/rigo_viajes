@@ -1,150 +1,86 @@
 package com.controlviajesv2.serviceImpl;
 
-import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.exception.ResourceNotFoundException;
-import com.controlviajesv2.mapper.EmpresaMapper;
 import com.controlviajesv2.mapper.UsuarioMapper;
-import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.UsuarioService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-    private final UsuarioRepository usuarioRepository;
-    private final EmpresaRepository empresaRepository;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private UsuarioMapper usuarioMapper;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
-        this.empresaRepository = empresaRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    /**
-     * Obtiene todos los usuarios existentes en la base de datos.
-     */
     @Override
-    public List<UsuarioDTO> obtenerTodos() {
-        logger.info("Obteniendo todos los usuarios");
-        return usuarioRepository.findAll()
-                .stream()
-                .map(UsuarioMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+    public UsuarioDTO obtenerUsuarioActual() {
+        // 1. Obtenemos el email del usuario logueado desde el Token de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
 
-    /**
-     * Busca un usuario por su ID.
-     * Lanza excepción si no se encuentra.
-     */
-    @Override
-    public UsuarioDTO obtenerPorId(Long id) {
-        logger.info("Buscando usuario con ID: {}", id);
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + id));
-        return UsuarioMapper.toDTO(usuario);
-    }
-
-
-
-
-
-
-    /**
-     * Actualiza los datos de un usuario existente.
-     */
-    @Override
-    public UsuarioDTO actualizar(Long id, UsuarioDTO usuarioDTO) {
-        logger.info("Actualizando usuario con ID: {}", id);
-        Usuario existente = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + id));
-
-        // Se actualizan los campos del usuario
-        existente.setNombre(usuarioDTO.getNombre());
-        existente.setEmail(usuarioDTO.getEmail());
-        existente.setCuentaBancaria(usuarioDTO.getCuentaBancaria());
-
-        existente.setNif(usuarioDTO.getNif());
-        existente.setTelefono(usuarioDTO.getTelefono());
-        existente.setImagenUrl(usuarioDTO.getImagenUrl());
-        // --- 4. DIRECCIÓN ---
-        // Tenemos que convertir el DTO de dirección a la entidad Dirección incrustada
-        if (usuarioDTO.getDireccion() != null) {
-            // Si la entidad ya tenía dirección, actualizamos sus campos. Si no, creamos una nueva.
-            if (existente.getDireccion() == null) {
-                existente.setDireccion(new com.controlviajesv2.entity.Direccion());
-            }
-
-            existente.getDireccion().setCalle(usuarioDTO.getDireccion().getCalle());
-            existente.getDireccion().setNumero(usuarioDTO.getDireccion().getNumero());
-            existente.getDireccion().setCodigoPostal(usuarioDTO.getDireccion().getCodigoPostal());
-            existente.getDireccion().setCiudad(usuarioDTO.getDireccion().getCiudad());
-            existente.getDireccion().setProvincia(usuarioDTO.getDireccion().getProvincia());
-            existente.getDireccion().setPais(usuarioDTO.getDireccion().getPais());
-        } else {
-            // Opcional: Si mandan la dirección vacía, ¿quieres borrarla?
-            // existente.setDireccion(null);
-        }
-
-        // Solo la actualizamos si viene una nueva contraseña y no está vacía
-        if (usuarioDTO.getPassword() != null && !usuarioDTO.getPassword().isEmpty()) {
-            existente.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
-        }
-        //existente.setRoles(usuarioDTO.getRoles());//de momento lo comento para que no se pueda actualizar el rol desde un endpoin
-
-        Usuario actualizado = usuarioRepository.save(existente);
-        return UsuarioMapper.toDTO(actualizado);
-    }
-
-    /**
-     * Elimina un usuario por su ID.
-     */
-    @Override
-    public void eliminar(Long id) {
-        logger.info("Eliminando usuario con ID: {}", id);
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + id));
-        usuarioRepository.delete(usuario);
-    }
-
-    /**
-     * metodo encargado de sacar las empresas asociadas a un usuario
-     * @param usuarioId
-     * @return
-     */
-    @Override
-    public List<EmpresaDTO> obtenerEmpresasDeUsuario(Long usuarioId) {
-        // 1. Obtener quién está haciendo la petición (del Token)
-        String usernameActual = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        // 2. Buscar al usuario dueño del ID que intentan consultar
-        Usuario usuarioSolicitado = usuarioRepository.findById(usuarioId)
+        // 2. Buscamos en la BD por ese email
+        Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        // 3. EL GUARDIÁN: Si los nombres no coinciden (y no eres admin), ¡FUERA!
-        // (Asumo que el username es único según tu entidad Usuario)
-        if (!usuarioSolicitado.getEmail().equals(usernameActual)) {
-            // Aquí lanzamos un error 403 si intentan espiar
-            throw new AccessDeniedException("No tienes permiso para ver los datos de otro usuario.");
+        return usuarioMapper.toDTO(usuario);
+    }
+
+    @Override
+    public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO) {
+        // 1. Obtenemos al usuario real que está haciendo la petición
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        // 2. Actualizamos solo los datos permitidos
+        usuario.setNombre(usuarioDTO.getNombre());
+        usuario.setTelefono(usuarioDTO.getTelefono());
+        usuario.setNif(usuarioDTO.getNif());
+
+        usuario.setCuentaBancaria(usuarioDTO.getCuentaBancaria());
+        // 3. ACTUALIZACIÓN DE DIRECCIÓN (CORREGIDO)
+        // Primero verificamos si el usuario ya tiene una dirección instanciada
+        if (usuario.getDireccion() == null) {
+            usuario.setDireccion(new com.controlviajesv2.entity.Direccion());
         }
 
-        // 4. Si pasa el control, devolvemos los datos
-        return empresaRepository.findByUsuarioId(usuarioId)
-                .stream()
-                .map(EmpresaMapper::toDTO)
-                .collect(Collectors.toList());
+        // Ahora actualizamos los campos DENTRO del objeto dirección
+        // Nota: Asumo que en tu clase Direccion.java los campos se llaman 'calle', 'numero', etc.
+        // Si se llaman diferente, cámbialo aquí.
+        usuario.getDireccion().setCalle(usuarioDTO.getDireccion().getCalle());
+        usuario.getDireccion().setNumero(usuarioDTO.getDireccion().getNumero());
+        usuario.getDireccion().setCiudad(usuarioDTO.getDireccion().getCiudad());
+        usuario.getDireccion().setProvincia(usuarioDTO.getDireccion().getProvincia());
+        usuario.getDireccion().setPais(usuarioDTO.getDireccion().getPais());
+        usuario.getDireccion().setCodigoPostal(usuarioDTO.getDireccion().getCodigoPostal());
+
+        // Si envía contraseña nueva, la encriptamos y actualizamos
+        if (usuarioDTO.getPassword() != null && !usuarioDTO.getPassword().isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        }
+
+        Usuario actualizado = usuarioRepository.save(usuario);
+        return usuarioMapper.toDTO(actualizado);
+    }
+
+    @Override
+    public UsuarioDTO obtenerPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + id));
+        return usuarioMapper.toDTO(usuario);
     }
 }

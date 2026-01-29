@@ -1,96 +1,35 @@
 package com.controlviajesv2.controller;
 
-
-import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.service.UsuarioService;
-import com.controlviajesv2.util.AppConstants;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-/**
- * Controlador REST para la gestión de usuarios.
- * Proporciona endpoints CRUD para la entidad Usuario.
- */
 @RestController
-@RequestMapping(AppConstants.REQUEST_USUARIOCONTROLLER)
+@RequestMapping("/api/usuarios")
+@Tag(name = "Perfil de Usuario", description = "Gestión de la cuenta del usuario logueado")
 public class UsuarioController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
+    @Autowired
+    private UsuarioService usuarioService;
 
-    private final UsuarioService usuarioService;
+    // YA NO USAMOS ID EN LA URL (Más seguro)
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
-
-    /**
-     * Obtiene todos los usuarios registrados.
-     */
-    @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
-        logger.info("Listando todos los usuarios");
-        List<UsuarioDTO> usuarios = usuarioService.obtenerTodos();
-        return ResponseEntity.ok(usuarios);
-    }
-
-    /**
-     * Obtiene un usuario por su ID.
-     */
-    @GetMapping(AppConstants.REQUEST_USUARIOCONTROLLER_ID)
-    public ResponseEntity<UsuarioDTO> obtenerUsuario(@PathVariable Long id) {
-        logger.info("Obteniendo usuario con ID: {}", id);
-        UsuarioDTO usuario = usuarioService.obtenerPorId(id);
+    @Operation(summary = "Ver mi perfil", description = "Obtiene los datos del usuario actualmente autenticado via Token.")
+    @GetMapping("/perfil")
+    public ResponseEntity<UsuarioDTO> obtenerPerfil() {
+        UsuarioDTO usuario = usuarioService.obtenerUsuarioActual();
         return ResponseEntity.ok(usuario);
     }
 
-
-
-
-
-
-    /**
-     * Actualiza un usuario existente.
-     */
-    @PutMapping(AppConstants.REQUEST_USUARIOCONTROLLER_ID)
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(
-            @PathVariable Long id,
-            @Valid @RequestBody UsuarioDTO usuarioDTO) {
-        logger.info("Actualizando usuario con ID: {}", id);
-        UsuarioDTO actualizado = usuarioService.actualizar(id, usuarioDTO);
+    @Operation(summary = "Actualizar mi perfil", description = "Permite modificar tus propios datos personales.")
+    @PutMapping("/perfil")
+    public ResponseEntity<UsuarioDTO> actualizarPerfil(@Valid @RequestBody UsuarioDTO usuarioDTO) {
+        UsuarioDTO actualizado = usuarioService.actualizarUsuario(usuarioDTO);
         return ResponseEntity.ok(actualizado);
     }
-
-    /**
-     * Elimina un usuario por su ID.
-     */
-    @DeleteMapping(AppConstants.REQUEST_USUARIOCONTROLLER_ID)
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
-        logger.info("Eliminando usuario con ID: {}", id);
-        usuarioService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
-
-
-
-/**
-Sacar las empresas de un usuario
- */
-    @GetMapping(AppConstants.REQUEST_USUARIOCONTROLLER_empresas)
-    public ResponseEntity<List<EmpresaDTO>> obtenerEmpresasDeUsuario(@PathVariable Long id) {
-        List<EmpresaDTO> empresas = usuarioService.obtenerEmpresasDeUsuario(id);
-        return ResponseEntity.ok(empresas);
-    }
-
-
-
-
-
 }

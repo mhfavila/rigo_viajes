@@ -9,6 +9,10 @@ import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.security.JwtTokenGenerator;
 import com.controlviajesv2.security.service.LoginAttemptService;
 import com.controlviajesv2.util.AppConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,6 +36,7 @@ import java.util.Set;
 @CrossOrigin(origins = "http://localhost:4200")  // Permite peticiones desde Angular
 @RestController
 @RequestMapping(AppConstants.REQUEST_AUTHCONTROLLER)
+@Tag(name = "Autenticación", description = "Endpoints para registro e inicio de sesión de usuarios")
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -60,7 +65,11 @@ public class AuthController {
     /**
      * Autentica a un usuario y devuelve un JWT si las credenciales son válidas.
      */
-
+    @Operation(summary = "Iniciar sesión", description = "Autentica al usuario con email y contraseña y devuelve un Token JWT.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Login exitoso (Token generado)"),
+            @ApiResponse(responseCode = "401", description = "Credenciales incorrectas")
+    })
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGIN)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         //el request.getNombre() esta recibiendo el email ,no el nombre ,esta asi por que desde el fronted se llama nombre
@@ -99,7 +108,11 @@ public class AuthController {
     /**
      * Registra un nuevo usuario si el nombre no está ya en uso.
      */
-    // REGISTRO
+    @Operation(summary = "Registrar nuevo usuario", description = "Crea una nueva cuenta de usuario. El email debe ser único.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "El email ya existe o datos inválidos")
+    })
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_REGISTER)
     public ResponseEntity<?> register(@RequestBody AuthRequest request) {
         logger.info("Intento de registro para el usuario: {}", request.getEmail());
@@ -142,6 +155,7 @@ public class AuthController {
     /**Cierre de sesión (Logout)
      * Invalida el token actual añadiéndolo a la lista negra.
      */
+    @Operation(summary = "Cerrar Sesion", description = "Cierra la sesion actual")
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGOUT)
     public ResponseEntity<?> logout(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");

@@ -69,6 +69,7 @@ public class SecurityConfig {
                 // Configuración de autorización -> se puede usar sin estar logueaso :loguin y registro
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(AppConstants.API_AUTH_PATH,"/api/ping").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/doc").permitAll()
                         .anyRequest().authenticated()
                 )
 
