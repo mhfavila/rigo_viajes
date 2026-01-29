@@ -16,8 +16,14 @@ export class EmpresaService {
     }
   }
 
-  getEmpresasDeUsuario(usuarioId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/usuarios/empresas/${usuarioId}`);
+  //getEmpresasDeUsuario(usuarioId: number): Observable<any[]> {
+    //return this.http.get<any[]>(`${this.baseUrl}/usuarios/empresas/${usuarioId}`);
+  //}
+
+  // 👇 CAMBIO IMPORTANTE: Quitamos el parámetro (usuarioId)
+  getEmpresasDeUsuario(): Observable<any[]> {
+    // Ahora llamamos a /empresas (El Backend sabrá quién eres por el Token)
+    return this.http.get<any[]>(`${this.baseUrl}/empresas`);
   }
 
   crearEmpresa(empresa: Empresa): Observable<Empresa> {

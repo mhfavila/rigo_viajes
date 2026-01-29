@@ -15,7 +15,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 export class PerfilComponent implements OnInit {
 
   perfilForm!: FormGroup;
-  userId: number | null = null;
+ // userId: number | null = null;
   loading = true;
 
   constructor(
@@ -27,16 +27,12 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     // 1. Obtener ID del usuario logueado desde el token
-    this.userId = this.authService.getUsuarioId();
+    //this.userId = this.authService.getUsuarioId();
 
     this.initForm();
+    this.cargarDatos();
 
-    if (this.userId) {
-      this.cargarDatos();
-    } else {
-      console.error('No se pudo obtener el ID del usuario');
-      this.loading = false;
-    }
+
   }
 
   initForm(): void {
@@ -66,9 +62,10 @@ export class PerfilComponent implements OnInit {
   }
 
   cargarDatos() {
-    if (!this.userId) return;
+    //if (!this.userId) return;
 
-    this.usuarioService.getUsuario(this.userId).subscribe({
+    //this.usuarioService.getUsuario(this.userId).subscribe({
+    this.usuarioService.obtenerPerfil().subscribe({
       next: (usuario) => {
         // Rellenamos el formulario con los datos que vienen del backend
         this.perfilForm.patchValue(usuario);
@@ -91,7 +88,7 @@ export class PerfilComponent implements OnInit {
       return;
     }
 
-    if (!this.userId) return;
+   // if (!this.userId) return;
 
     // getRawValue incluye los campos deshabilitados (nombre, email)
     const datosParaEnviar = this.perfilForm.getRawValue();
@@ -101,7 +98,7 @@ export class PerfilComponent implements OnInit {
       datosParaEnviar.nif = datosParaEnviar.nif.toUpperCase();
     }
 
-    this.usuarioService.updateUsuario(this.userId, datosParaEnviar).subscribe({
+   this.usuarioService.updatePerfil(datosParaEnviar).subscribe({
       next: (res) => {
         this.mostrarNotificacion('Perfil actualizado correctamente', 'success');
       },

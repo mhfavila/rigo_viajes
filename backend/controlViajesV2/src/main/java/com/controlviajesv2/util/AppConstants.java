@@ -48,7 +48,7 @@ public final class AppConstants {
 
     //UsuarioController
     public static final String REQUEST_USUARIOCONTROLLER = "/api/usuarios" ;
-    public static final String REQUEST_USUARIOCONTROLLER_ID = "/{id}" ;
+    public static final String REQUEST_USUARIOCONTROLLER_PERFIL = "/perfil" ;
    // public static final String REQUEST_USUARIOCONTROLLER =  ;
 
     public static final String REQUEST_USUARIOCONTROLLER_empresas ="/empresas/{id}";

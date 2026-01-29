@@ -5,16 +5,18 @@ import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.dto.DireccionDTO;
 import com.controlviajesv2.entity.Direccion;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component // 👈 1. IMPORTANTE: Esto permite que funcione el @Autowired
 public class EmpresaMapper {
 
-
-
-    //
-    public static EmpresaDTO toDTO(Empresa empresa) {
+    // 2. Quitamos "static" de todos los métodos públicos
+    public EmpresaDTO toDTO(Empresa empresa) {
         if (empresa == null) return null;
 
-        //obtenemos el id del usuario relacionado, no toda la entidad.
         EmpresaDTO dto = new EmpresaDTO();
         dto.setId(empresa.getId());
         dto.setNombre(empresa.getNombre());
@@ -23,17 +25,20 @@ public class EmpresaMapper {
         dto.setTelefono(empresa.getTelefono());
         dto.setIban(empresa.getIban());
         dto.setEmail(empresa.getEmail());
-        //Solo se incluye el id del usuario (usuario.getId()), no toda la entidad Usuario
-        dto.setUsuarioId(empresa.getUsuario().getId());
+
+        // Manejo seguro del usuario (evitar NullPointerException)
+        if (empresa.getUsuario() != null) {
+            dto.setUsuarioId(empresa.getUsuario().getId());
+        }
+
         dto.setPrecioKmDefecto(empresa.getPrecioKmDefecto());
         dto.setPrecioHoraEsperaDefecto(empresa.getPrecioHoraEsperaDefecto());
         dto.setPrecioDietaDefecto(empresa.getPrecioDietaDefecto());
 
-
         return dto;
     }
 
-    public static Empresa toEntity(EmpresaDTO dto, Usuario usuario) {
+    public Empresa toEntity(EmpresaDTO dto, Usuario usuario) {
         if (dto == null || usuario == null) return null;
 
         return Empresa.builder()
@@ -47,16 +52,23 @@ public class EmpresaMapper {
                 .precioDietaDefecto(dto.getPrecioDietaDefecto())
                 .precioHoraEsperaDefecto(dto.getPrecioHoraEsperaDefecto())
                 .precioKmDefecto(dto.getPrecioKmDefecto())
-                .usuario(usuario) // Asignamos la entidad completa
+                .usuario(usuario)
                 .build();
-        //Usamos el patrón Builder que ya tienes definido con Lombok para construir la entidad de forma limpia.
     }
+
+    // 👇 3. EL MÉTODO NUEVO QUE FALTABA (Para convertir listas)
+    public List<EmpresaDTO> toDtoList(List<Empresa> empresas) {
+        if (empresas == null) return null;
+        return empresas.stream()
+                .map(this::toDTO) // Llama al método toDTO uno por uno
+                .collect(Collectors.toList());
+    }
+
     // ========================================================================
-    // MÉTODOS AUXILIARES PRIVADOS (Mapean la dirección campo a campo)
+    // MÉTODOS AUXILIARES (Pueden ser privados o públicos según prefieras)
     // ========================================================================
 
-    // De Entidad -> DTO
-    private static DireccionDTO toDireccionDTO(Direccion direccion) {
+    private DireccionDTO toDireccionDTO(Direccion direccion) {
         if (direccion == null) return null;
 
         return DireccionDTO.builder()
@@ -69,8 +81,7 @@ public class EmpresaMapper {
                 .build();
     }
 
-    // De DTO -> Entidad
-    private static Direccion toDireccionEntity(DireccionDTO dto) {
+    private Direccion toDireccionEntity(DireccionDTO dto) {
         if (dto == null) return null;
 
         return Direccion.builder()
@@ -82,6 +93,4 @@ public class EmpresaMapper {
                 .pais(dto.getPais())
                 .build();
     }
-
-
 }

@@ -1,9 +1,12 @@
 package com.controlviajesv2.serviceImpl;
 
+import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.exception.ResourceNotFoundException;
+import com.controlviajesv2.mapper.EmpresaMapper;
 import com.controlviajesv2.mapper.UsuarioMapper;
+import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -23,6 +29,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EmpresaMapper empresaMapper;
 
     @Override
     public UsuarioDTO obtenerUsuarioActual() {
@@ -83,4 +91,6 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + id));
         return usuarioMapper.toDTO(usuario);
     }
+
+
 }

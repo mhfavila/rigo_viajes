@@ -11,6 +11,7 @@ import com.controlviajesv2.repository.UsuarioRepository;
 import com.controlviajesv2.service.EmpresaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmpresaServiceImpl.class);
 
-
+    @Autowired
+    private EmpresaMapper empresaMapper;
     private final EmpresaRepository empresaRepository;
     private final UsuarioRepository usuarioRepository;
 
@@ -38,12 +40,12 @@ public class EmpresaServiceImpl implements EmpresaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + empresaDTO.getUsuarioId()));
         logger.info("Creando nueva empresa con nombre: {} para el usuario: {}", empresaDTO.getNombre(),usuario.getNombre());
         // Convertimos el DTO a entidad y asociamos el usuario
-        Empresa empresa = EmpresaMapper.toEntity(empresaDTO,usuario);
+        Empresa empresa = empresaMapper.toEntity(empresaDTO,usuario);
 
 
         // Guardamos la empresa y convertimos la entidad guardada en un DTO para devolverla
         Empresa guardada = empresaRepository.save(empresa);
-        return EmpresaMapper.toDTO(guardada);
+        return empresaMapper.toDTO(guardada);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class EmpresaServiceImpl implements EmpresaService {
         // Obtenemos todas las empresas y las convertimos a DTO
         logger.info("Obteniendo todas las empresas");
         return empresaRepository.findAll().stream()
-                .map(EmpresaMapper::toDTO)
+                .map(empresaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -61,7 +63,7 @@ public class EmpresaServiceImpl implements EmpresaService {
         logger.info("Buscando empresa con ID: {}", id);
         Empresa empresa = empresaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada con ID: " + id));
-        return EmpresaMapper.toDTO(empresa);
+        return empresaMapper.toDTO(empresa);
     }
 
     @Override
@@ -98,7 +100,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
         // Guardamos y devolvemos el resultado actualizado
         Empresa actualizada = empresaRepository.save(existente);
-        return EmpresaMapper.toDTO(actualizada);
+        return empresaMapper.toDTO(actualizada);
     }
 
     @Override

@@ -22,12 +22,16 @@ export class UsuarioService {
   }
 
   // Obtener datos del usuario por ID
-  getUsuario(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.baseUrl}/${id}`);
+  //getUsuario(id: number): Observable<Usuario> {
+    //return this.http.get<Usuario>(`${this.baseUrl}/${id}`);
+ // }
+ obtenerPerfil(): Observable<Usuario> {
+    // Apunta a: /api/usuarios/perfil
+    return this.http.get<Usuario>(`${this.baseUrl}/perfil`);
   }
 
   // Actualizar datos del usuario
-  updateUsuario(id: number, usuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.baseUrl}/${id}`, usuario);
-  }
+  updatePerfil(usuario: Usuario): Observable<Usuario> {
+  return this.http.put<Usuario>(`${this.baseUrl}/perfil`, usuario);
+}
 }

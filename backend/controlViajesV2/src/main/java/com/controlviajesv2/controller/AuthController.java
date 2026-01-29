@@ -155,7 +155,11 @@ public class AuthController {
     /**Cierre de sesión (Logout)
      * Invalida el token actual añadiéndolo a la lista negra.
      */
-    @Operation(summary = "Cerrar Sesion", description = "Cierra la sesion actual")
+    @Operation(summary = "Cerrar Sesion", description = "Cierra la seesion")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "El email ya existe o datos inválidos")
+    })
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGOUT)
     public ResponseEntity<?> logout(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");

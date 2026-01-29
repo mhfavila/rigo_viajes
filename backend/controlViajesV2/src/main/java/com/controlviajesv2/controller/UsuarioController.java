@@ -1,7 +1,9 @@
 package com.controlviajesv2.controller;
 
+import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.service.UsuarioService;
+import com.controlviajesv2.util.AppConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -9,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping(AppConstants.REQUEST_USUARIOCONTROLLER)
 @Tag(name = "Perfil de Usuario", description = "Gestión de la cuenta del usuario logueado")
 public class UsuarioController {
 
@@ -20,7 +24,7 @@ public class UsuarioController {
     // YA NO USAMOS ID EN LA URL (Más seguro)
 
     @Operation(summary = "Ver mi perfil", description = "Obtiene los datos del usuario actualmente autenticado via Token.")
-    @GetMapping("/perfil")
+    @GetMapping(AppConstants.REQUEST_USUARIOCONTROLLER_PERFIL)
     public ResponseEntity<UsuarioDTO> obtenerPerfil() {
         UsuarioDTO usuario = usuarioService.obtenerUsuarioActual();
         return ResponseEntity.ok(usuario);
@@ -32,4 +36,5 @@ public class UsuarioController {
         UsuarioDTO actualizado = usuarioService.actualizarUsuario(usuarioDTO);
         return ResponseEntity.ok(actualizado);
     }
+
 }

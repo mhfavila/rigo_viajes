@@ -1,7 +1,7 @@
 package com.controlviajesv2.mapper;
 
-import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.dto.DireccionDTO; // <--- IMPORT
+import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.entity.Direccion; // <--- IMPORT
 import org.springframework.stereotype.Component;

@@ -1,6 +1,9 @@
 package com.controlviajesv2.service;
 
+import com.controlviajesv2.dto.EmpresaDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
+
+import java.util.List;
 
 public interface UsuarioService {
 
@@ -12,4 +15,6 @@ public interface UsuarioService {
 
     // Mantenemos este por si acaso (para uso interno)
     UsuarioDTO obtenerPorId(Long id);
+
+
 }

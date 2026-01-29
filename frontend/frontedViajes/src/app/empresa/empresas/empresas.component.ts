@@ -34,7 +34,7 @@ export class EmpresasComponent implements OnInit {
     console.log('Usuario ID en frontend:', usuarioId);
 
     if (usuarioId) {
-      this.empresaService.getEmpresasDeUsuario(usuarioId).subscribe({
+      this.empresaService.getEmpresasDeUsuario().subscribe({
         next: (data) => {
           console.log('Respuesta del backend:', data);
           this.empresas = data;
