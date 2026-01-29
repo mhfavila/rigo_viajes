@@ -13,7 +13,7 @@ public class UsuarioMapper {
     /**
      * Convierte una entidad Usuario en un UsuarioDTO.
      */
-    public static UsuarioDTO toDTO(Usuario usuario) {
+    public  UsuarioDTO toDTO(Usuario usuario) {
         if (usuario == null) return null;
 
         UsuarioDTO dto = new UsuarioDTO();
