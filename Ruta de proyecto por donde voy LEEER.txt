@@ -25,6 +25,7 @@ MEJORAS HABLADAS CON RIGO
 				-- meter para dar avisos en la pesta;a de registro como que la contrase;a tiene que ser de 6 caracteres o q el email ya se usa
 				--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
 				--limpiar comentarios y log innecesarios y mirar los comentarios y demas informacion que hay en el codigo
+				--revisar por que lo de swagger no funciona en prod
 
 			
 POR DONDE ME LLEGO:   
