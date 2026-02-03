@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,29 +34,37 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public EmpresaDTO crearEmpresa(EmpresaDTO empresaDTO) {
+        // 1. Obtener usuario autenticado (igual que en listarEmpresas)
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        logger.info("Creando nueva empresa con nombre: {}", empresaDTO.getNombre());
-        // Obtenemos el usuario asociado usando el ID del DTO
-        Usuario usuario = usuarioRepository.findById(empresaDTO.getUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + empresaDTO.getUsuarioId()));
-        logger.info("Creando nueva empresa con nombre: {} para el usuario: {}", empresaDTO.getNombre(),usuario.getNombre());
-        // Convertimos el DTO a entidad y asociamos el usuario
-        Empresa empresa = empresaMapper.toEntity(empresaDTO,usuario);
+        logger.info("Creando empresa {} para el usuario autenticado: {}", empresaDTO.getNombre(), email);
 
+        // 2. Usamos el usuario REAL, ignorando lo que venga en el DTO
+        Empresa empresa = empresaMapper.toEntity(empresaDTO, usuario);
 
-        // Guardamos la empresa y convertimos la entidad guardada en un DTO para devolverla
         Empresa guardada = empresaRepository.save(empresa);
         return empresaMapper.toDTO(guardada);
     }
 
     @Override
     public List<EmpresaDTO> listarEmpresas() {
-        // Obtenemos todas las empresas y las convertimos a DTO
-        logger.info("Obteniendo todas las empresas");
-        return empresaRepository.findAll().stream()
-                .map(empresaMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+            // 1. Averiguamos quién es el usuario logueado (sacamos su email del Token)
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+            logger.info("Listando empresas para el usuario: {}", email);
+
+            // 2. Buscamos al usuario completo en la BD
+            Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+            // 3. 🛑 AQUÍ ESTÁ EL CAMBIO: Usamos 'findByUsuario' en vez de 'findAll'
+            return empresaRepository.findByUsuario(usuario).stream()
+                    .map(empresaMapper::toDTO)
+                    .collect(Collectors.toList());
+        }
+
 
     @Override
     public EmpresaDTO obtenerEmpresaPorId(Long id) {
