@@ -24,4 +24,7 @@ public interface FacturaService {
 
 //busca las facturas de una empresa, busca por él, id de la empresa
     List<FacturaDTO> getFacturasPorEmpresa(Long empresaId);
+
+    void validarDatosFactura(Long id);
+
 }

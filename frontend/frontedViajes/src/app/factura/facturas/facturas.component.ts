@@ -52,7 +52,7 @@ export class FacturasComponent implements OnInit {
     }
   }
 
-
+/*
 descargarFacturaPdf(facturaId: number) {
     this.facturaService.descargarPdf(facturaId).subscribe((data) => {
       const blob = new Blob([data], { type: 'application/pdf' });
@@ -63,7 +63,54 @@ descargarFacturaPdf(facturaId: number) {
       a.click();
     });
   }
+*/
 
+descargarFacturaPdf(facturaId: number) {
+    this.facturaService.descargarPdf(facturaId).subscribe({
+      //  CASO DE ÉXITO (Tu código original va aquí)
+      next: (data: Blob) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `factura_${facturaId}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+
+      //  CASO DE ERROR (Aquí leemos el mensaje oculto)
+      error: (err: any) => {
+        // Si el error viene envuelto en un Blob (porque esperábamos un archivo)
+        if (err.error instanceof Blob) {
+          const reader = new FileReader();
+
+          // Cuando termine de leer el archivo de error...
+          reader.onload = (e: any) => {
+            try {
+              // Convertimos el texto a JSON
+              const errorBody = JSON.parse(e.target.result);
+              // Sacamos el mensaje que pusiste en Java
+              const mensaje = errorBody.message || 'Error al descargar la factura';
+
+              // Mostramos el aviso en pantalla
+              this.snackBar.open(mensaje, 'Cerrar', {
+                duration: 5000,
+                panelClass: ['error-snackbar']
+              });
+            } catch (jsonError) {
+              this.snackBar.open('Error inesperado al generar el PDF', 'Cerrar', { duration: 3000 });
+            }
+          };
+
+          // Leemos el blob como texto
+          reader.readAsText(err.error);
+        } else {
+          // Error normal de conexión
+          this.snackBar.open('Error de conexión con el servidor', 'Cerrar', { duration: 3000 });
+        }
+      }
+    });
+  }
 
 
   eliminarFactura(factura: Factura) {

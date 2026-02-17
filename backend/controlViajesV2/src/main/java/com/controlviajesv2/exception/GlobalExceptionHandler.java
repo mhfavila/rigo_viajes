@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -16,10 +18,23 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
+
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> manejarArgumentoInvalido(IllegalArgumentException ex, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                HttpStatus.BAD_REQUEST,       // 1. El estado (400)
+                ex.getMessage(),              // 2. El mensaje ("Faltan datos...")
+                request.getRequestURI()       // 3. La ruta ("/api/facturas/...")
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
 
     // Maneja errores cuando no se encuentra un recurso (ej. empresa, usuario, etc.)
     @ExceptionHandler(ResourceNotFoundException.class)

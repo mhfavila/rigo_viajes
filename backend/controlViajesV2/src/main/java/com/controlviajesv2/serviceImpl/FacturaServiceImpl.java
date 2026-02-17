@@ -51,8 +51,15 @@ public class FacturaServiceImpl implements FacturaService {
         Usuario usuario = usuarioRepository.findById(facturaDTO.getUsuarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + facturaDTO.getUsuarioId()));
 
+        //generamos aqui el numero de factura e ignoramos el que traiga dedesde el fronted
+        String nuevoNumero = generarSiguienteNumeroFactura(empresa, usuario);
+
+        facturaDTO.setNumeroFactura(nuevoNumero);
+        logger.info("Generado número de factura único: {}", nuevoNumero);
+
         Factura factura = FacturaMapper.toEntity(facturaDTO, empresa, usuario);
         Factura guardada = facturaRepository.save(factura);
+
 
         if (facturaDTO.getServiciosIds() != null && !facturaDTO.getServiciosIds().isEmpty()) {
 
@@ -167,5 +174,63 @@ public class FacturaServiceImpl implements FacturaService {
         return facturas.stream()
                 .map(FacturaMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void validarDatosFactura(Long id) {
+        Factura factura = facturaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Factura no encontrada"));
+
+        // 1. Validar Cliente (Usuario)
+        if (factura.getUsuario() == null || factura.getUsuario().getDireccion() == null) {
+            throw new IllegalArgumentException("No se puede generar la factura: El cliente " +
+                    (factura.getUsuario() != null ? factura.getUsuario().getNombre() : "desconocido") +
+                    " no tiene dirección configurada en su perfil.");
+        }
+
+        // 2. Validar Proveedor (Empresa)
+        if (factura.getEmpresa() == null || factura.getEmpresa().getDireccion() == null) {
+            throw new IllegalArgumentException("No se puede generar la factura: La empresa " +
+                    (factura.getEmpresa() != null ? factura.getEmpresa().getNombre() : "desconocida") +
+                    " no tiene dirección fiscal configurada.");
+        }
+    }
+
+
+    // Método auxiliar actualizado para incluir ID de Usuario
+    private String generarSiguienteNumeroFactura(Empresa empresa, Usuario usuario) {
+        int year = java.time.LocalDate.now().getYear();
+
+        // 1. Definimos el prefijo único por usuario (Ej: "U5-")
+        String prefijoUsuario = "U" + usuario.getId() + "-";
+
+        // 2. Buscamos todas las facturas de la empresa
+        List<Factura> facturas = facturaRepository.findByEmpresaId(empresa.getId());
+
+        // 3. Filtramos: mismo año Y que empiecen por el prefijo de este usuario
+        // Esto es importante para no contar facturas antiguas con formato viejo
+        int maxSecuencia = facturas.stream()
+                .filter(f -> f.getFechaEmision().getYear() == year)
+                .filter(f -> f.getNumeroFactura().startsWith(prefijoUsuario))
+                .mapToInt(f -> {
+                    try {
+                        // Formato: U1-N-005/2026
+                        // Queremos sacar el "005".
+                        // Split por "N-" nos da ["U1-", "005/2026"]
+                        // Cogemos la segunda parte, y split por "/" -> "005"
+                        String[] partes = f.getNumeroFactura().split("-N-");
+                        String numeroYAnio = partes[1]; // "005/2026"
+                        String numeroPuro = numeroYAnio.split("/")[0]; // "005"
+
+                        return Integer.parseInt(numeroPuro);
+                    } catch (Exception e) {
+                        return 0; // Si el formato es raro, lo ignoramos
+                    }
+                })
+                .max()
+                .orElse(0);
+
+        // 4. Generamos el nuevo número: U1-N-001/2026
+        return String.format("%sN-%03d/%d", prefijoUsuario, maxSecuencia + 1, year);
     }
 }

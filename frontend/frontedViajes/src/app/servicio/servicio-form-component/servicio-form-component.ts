@@ -244,6 +244,16 @@ cargarPreciosPorDefecto(empresaId: number) {
 
     payload.empresaId = this.empresaContextId;
 
+    // Evita que al editar se reste un día por la zona horaria UTC
+    // ---------------------------------------------------------
+    if (payload.fechaServicio) {
+        const fecha = new Date(payload.fechaServicio);
+        // Ajustamos la zona horaria restando el offset para compensar
+        const fechaLocal = new Date(fecha.getTime() - (fecha.getTimezoneOffset() * 60000));
+        // Guardamos solo la fecha en formato string YYYY-MM-DD
+        payload.fechaServicio = fechaLocal.toISOString().split('T')[0];
+    }
+
     // 4. Calculamos el campo 'importeServicio'
     // (Usamos || 0 para evitar NaN si los campos están vacíos)
     // payload.importeServicio =

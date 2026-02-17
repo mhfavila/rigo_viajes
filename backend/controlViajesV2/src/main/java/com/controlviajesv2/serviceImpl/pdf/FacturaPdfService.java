@@ -6,12 +6,15 @@ import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.repository.FacturaRepository;
+import com.controlviajesv2.serviceImpl.FacturaServiceImpl;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +28,18 @@ public class FacturaPdfService {
 
     @Autowired
     private FacturaRepository facturaRepository;
+    private static final Logger logger = LoggerFactory.getLogger(FacturaServiceImpl.class);
+
 
     public byte[] generarPdf(Long facturaId) throws Exception {
         Factura factura = facturaRepository.findById(facturaId)
                 .orElseThrow(() -> new RuntimeException("Factura no encontrada"));
 
+
         Empresa empresa = factura.getEmpresa();
         Usuario usuario = empresa.getUsuario();
+
+
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4, 40, 40, 40, 40);

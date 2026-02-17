@@ -122,6 +122,9 @@ public class FacturaController {
     @GetMapping(value = AppConstants.REQUEST_FACTURAS_PDF_ID, produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> generarFacturaPdf(@PathVariable Long id) {
         try {
+            //validamos los datos antes de generar el pdf
+            facturaService.validarDatosFactura(id);
+
             byte[] pdf = facturaPdfService.generarPdf(id);
 
             HttpHeaders headers = new HttpHeaders();
@@ -133,7 +136,13 @@ public class FacturaController {
                     .body(pdf);
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            // Si el error es de validación, lo relanzamos para que lo coja el GlobalExceptionHandler
+            if (e instanceof IllegalArgumentException) {
+                throw (IllegalArgumentException) e;
+            }
+            // Para otros errores, lanzamos RuntimeException o lo que prefieras
+            throw new RuntimeException("Error al generar el PDF: " + e.getMessage());
         }
     }
 
