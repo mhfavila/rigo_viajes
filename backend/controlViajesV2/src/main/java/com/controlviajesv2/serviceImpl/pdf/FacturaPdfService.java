@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +31,7 @@ public class FacturaPdfService {
     private FacturaRepository facturaRepository;
     private static final Logger logger = LoggerFactory.getLogger(FacturaServiceImpl.class);
 
-
+    @Transactional(readOnly = true, noRollbackFor = IllegalArgumentException.class)
     public byte[] generarPdf(Long facturaId) throws Exception {
         Factura factura = facturaRepository.findById(facturaId)
                 .orElseThrow(() -> new RuntimeException("Factura no encontrada"));
@@ -39,7 +40,16 @@ public class FacturaPdfService {
         Empresa empresa = factura.getEmpresa();
         Usuario usuario = empresa.getUsuario();
 
+// Comprobamos que existan las direcciones antes de intentar pintar nada
+        if (usuario.getDireccion() == null) {
+            throw new IllegalArgumentException("No se puede generar la factura: El cliente " +
+                    usuario.getNombre() + " no tiene dirección configurada en su perfil.");
+        }
 
+        if (empresa.getDireccion() == null) {
+            throw new IllegalArgumentException("No se puede generar la factura: La empresa " +
+                    empresa.getNombre() + " no tiene dirección fiscal configurada.");
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4, 40, 40, 40, 40);

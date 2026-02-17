@@ -1,90 +1,48 @@
 RUTA A SEGUIR EN EL PROYECTO DE RIGO
+		--revisar como funciona la barra de navegacion
+		--revisar que datos saca la factura
+		--modificar para que en la empresa aparte de un cif se pueda meter un cnif de autonomo que es un nif normal hay que revisarlo en el fronted		
+		-revisar el fronted la estetica	,unificar sobre todos los mensajes de los registros para que todos seandel mismo estilo al de el correo ya exite	
+		--revisar que al crear una empresa el nif o cif lo compruebe bien
+		-- meter para dar avisos en la pesta;a de registro como que la contrase;a tiene que ser de 6 caracteres o q el email ya se usa
+		--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
+		--limpiar comentarios y log innecesarios y mirar los comentarios y demas informacion que hay en el codigo
+		>>Revisar como estoy usando tailwind para hacerlo bonito y ver si lo puedo usar en el resto
+		>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
+		
+		
+		
+		
+		COSAS VISTAS PARA EL PROYECTO
+				-->test unitarios y demas para si cambio algo se lancen solos y prueben si falla algo
+				
+				-->En el método listarServicios(), sigues usando findAll():
+				-->En el método actualizarUsuario, recibes la contraseña en el DTO.
+				-->Mirar como colocar los logs para poner niveles de informacion y quitar los sytem .print
+				
+				
+				-->B. Controladores "Gordos" vs Servicios
+							En FacturaController.java, has metido lógica de validación (validarDatosFactura).
 
-			
+							Mejora: Idealmente, el Controller debe ser "tonto" (solo recibir HTTP y llamar al Service). La validación debería estar dentro de crearFactura o generarPdf en el propio Servicio. Pero tal como lo dejamos para arreglar el error 500, es aceptable por ahora.
+			 
+
+
+
 					
-				
-			
-
-
-
-
-
-
-
-
-
-MEJORAS HABLADAS CON RIGO			
-				
-				
-				-modificar para que en la empresa aparte de un cif se pueda meter un cnif de autonomo que es un nif normal hay que revisarlo en el fronted			
-				-revisar el fronted la estetica	,unificar sobre todos los mensajes de los registros para que todos seandel mismo estilo al de el correo ya exite			
-				-meter los datos del usuario en la factura
-				-revisar que datos saca la factura
-				--revisar como funciona la barra de navegacion
-				--revisar que al crear una empresa el nif o cif lo compruebe bien
-				-- meter para dar avisos en la pesta;a de registro como que la contrase;a tiene que ser de 6 caracteres o q el email ya se usa
-				--mirar para que los servicios salgan ordenados en la factura y en la pantalla -->Por fecha en plan si hago todos los servicios de diciembre si hay uno que pongo más el último pero se hizo el primero se queda el último en la factura
-				--limpiar comentarios y log innecesarios y mirar los comentarios y demas informacion que hay en el codigo
-				--revisar por que lo de swagger no funciona en prod
-
-			
-POR DONDE ME LLEGO:   
-
-
-
-						>>Revisar como estoy usando tailwind para hacerlo bonito y ver si lo puedo usar en el resto
 						
-						>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
 						
-						>- en la lista de servicios en las columnas poner para que pueda ordenar de mayor a menor o algo si				
-						PUEDO A"ADIR UNA BARRA DE NAVEGACION DONDE IRA EL BOTON DE SALIR -->appbar.component.html
-			FACTURA 
 						
-					
-					-->mirar para odenar que los servicios con cuadro de chak queden ariba
-					>EN La pantalla de facturas pondre algo para eliminar la factura por si se han confundido pero esto tiene que tambien volvera poner los servicos que estuvieran sin factura 
-			
-			En ENTIDADES 
-					|> corregir datos que faltan en viajes y en empresas y servicos y facturas
-					|>	>>Probablemete habra que a;adir en los servicios algo del estilo  destino dos (hablar con rigo para ver como funciona eso)	
+						
+		
 					
 					
-					-> en la clase usuario meter estos campos para poder sacarlos en la factura
-													-Direccion
-													-codigo postal y provincia
-													-Nombre de la due;a de la empresa o del titular 
-													- su dni
-													-numero de cuenta
-													Volver a poner lo  de por defecto en el registro el rol ROL_USER en el fronted va esto
-														
-					>faltan por a;adir datos a la factura	
-					
-					. mirar los filtros que se quieren poner como alguno para solo selecionar los viajes por id o algo asi o como sacar algo para que haga un marcado y poder ir selecionando uno a uno 
-					
-					
-					
-					
-					
-					
-			COSAS:
-				->-- revisar todo el codigo y quitar los log que puedan sacar informacion compromentida
-				
-				-->Revisar lo de los refresh tokens , son para que el usuario no necesite estar logandose si se acaba el tiempo
-				
-				
-				-->puedo revisar cosas con los roles ,de momento todos se crean en ROLE_USER desde el backend
+	
 				
 			
 									
 									
 									
 									
-				REVISIONES FINALES 
-						
-						
-						
-					
-						
-
-						-->SEGURIDAD DEL FRONTED  voy a meterlo en claude a las 3 para que me lo revise bien
+				
 						

@@ -123,7 +123,7 @@ public class FacturaController {
     public ResponseEntity<byte[]> generarFacturaPdf(@PathVariable Long id) {
         try {
             //validamos los datos antes de generar el pdf
-            facturaService.validarDatosFactura(id);
+            //facturaService.validarDatosFactura(id);
 
             byte[] pdf = facturaPdfService.generarPdf(id);
 
