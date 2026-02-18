@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor // <-- Esta es la que te falta para aceptar el token en el constructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse {
     private String token;
