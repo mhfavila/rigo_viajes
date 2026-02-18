@@ -7,6 +7,7 @@ import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.exception.ResourceNotFoundException;
+import com.controlviajesv2.mapper.FacturaMapper;
 import com.controlviajesv2.mapper.ServicioMapper;
 import com.controlviajesv2.repository.EmpresaRepository;
 import com.controlviajesv2.repository.FacturaRepository;
@@ -31,17 +32,19 @@ public class ServicioServiceImpl implements ServicioService {
 
     private static final Logger logger = LoggerFactory.getLogger(ServicioServiceImpl.class);
 
-    private final ServicioRepository servicioRepository;
-    private final FacturaRepository facturaRepository;
-    private final EmpresaRepository empresaRepository;
+    @Autowired
+    private ServicioMapper servicioMapper;
+    @Autowired
+    private  ServicioRepository servicioRepository;
+    @Autowired
+    private  FacturaRepository facturaRepository;
+    @Autowired
+    private  EmpresaRepository empresaRepository;
 
 
 
-    public ServicioServiceImpl(ServicioRepository servicioRepository, FacturaRepository facturaRepository, EmpresaRepository empresaRepository) {
-        this.servicioRepository = servicioRepository;
-        this.facturaRepository = facturaRepository;
-        this.empresaRepository = empresaRepository;
-    }
+
+
 
     @Override
     public ServicioDTO crearServicio(ServicioDTO servicioDTO) {
@@ -53,20 +56,20 @@ public class ServicioServiceImpl implements ServicioService {
                         "Empresa no encontrada con ID: " + servicioDTO.getEmpresaId()));
 
 
-        Servicio servicio = ServicioMapper.toEntity(servicioDTO, empresa);
+        Servicio servicio = servicioMapper.toEntity(servicioDTO, empresa);
 
 
         Servicio guardado = servicioRepository.save(servicio);
 
 
-        return ServicioMapper.toDTO(guardado);
+        return servicioMapper.toDTO(guardado);
     }
 
     @Override
     public List<ServicioDTO> listarServicios() {
         logger.info("Listando todos los servicios");
         return servicioRepository.findAll().stream()
-                .map(ServicioMapper::toDTO)
+                .map(servicioMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -75,7 +78,7 @@ public class ServicioServiceImpl implements ServicioService {
         logger.info("Buscando servicio con ID: {}", id);
         Servicio servicio = servicioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Servicio no encontrado con ID: " + id));
-        return ServicioMapper.toDTO(servicio);
+        return servicioMapper.toDTO(servicio);
     }
 
     @Override
@@ -139,7 +142,7 @@ public class ServicioServiceImpl implements ServicioService {
         }
 
         Servicio actualizado = servicioRepository.save(existente);
-        return ServicioMapper.toDTO(actualizado);
+        return servicioMapper.toDTO(actualizado);
     }
 
     @Override
@@ -160,7 +163,7 @@ public class ServicioServiceImpl implements ServicioService {
     public List<ServicioDTO> findByEmpresaId(Long empresaId) {
         return servicioRepository.findByEmpresaId(empresaId)
                 .stream()
-                .map(ServicioMapper::toDTO)
+                .map(servicioMapper::toDTO)
                 .collect(Collectors.toList());
     }
 

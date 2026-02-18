@@ -15,8 +15,10 @@ import com.controlviajesv2.service.FacturaService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -24,21 +26,18 @@ public class FacturaServiceImpl implements FacturaService {
 
     private static final Logger logger = LoggerFactory.getLogger(FacturaServiceImpl.class);
 
-    private final FacturaRepository facturaRepository;
-    private final EmpresaRepository empresaRepository;
-    private final UsuarioRepository usuarioRepository;
-    private final ServicioRepository servicioRepository;
+    @Autowired
+    private  EmpresaRepository empresaRepository;
+    @Autowired
+    private  UsuarioRepository usuarioRepository;
+    @Autowired
+    private  ServicioRepository servicioRepository;
 
+    @Autowired
+    private FacturaMapper facturaMapper;
+    @Autowired
+    private FacturaRepository facturaRepository;
 
-    public FacturaServiceImpl(FacturaRepository facturaRepository,
-                              EmpresaRepository empresaRepository,
-                              UsuarioRepository usuarioRepository, ServicioRepository servicioRepository) {
-        this.facturaRepository = facturaRepository;
-        this.empresaRepository = empresaRepository;
-        this.usuarioRepository = usuarioRepository;
-
-        this.servicioRepository = servicioRepository;
-    }
 
     @Override
     @Transactional
@@ -57,7 +56,7 @@ public class FacturaServiceImpl implements FacturaService {
         facturaDTO.setNumeroFactura(nuevoNumero);
         logger.info("Generado número de factura único: {}", nuevoNumero);
 
-        Factura factura = FacturaMapper.toEntity(facturaDTO, empresa, usuario);
+        Factura factura = facturaMapper.toEntity(facturaDTO, empresa, usuario);
         Factura guardada = facturaRepository.save(factura);
 
 
@@ -82,14 +81,14 @@ public class FacturaServiceImpl implements FacturaService {
         }
 
 
-        return FacturaMapper.toDTO(guardada);
+        return facturaMapper.toDTO(guardada);
     }
 
     @Override
     public List<FacturaDTO> listarFacturas() {
         logger.info("Listando todas las facturas");
         return facturaRepository.findAll().stream()
-                .map(FacturaMapper::toDTO)
+                .map(facturaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -98,7 +97,7 @@ public class FacturaServiceImpl implements FacturaService {
         logger.info("Obteniendo factura con ID: {}", id);
         Factura factura = facturaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Factura no encontrada con ID: " + id));
-        return FacturaMapper.toDTO(factura);
+        return facturaMapper.toDTO(factura);
     }
 
     @Override
@@ -136,7 +135,7 @@ public class FacturaServiceImpl implements FacturaService {
         }
 
         Factura actualizada = facturaRepository.save(existente);
-        return FacturaMapper.toDTO(actualizada);
+        return facturaMapper.toDTO(actualizada);
     }
 
     @Override
@@ -146,14 +145,18 @@ public class FacturaServiceImpl implements FacturaService {
         Factura factura = facturaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Factura no encontrada con ID: " + id));
 
-        // 1. DESVINCULAR LOS SERVICIOS
-        // Recorremos los servicios de esta factura y les quitamos la referencia
-        if (factura.getServicios() != null) {
-            for (Servicio servicio : factura.getServicios()) {
+
+        if (factura.getServicios() != null && !factura.getServicios().isEmpty()) {
+            List<Servicio> serviciosACopiar = new ArrayList<>(factura.getServicios());//creamos una copia para evitar ConcurrentModificationException
+            for (Servicio servicio :serviciosACopiar) {
                 servicio.setFactura(null); // El servicio queda "libre"
             }
+
+            factura.getServicios().clear();//limpiamos la lista aoriginal
+
+
             // Guardamos los cambios en los servicios (ahora huérfanos de factura, pero vivos)
-            servicioRepository.saveAll(factura.getServicios());
+            servicioRepository.saveAll(serviciosACopiar);
         }
 
 
@@ -172,7 +175,7 @@ public class FacturaServiceImpl implements FacturaService {
 
         List<Factura> facturas = facturaRepository.findByEmpresaId(empresaId);
         return facturas.stream()
-                .map(FacturaMapper::toDTO)
+                .map(facturaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 

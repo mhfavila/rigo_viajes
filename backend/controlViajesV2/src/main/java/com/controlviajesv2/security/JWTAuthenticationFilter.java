@@ -2,6 +2,7 @@ package com.controlviajesv2.security;
 
 
 import com.controlviajesv2.security.service.TokenBlacklistService;
+import com.controlviajesv2.serviceImpl.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -65,7 +66,7 @@ private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFi
             jwt = authHeader.substring(7); // extrae el token sin "Bearer "
 
             // Comprobamos si el token ha sido revocado antes de intentar procesarlo
-            if (tokenBlacklistService.isRevoked(jwt)) {
+            if (tokenBlacklistService.isBlacklisted(jwt)) {
                 logger.warn("Intento de acceso con token revocado (Blacklisted)");
                 sendErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "El token ha sido revocado (Cierre de sesión previo)", request.getRequestURI());
                 return; // Cortamos la ejecución aquí

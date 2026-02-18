@@ -32,6 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private EmpresaMapper empresaMapper;
 
+
     @Override
     public UsuarioDTO obtenerUsuarioActual() {
         // 1. Obtenemos el email del usuario logueado desde el Token de seguridad
@@ -65,16 +66,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario.getDireccion() == null) {
             usuario.setDireccion(new com.controlviajesv2.entity.Direccion());
         }
+        if(usuarioDTO.getDireccion() != null) {
 
-        // Ahora actualizamos los campos DENTRO del objeto dirección
-        // Nota: Asumo que en tu clase Direccion.java los campos se llaman 'calle', 'numero', etc.
-        // Si se llaman diferente, cámbialo aquí.
-        usuario.getDireccion().setCalle(usuarioDTO.getDireccion().getCalle());
-        usuario.getDireccion().setNumero(usuarioDTO.getDireccion().getNumero());
-        usuario.getDireccion().setCiudad(usuarioDTO.getDireccion().getCiudad());
-        usuario.getDireccion().setProvincia(usuarioDTO.getDireccion().getProvincia());
-        usuario.getDireccion().setPais(usuarioDTO.getDireccion().getPais());
-        usuario.getDireccion().setCodigoPostal(usuarioDTO.getDireccion().getCodigoPostal());
+
+            // Ahora actualizamos los campos DENTRO del objeto dirección
+            // Nota: Asumo que en tu clase Direccion.java los campos se llaman 'calle', 'numero', etc.
+            // Si se llaman diferente, cámbialo aquí.
+            usuario.getDireccion().setCalle(usuarioDTO.getDireccion().getCalle());
+            usuario.getDireccion().setNumero(usuarioDTO.getDireccion().getNumero());
+            usuario.getDireccion().setCiudad(usuarioDTO.getDireccion().getCiudad());
+            usuario.getDireccion().setProvincia(usuarioDTO.getDireccion().getProvincia());
+            usuario.getDireccion().setPais(usuarioDTO.getDireccion().getPais());
+            usuario.getDireccion().setCodigoPostal(usuarioDTO.getDireccion().getCodigoPostal());
+        }
 
         // Si envía contraseña nueva, la encriptamos y actualizamos
         if (usuarioDTO.getPassword() != null && !usuarioDTO.getPassword().isEmpty()) {

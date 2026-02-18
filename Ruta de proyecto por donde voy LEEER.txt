@@ -9,6 +9,7 @@ RUTA A SEGUIR EN EL PROYECTO DE RIGO
 		--limpiar comentarios y log innecesarios y mirar los comentarios y demas informacion que hay en el codigo
 		>>Revisar como estoy usando tailwind para hacerlo bonito y ver si lo puedo usar en el resto
 		>REVISAR QUE CUANDO EDITA O CREA UN SERVICIO LOS NUMEROS NO SEAN UY GRANDES O CAMBIAR EL BACKEND
+		>>Revisar si usar mapSruct en los mappers
 		
 		
 		

@@ -24,13 +24,15 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Autowired
     private EmpresaMapper empresaMapper;
-    private final EmpresaRepository empresaRepository;
-    private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private  EmpresaRepository empresaRepository;
+    @Autowired
+    private  UsuarioRepository usuarioRepository;
 
-    public EmpresaServiceImpl(EmpresaRepository empresaRepository, UsuarioRepository usuarioRepository) {
-        this.empresaRepository = empresaRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
+
+
+
+
 
     @Override
     public EmpresaDTO crearEmpresa(EmpresaDTO empresaDTO) {
@@ -106,6 +108,9 @@ public class EmpresaServiceImpl implements EmpresaService {
         }
         existente.setTelefono(empresaDTO.getTelefono());
         existente.setEmail(empresaDTO.getEmail());
+        existente.setPrecioDietaDefecto(empresaDTO.getPrecioDietaDefecto());
+        existente.setPrecioKmDefecto(empresaDTO.getPrecioKmDefecto());
+        existente.setPrecioHoraEsperaDefecto(empresaDTO.getPrecioHoraEsperaDefecto());
 
         // Guardamos y devolvemos el resultado actualizado
         Empresa actualizada = empresaRepository.save(existente);

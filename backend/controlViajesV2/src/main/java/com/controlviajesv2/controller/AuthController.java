@@ -157,8 +157,8 @@ public class AuthController {
      */
     @Operation(summary = "Cerrar Sesion", description = "Cierra la seesion")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuario registrado exitosamente"),
-            @ApiResponse(responseCode = "400", description = "El email ya existe o datos inválidos")
+            @ApiResponse(responseCode = "200", description = "Sesion cerrada con exito"),
+            @ApiResponse(responseCode = "400", description = "fallo al cerrar la sesion")
     })
     @PostMapping(AppConstants.REQUEST_AUTHCONTROLLER_LOGOUT)
     public ResponseEntity<?> logout(HttpServletRequest request) {
@@ -168,7 +168,7 @@ public class AuthController {
             String token = authHeader.substring(7);
 
             // Invalidar el token
-            tokenBlacklistService.revokeToken(token);
+            tokenBlacklistService.blacklistToken(token);
             logger.info("Token revocado correctamente. Logout exitoso.");
 
             return ResponseEntity.ok(Map.of("mensaje", "Sesión cerrada correctamente"));

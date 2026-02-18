@@ -6,10 +6,13 @@ import com.controlviajesv2.entity.Direccion;
 import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
+import org.checkerframework.checker.units.qual.C;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ServicioMapper {
 
-    public static ServicioDTO toDTO(Servicio servicio) {
+    public  ServicioDTO toDTO(Servicio servicio) {
         if (servicio == null) return null;
 
         return ServicioDTO.builder()
@@ -37,7 +40,7 @@ public class ServicioMapper {
                 .build();
     }
 
-    public static Servicio toEntity(ServicioDTO dto, Empresa empresa) {
+    public  Servicio toEntity(ServicioDTO dto, Empresa empresa) {
         if (dto == null) return null;
 
         return Servicio.builder()

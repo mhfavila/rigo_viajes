@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component // 👈 1. IMPORTANTE: Esto permite que funcione el @Autowired
+@Component
 public class EmpresaMapper {
 
-    // 2. Quitamos "static" de todos los métodos públicos
+
     public EmpresaDTO toDTO(Empresa empresa) {
         if (empresa == null) return null;
 
@@ -64,9 +64,7 @@ public class EmpresaMapper {
                 .collect(Collectors.toList());
     }
 
-    // ========================================================================
-    // MÉTODOS AUXILIARES (Pueden ser privados o públicos según prefieras)
-    // ========================================================================
+
 
     private DireccionDTO toDireccionDTO(Direccion direccion) {
         if (direccion == null) return null;

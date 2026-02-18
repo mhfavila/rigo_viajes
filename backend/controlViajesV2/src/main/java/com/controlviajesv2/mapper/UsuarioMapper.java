@@ -1,9 +1,9 @@
 package com.controlviajesv2.mapper;
 
-import com.controlviajesv2.dto.DireccionDTO; // <--- IMPORT
+import com.controlviajesv2.dto.DireccionDTO;
 import com.controlviajesv2.dto.UsuarioDTO;
 import com.controlviajesv2.entity.Usuario;
-import com.controlviajesv2.entity.Direccion; // <--- IMPORT
+import com.controlviajesv2.entity.Direccion;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +19,7 @@ public class UsuarioMapper {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setId(usuario.getId());
         dto.setNombre(usuario.getNombre());
-        dto.setPassword(usuario.getPassword()); // Ojo, normalmente el password no se devuelve al frontend por seguridad, pero lo dejo como lo tenías
+        //dto.setPassword(usuario.getPassword());
         dto.setEmail(usuario.getEmail());
         dto.setRoles(usuario.getRoles());
 
@@ -38,7 +38,7 @@ public class UsuarioMapper {
     /**
      * Convierte un UsuarioDTO en una entidad Usuario.
      */
-    public static Usuario toEntity(UsuarioDTO dto) {
+    public Usuario toEntity(UsuarioDTO dto) {
         if (dto == null) return null;
 
         Usuario usuario = new Usuario();
@@ -65,7 +65,7 @@ public class UsuarioMapper {
     // ========================================================================
 
     // De Entidad -> DTO
-    private static DireccionDTO toDireccionDTO(Direccion direccion) {
+    private  DireccionDTO toDireccionDTO(Direccion direccion) {
         if (direccion == null) return null;
 
         // Aquí usamos el Builder de DireccionDTO porque ese objeto sí tiene @Builder
@@ -80,7 +80,7 @@ public class UsuarioMapper {
     }
 
     // De DTO -> Entidad
-    private static Direccion toDireccionEntity(DireccionDTO dto) {
+    private  Direccion toDireccionEntity(DireccionDTO dto) {
         if (dto == null) return null;
 
         return Direccion.builder()

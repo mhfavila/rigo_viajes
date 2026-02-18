@@ -3,7 +3,7 @@ package com.controlviajesv2.security.config;
 import com.controlviajesv2.security.CustomAccessDeniedHandler;
 import com.controlviajesv2.security.CustomAuthenticationEntryPoint;
 import com.controlviajesv2.security.JWTAuthenticationFilter;
-import com.controlviajesv2.security.UserDetailsServiceImpl;
+import com.controlviajesv2.serviceImpl.UserDetailsServiceImpl;
 import com.controlviajesv2.util.AppConstants;
 
 import org.springframework.beans.factory.annotation.Value;

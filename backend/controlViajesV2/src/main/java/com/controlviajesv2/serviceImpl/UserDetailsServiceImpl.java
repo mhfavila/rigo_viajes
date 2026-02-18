@@ -1,7 +1,8 @@
-package com.controlviajesv2.security;
+package com.controlviajesv2.serviceImpl;
 
 import com.controlviajesv2.entity.Usuario;
 import com.controlviajesv2.repository.UsuarioRepository;
+import com.controlviajesv2.security.UsuarioPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;

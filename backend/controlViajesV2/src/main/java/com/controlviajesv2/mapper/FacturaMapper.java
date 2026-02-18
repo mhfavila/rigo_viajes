@@ -8,12 +8,15 @@ import com.controlviajesv2.entity.Empresa;
 import com.controlviajesv2.entity.Factura;
 import com.controlviajesv2.entity.Servicio;
 import com.controlviajesv2.entity.Usuario;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
+
+@Component
 public class FacturaMapper {
 
 
-    public static FacturaDTO toDTO(Factura factura) {
+    public FacturaDTO toDTO(Factura factura) {
         if (factura == null) return null;
 
         return FacturaDTO.builder()
@@ -38,7 +41,7 @@ public class FacturaMapper {
                 .build();
     }
 
-    public static Factura toEntity(FacturaDTO dto, Empresa empresa, Usuario usuario) {
+    public  Factura toEntity(FacturaDTO dto, Empresa empresa, Usuario usuario) {
         if (dto == null) return null;
 
         return Factura.builder()
