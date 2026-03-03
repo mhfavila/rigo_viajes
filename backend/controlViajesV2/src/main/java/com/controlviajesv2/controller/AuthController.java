@@ -132,7 +132,7 @@ public class AuthController {
         // Crear nuevo usuario con password cifrada
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(request.getNombre());
-       // nuevoUsuario.setEmail(request.getNombre() + "@tudominio.com"); // Si quieres, puedes pedir email en otro DTO
+
         nuevoUsuario.setEmail(request.getEmail());
         nuevoUsuario.setPassword(passwordEncoder.encode(request.getPassword()));
 
