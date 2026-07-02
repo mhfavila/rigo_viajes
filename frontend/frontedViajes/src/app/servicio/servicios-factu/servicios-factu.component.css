@@ -15,3 +15,13 @@
 .btn-eliminar {
   margin: 0 4px;
 }
+
+@media (max-width: 767px) {
+  .acciones-principales {
+    flex-direction: column;
+  }
+
+  .acciones-principales button {
+    width: 100%;
+  }
+}

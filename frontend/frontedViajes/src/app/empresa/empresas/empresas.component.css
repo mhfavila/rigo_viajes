@@ -1,54 +1,64 @@
-.centered {
+.page-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.page-header {
   display: flex;
-  flex-direction: column;   /* Apila elementos en columna */
-  justify-content: center;  /* Centrado vertical */
-  align-items: center;      /* Centrado horizontal */
-  min-height: 100vh;        /* Ocupa toda la altura de la pantalla */
-  text-align: center;       /* Centra el texto */
-  background-color: #f9f9f9; /* Opcional, fondo suave */
-  padding: 1rem;            /* Espacio interno */
-  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.form-container-table {
-  width: 80%;                /* Que la tabla no ocupe toda la pantalla */
-  max-width: 900px;          /* Tamaño máximo */
-  background: #fff;          /* Fondo blanco para la tabla */
-  border-radius: 12px;       /* Bordes redondeados */
-  padding: 1rem;             /* Espacio interior */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombras suaves */
+.page-header h2 {
+  margin: 0;
+  color: var(--cv-text);
 }
 
-table {
+.table-wrapper {
+  padding: 0.75rem;
+}
+
+.empresas-table {
   width: 100%;
-  border-collapse: collapse;
 }
 
-th, td {
+.empresas-table th,
+.empresas-table td {
   text-align: left;
   padding: 0.75rem;
 }
 
-th {
-  background-color: #f1f1f1;
+.empresas-table th {
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .acciones-cell {
   display: flex;
-  gap: 0.5rem;   /* Espacio entre botones */
-  justify-content: flex-end;  /* mueve todo al final de la celda */
+  gap: 0.5rem;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .boton-flotante {
-  margin-top: 1.5rem;
+  margin-top: 0.25rem;
   padding: 0.8rem 1.2rem;
   font-weight: bold;
 }
+.page-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .acciones-cell button.mat-raised-button {
   box-shadow: none;
 }
-table tr {
+.empresas-table tr {
   border-bottom: 1px solid #e0e0e0;
   position: relative;
   z-index: 1;
@@ -89,6 +99,20 @@ table tr {
 
 .btn-ver:hover {
   background-color: #2214e4;
+}
 
+@media (max-width: 767px) {
+  .page-header {
+    align-items: flex-start;
+  }
+
+  .page-header button,
+  .page-footer-actions button {
+    width: 100%;
+  }
+
+  .acciones-cell {
+    justify-content: flex-start;
+  }
 
 }

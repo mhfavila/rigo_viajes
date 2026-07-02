@@ -1,11 +1,14 @@
+<section class="page-shell">
+  <header class="page-header">
+    <h2>Empresas asociadas a tu Usuario</h2>
+    <button mat-stroked-button color="warn" (click)="logout()">
+      Cerrar sesion
+    </button>
+  </header>
 
-<div class="centered">
-  <h2>Empresas asociadas a tu Usuario</h2>
-  <button (click)="logout()" class="btn btn-danger">
-  Cerrar Sesión
-</button>
-  <div class="form-container-table">
-    <table mat-table [dataSource]="empresas" class="mat-elevation-z8">
+  <div class="cv-card table-wrapper">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="empresas" class="empresas-table">
 
       <!-- Columna Nombre -->
       <ng-container matColumnDef="nombre">
@@ -53,21 +56,15 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="['nombre','cif','acciones']"></tr>
-      <tr mat-row
-        *matRowDef="let row; columns: ['nombre','cif','acciones'];"></tr>
-    </table>
-
+      <tr mat-row *matRowDef="let row; columns: ['nombre','cif','acciones'];"></tr>
+      </table>
+    </div>
   </div>
-  <div>
 
-    <button
-      mat-raised-button
-      color="accent"
-      class="boton-flotante"
-      matTooltip="Crear nueva empresa"
-      (click)="crearEmpresa()">
+  <div class="page-footer-actions">
+    <button mat-raised-button color="accent" class="boton-flotante"
+      matTooltip="Crear nueva empresa" (click)="crearEmpresa()">
       AÑADIR EMPRESA +
     </button>
   </div>
-
-</div>
+</section>

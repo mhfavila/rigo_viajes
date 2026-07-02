@@ -1,8 +1,8 @@
-<div class="container mx-auto p-4 max-w-4xl mt-6">
+<div class="container mx-auto p-4 max-w-4xl mt-4 md:mt-6">
 
-  <div class="flex justify-between items-center mb-6">
+  <div class="perfil-header flex justify-between items-center mb-6 gap-3 flex-wrap">
     <h1 class="text-2xl font-bold text-gray-800">Mi Perfil Fiscal</h1>
-    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="perfilForm.invalid || loading">
+    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="perfilForm.invalid || loading" class="perfil-save-btn">
       <mat-icon>save</mat-icon> Guardar Cambios
     </button>
   </div>
@@ -11,18 +11,18 @@
     <p>Cargando datos...</p>
     </div>
 
-  <form [formGroup]="perfilForm" *ngIf="!loading" class="bg-white p-6 rounded-lg shadow-md">
+  <form [formGroup]="perfilForm" *ngIf="!loading" class="cv-card bg-white p-4 md:p-6 rounded-lg shadow-md">
 
     <h3 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Datos de Cuenta</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <mat-form-field appearance="outline">
         <mat-label>Usuario</mat-label>
-        <input matInput formControlName="nombre">
+        <input matInput formControlName="nombre" title="Usuario">
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email">
+        <input matInput formControlName="email" title="Email">
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
     </div>
@@ -31,7 +31,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
       <mat-form-field appearance="fill">
         <mat-label>NIF / CIF</mat-label>
-        <input matInput formControlName="nif" placeholder="12345678Z" style="text-transform:uppercase">
+        <input matInput formControlName="nif" placeholder="12345678Z" class="uppercase-input">
         <mat-error *ngIf="perfilForm.get('cif')?.hasError('required')">El
                 CIF/NIF es obligatorio</mat-error>
         <mat-error *ngIf="perfilForm.get('nif')?.hasError('pattern')">Formato inválido</mat-error>
@@ -39,7 +39,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Teléfono</mat-label>
-        <input matInput formControlName="telefono">
+        <input matInput formControlName="telefono" title="Telefono">
         <mat-error
                 *ngIf="perfilForm.get('telefono')?.hasError('required')">Obligatorio</mat-error>
               <mat-error
@@ -78,31 +78,31 @@
 
       <mat-form-field appearance="fill" class="md:col-span-4">
         <mat-label>Calle</mat-label>
-        <input matInput formControlName="calle">
+        <input matInput formControlName="calle" title="Calle">
         <mat-error *ngIf="perfilForm.get('direccion.calle')?.invalid">Requerido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="md:col-span-2">
         <mat-label>Número</mat-label>
-        <input matInput formControlName="numero">
+        <input matInput formControlName="numero" title="Numero">
         <mat-error *ngIf="perfilForm.get('direccion.numero')?.invalid">Requerido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="md:col-span-2">
         <mat-label>Código Postal</mat-label>
-        <input matInput formControlName="codigoPostal">
+        <input matInput formControlName="codigoPostal" title="Codigo postal">
         <mat-error *ngIf="perfilForm.get('direccion.codigoPostal')?.invalid">Requerido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="md:col-span-2">
         <mat-label>Ciudad</mat-label>
-        <input matInput formControlName="ciudad">
+        <input matInput formControlName="ciudad" title="Ciudad">
         <mat-error *ngIf="perfilForm.get('direccion.ciudad')?.invalid">Requerido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="md:col-span-2">
         <mat-label>Provincia</mat-label>
-        <input matInput formControlName="provincia">
+        <input matInput formControlName="provincia" title="Provincia">
         <mat-error *ngIf="perfilForm.get('direccion.provincia')?.invalid">Requerido</mat-error>
       </mat-form-field>
     </div>

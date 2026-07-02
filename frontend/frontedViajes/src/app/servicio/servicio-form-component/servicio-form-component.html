@@ -1,16 +1,9 @@
-<!--
-  El título cambiará dinámicamente
--->
-<h1 class="text-2xl font-bold mb-4 p-4">
-  {{ isEditMode ? 'Editar Servicio' : 'Crear Nuevo Servicio' }}
-</h1>
+<section class="service-form-shell cv-card">
+  <h1 class="text-2xl font-bold mb-4 p-4">
+    {{ isEditMode ? 'Editar Servicio' : 'Crear Nuevo Servicio' }}
+  </h1>
 
-<!--
-  1. El "Armario" (Formulario Principal)
-  - Se vincula al 'servicioForm' del .ts
-  - (ngSubmit) llama a 'guardar()'.
--->
-<form [formGroup]="servicioForm" (ngSubmit)="guardar()" class="p-4">
+  <form [formGroup]="servicioForm" (ngSubmit)="guardar()" class="p-4">
 
   <!--
     2. El grupo de pestañas de Angular Material.
@@ -34,7 +27,7 @@
 
         <mat-form-field class="w-full">
           <mat-label>Tipo de Servicio</mat-label>
-          <input matInput formControlName="tipoServicio" required>
+          <input matInput formControlName="tipoServicio" title="Tipo de servicio" required>
           <mat-error
             *ngIf="servicioForm.get('viaje.tipoServicio')?.hasError('required')">
             El tipo es requerido.
@@ -44,7 +37,7 @@
         <!-- Selector de Fecha -->
         <mat-form-field class="w-full">
           <mat-label>Fecha del Servicio</mat-label>
-          <input matInput [matDatepicker]="picker"
+          <input matInput [matDatepicker]="picker" title="Fecha del servicio"
             formControlName="fechaServicio" required>
           <mat-datepicker-toggle matSuffix
             [for]="picker"></mat-datepicker-toggle>
@@ -80,7 +73,7 @@
 
         <mat-form-field class="w-full">
           <mat-label>Cliente Final</mat-label>
-          <input matInput formControlName="clienteFinal">
+          <input matInput formControlName="clienteFinal" title="Cliente final">
         </mat-form-field>
 
       </div>
@@ -96,12 +89,12 @@
 
         <mat-form-field class="w-full">
           <mat-label>Conductor</mat-label>
-          <input matInput formControlName="conductor">
+          <input matInput formControlName="conductor" title="Conductor">
         </mat-form-field>
 
         <mat-form-field class="w-full">
           <mat-label>Matrícula Vehículo</mat-label>
-          <input matInput formControlName="matriculaVehiculo">
+          <input matInput formControlName="matriculaVehiculo" title="Matricula vehiculo">
         </mat-form-field>
 
         <!-- Dejamos 2 columnas libres a propósito para alinear los costes -->
@@ -109,7 +102,7 @@
 
         <mat-form-field class="w-full">
           <mat-label>KM</mat-label>
-          <input matInput type="number" formControlName="km" required>
+          <input matInput type="number" formControlName="km" title="Kilometros" required>
           <mat-error
             *ngIf="servicioForm.get('logisticaCostes.km')?.hasError('required')">
             Requerido.
@@ -118,7 +111,7 @@
 
         <mat-form-field class="w-full">
           <mat-label>Precio / KM (€)</mat-label>
-          <input matInput type="number" formControlName="precioKm" required>
+          <input matInput type="number" formControlName="precioKm" title="Precio por kilometro" required>
           <mat-error
             *ngIf="servicioForm.get('logisticaCostes.precioKm')?.hasError('required')">
             Requerido.
@@ -131,17 +124,17 @@
 
         <mat-form-field class="w-full">
           <mat-label>Precio Dieta (€)</mat-label>
-          <input matInput type="number" formControlName="precioDieta">
+          <input matInput type="number" formControlName="precioDieta" title="Precio dieta">
         </mat-form-field>
 
         <mat-form-field class="w-full">
           <mat-label>Horas Espera</mat-label>
-          <input matInput type="number" formControlName="horasEspera">
+          <input matInput type="number" formControlName="horasEspera" title="Horas de espera">
         </mat-form-field>
 
         <mat-form-field class="w-full">
           <mat-label>Precio Hora Espera (€)</mat-label>
-          <input matInput type="number" formControlName="importeEspera">
+          <input matInput type="number" formControlName="importeEspera" title="Precio hora espera">
         </mat-form-field>
 
       </div>
@@ -157,17 +150,17 @@
 
         <mat-form-field class="w-full">
           <mat-label>Albarán</mat-label>
-          <input matInput formControlName="albaran">
+          <input matInput formControlName="albaran" title="Albaran">
         </mat-form-field>
 
         <mat-form-field class="w-full">
           <mat-label>Orden (para ordenar)</mat-label>
-          <input matInput type="number" formControlName="orden">
+          <input matInput type="number" formControlName="orden" title="Orden">
         </mat-form-field>
 
         <mat-form-field class="w-full md:col-span-2">
           <mat-label>Observaciones</mat-label>
-          <textarea matInput formControlName="observaciones"
+          <textarea matInput formControlName="observaciones" title="Observaciones"
             rows="5"></textarea>
         </mat-form-field>
 
@@ -181,7 +174,7 @@
     - Deben estar DENTRO del <form> pero FUERA de <mat-tab-group>
       para que siempre sean visibles.
   -->
-  <div class="flex justify-end gap-2 mt-6">
+  <div class="flex justify-end gap-2 mt-6 service-form-actions">
     <button mat-stroked-button type="button" (click)="cancelar()">
       Cancelar
     </button>
@@ -194,4 +187,5 @@
     </button>
   </div>
 
-</form>
+  </form>
+</section>

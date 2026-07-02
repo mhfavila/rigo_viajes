@@ -1,0 +1,13 @@
+.perfil-save-btn {
+	white-space: nowrap;
+}
+
+.uppercase-input {
+	text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+	.perfil-save-btn {
+		width: 100%;
+	}
+}

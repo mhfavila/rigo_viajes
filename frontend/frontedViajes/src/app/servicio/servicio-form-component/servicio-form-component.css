@@ -1,1 +1,17 @@
 
+.service-form-shell {
+	width: min(1200px, 100%);
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+@media (max-width: 767px) {
+	.service-form-actions {
+		flex-direction: column-reverse;
+	}
+
+	.service-form-actions button {
+		width: 100%;
+	}
+}
+

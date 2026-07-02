@@ -1,5 +1,5 @@
-<div class="centered">
-  <div class="form-container">
+<section class="auth-page">
+  <div class="form-container cv-card">
     <h2>Iniciar sesión</h2>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -13,10 +13,10 @@
       />
 
       <div *ngIf="loginForm.get('nombreUsuario')?.invalid && (loginForm.get('nombreUsuario')?.dirty || loginForm.get('nombreUsuario')?.touched)" class="error-text">
-        <small *ngIf="loginForm.get('nombreUsuario')?.hasError('required')" style="color: red;">
+        <small *ngIf="loginForm.get('nombreUsuario')?.hasError('required')" class="error-text">
           El correo es obligatorio.
         </small>
-        <small *ngIf="loginForm.get('nombreUsuario')?.hasError('email')" style="color: red;">
+        <small *ngIf="loginForm.get('nombreUsuario')?.hasError('email')" class="error-text">
           Introduce un correo válido.
         </small>
       </div>
@@ -25,6 +25,7 @@
       <input
         type="password"
         formControlName="password"
+        title="Contrasena"
       />
 
       <button type="submit" class="btn-login" [disabled]="isLoading || loginForm.invalid">
@@ -39,15 +40,15 @@
       </button>
 
       <div *ngIf="showSlowServerMessage" class="server-waking-up">
-        <small>⏳ <strong>El servidor se está despertando.</strong><br>
+        <small><strong>El servidor se esta despertando.</strong><br>
         Al ser la versión gratuita, esto puede tardar unos segundos. ¡Gracias por esperar!</small>
       </div>
 
-      <p *ngIf="errorMessage" class="error-message" style="color: red;">{{ errorMessage }}</p>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
 
     <button class="btn-secondary" (click)="irARegistro()" [disabled]="isLoading">
       Crear nuevo usuario
     </button>
   </div>
-</div>
+</section>

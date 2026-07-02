@@ -5,12 +5,14 @@
 
 /* Un poco de padding para que el contenido no se pegue a los bordes */
 .contenido-principal {
+  padding: 16px;
   min-height: 90vh;
-  background-color: #f5f5f5; /* Un gris muy clarito de fondo queda profesional */
+  background-color: var(--cv-surface);
 }
 
 /* Ajuste para que el toolbar no quede pegado si usas sombras */
 .navbar {
   position: relative;
   z-index: 10;
+  background: linear-gradient(90deg, var(--cv-primary) 0%, #1976d2 100%);
 }

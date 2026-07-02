@@ -1,107 +1,92 @@
-.centered {
+.auth-page {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* en vez de center, lo pone arriba */
-  height: 100vh;
-  padding-top: 50px;       /* espacio desde arriba */
-  background: #f0f0f0;
+  align-items: flex-start;
+  min-height: calc(100vh - 120px);
+  padding-top: 24px;
 }
-/* Cuadrado */
+
 .form-container {
-  width: 400px;
-  height: 400px;
-  background: #fff;
+  width: min(420px, 100%);
+  background: var(--cv-surface-soft);
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 
-  display: flex;           /* Flex en columna */
-  flex-direction: column;  /* Apila todo en columna */
-  justify-content: center; /* Centra verticalmente los elementos dentro */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Formulario dentro del cuadrado */
 .form-container form {
   display: flex;
-  flex-direction: column; /* Esto asegura que todos los divs hijos se apilen */
-  gap: 12px;              /* Espacio entre cada campo */
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Label e input */
 .form-container label {
   margin-bottom: 4px;
   font-weight: 500;
-  color: #333;
+  color: var(--cv-text);
 }
 
 .form-container input {
-  padding: 8px;
+  padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--cv-border);
   font-size: 1rem;
 }
 
-/* Título centrado */
 .form-container h2 {
-  text-align: center;   /* centra el texto horizontalmente */
-  margin-bottom: 1.5rem; /* espacio debajo del título */
-  font-weight: 600;      /* opcional: más negrita */
-  color: #222;           /* opcional: color oscuro */
-  font-size: 1.5rem;     /* tamaño más grande */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: var(--cv-text);
+  font-size: 1.5rem;
 }
 
-/*BOTONES*/
-
-/* Botón principal: Login */
 .btn-login {
   width: 100%;
   padding: 0.9rem;
   border: none;
-  border-radius: 50px;      /* redondeado tipo pill */
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  background-color: #007bff; /* azul */
+  background-color: var(--cv-primary);
   color: #fff;
   transition: background 0.3s ease, transform 0.2s ease;
-  margin-top: 1rem;          /* separa del campo anterior */
+  margin-top: 1rem;
 }
 
 .btn-login:hover {
-  background-color: #0056b3;
+  background-color: var(--cv-primary-strong);
   transform: scale(1.03);
 }
 
-/* Botón secundario: Crear nuevo usuario */
 .btn-secondary {
   width: 100%;
   padding: 0.9rem;
   border: none;
-  border-radius: 50px;      /* redondeado tipo pill */
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  background-color: #28a745; /* verde */
+  background-color: var(--cv-secondary);
   color: #fff;
   transition: background 0.3s ease, transform 0.2s ease;
-  margin-top: 0.8rem;        /* separa del botón anterior */
+  margin-top: 0.8rem;
 }
 
 .btn-secondary:hover {
-  background-color: #1e7e34;
+  filter: brightness(0.92);
   transform: scale(1.03);
 }
 
-
-/* --- Estilos para el estado de carga --- */
-
-/* 1. Deshabilitar visualmente el botón cuando carga */
 button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* 2. Contenedor para alinear spinner y texto */
 .loading-box {
   display: flex;
   align-items: center;
@@ -109,12 +94,11 @@ button:disabled {
   gap: 10px;
 }
 
-/* 3. El Spinner (Círculo giratorio) */
 .spinner {
   width: 16px;
   height: 16px;
   border: 2px solid #ffffff;
-  border-top: 2px solid transparent; /* Hace el efecto de giro */
+  border-top: 2px solid transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -124,10 +108,9 @@ button:disabled {
   100% { transform: rotate(360deg); }
 }
 
-/* 4. Mensaje de Servidor Lento (Render) */
 .server-waking-up {
   margin-top: 15px;
-  background-color: #e0f7fa; /* Azul clarito */
+  background-color: #e0f7fa;
   color: #006064;
   padding: 10px;
   border-radius: 5px;
@@ -136,7 +119,22 @@ button:disabled {
   animation: fadeIn 0.5s ease-in;
 }
 
+.error-text,
+.error-message {
+  color: #d32f2f;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 767px) {
+  .auth-page {
+    padding-top: 8px;
+  }
+
+  .form-container {
+    padding: 16px;
+  }
 }

@@ -2,6 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+/* EVOLUTION: 001_feature1 - design tokens and responsive baseline */
+:root {
+    --cv-primary: #1565c0;
+    --cv-primary-strong: #0d47a1;
+    --cv-secondary: #2e7d32;
+    --cv-surface: #f5f7fb;
+    --cv-surface-soft: #ffffff;
+    --cv-border: #dbe3ef;
+    --cv-text: #1f2a37;
+    --cv-radius: 10px;
+    --cv-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #f9fbff 0%, var(--cv-surface) 100%);
+    color: var(--cv-text);
+}
+
+/* Shared container styles for cards/forms/tables */
+.cv-card,
+.mat-mdc-card {
+    border-radius: var(--cv-radius);
+    box-shadow: var(--cv-shadow);
+    border: 1px solid var(--cv-border);
+    background: var(--cv-surface-soft);
+}
+
+/* Buttons: unify visual hierarchy */
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+    background-color: var(--cv-primary) !important;
+}
+
+.mat-mdc-raised-button.mat-primary:hover,
+.mat-mdc-unelevated-button.mat-primary:hover {
+    background-color: var(--cv-primary-strong) !important;
+}
+
+.mat-mdc-outlined-button,
+.mat-mdc-button {
+    border-radius: 999px;
+}
+
+/* Secondary accents for statuses and helper actions */
+.cv-secondary,
+.mat-mdc-chip.mat-mdc-standard-chip {
+    color: var(--cv-secondary);
+}
+
+/* Form controls */
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+/* Table wrappers */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: var(--cv-radius);
+}
+
+.table-responsive table {
+    min-width: 720px;
+}
 
 
 /* --- QUITAR FLECHAS (SPIN BUTTONS) DE LOS INPUTS NUMÉRICOS --- */
@@ -16,6 +91,29 @@ input[type=number]::-webkit-inner-spin-button {
 /* Para Firefox */
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+/* Responsive baseline */
+@media (max-width: 1023px) {
+    .contenido-principal {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 767px) {
+    .contenido-principal {
+        padding: 10px;
+    }
+
+    .mat-toolbar button[mat-button] {
+        padding-inline: 8px;
+        min-width: auto;
+        font-size: 0.875rem;
+    }
+
+    .table-responsive table {
+        min-width: 640px;
+    }
 }
 
 
