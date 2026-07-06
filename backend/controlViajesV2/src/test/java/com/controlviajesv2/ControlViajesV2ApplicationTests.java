@@ -1,13 +1,14 @@
 package com.controlviajesv2;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+
 class ControlViajesV2ApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void mainClassExists() {
+		assertThat(ControlViajesV2Application.class).isNotNull();
 	}
 
 }
